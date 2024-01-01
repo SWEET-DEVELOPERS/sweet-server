@@ -31,6 +31,7 @@ jobs:
 
       - name: 🍭 application.yml 파일을 생성 합니다.
         run: |
+          mkdir ./src/main/resources
           touch ./src/main/resources/application.yml
           echo "${{ secrets.APPLICATION }}" > ./src/main/resources/application.yml # github actions에서 설정한 값을 application.yml 파일에 쓰기
 
