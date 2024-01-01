@@ -20,7 +20,17 @@ public interface MemberApi {
     )
     @Operation(summary = "프로필을 조회")
     ResponseEntity<SuccessResponse<?>> testSwagger(
-//            @Parameter(description = "파라미터는 이런 식으로 사용", required = true) Long id
+    );
+
+    @ApiResponses(
+            value = {
+                    @ApiResponse(responseCode = "200"),
+                    @ApiResponse(responseCode = "404", content = @Content)
+            }
+    )
+    @Operation(summary = "토큰 임시 발급 API입니다. 로그인 생성 시 삭제할 예정입니다.")
+    ResponseEntity<SuccessResponse<?>> getToken(
+            @Parameter(description = "멤버 고유 id", required = true) Long memberId
     );
 
 }
