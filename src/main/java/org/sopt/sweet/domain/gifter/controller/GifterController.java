@@ -5,5 +5,5 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RequestMapping("/api/gifter")
 @RestController
-public class GifterController {
+public class GifterController implements GifterApi {
 }
