@@ -16,9 +16,9 @@ public class SwaggerConfig {
     @Bean
     public OpenAPI openAPI(){
         Info info = new Info()
-                .title("DODAY API Document")
-                .version("v0.1")
-                .description("doday API 명세서입니다.");
+                .title("Sweet API Document")
+                .version("v1.0")
+                .description("sweet API 명세서입니다.");
 
         SecurityScheme securityScheme = new SecurityScheme()
                 .name("Authorization")
