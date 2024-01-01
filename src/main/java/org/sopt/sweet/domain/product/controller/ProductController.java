@@ -5,5 +5,5 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RequestMapping("/api/product")
 @RestController
-public class ProductController {
+public class ProductController implements ProductApi{
 }
