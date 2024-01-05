@@ -147,6 +147,7 @@
 
 ## 🍰 Git & Code Convention
 ### ✨ [ 스윗 서버의 코드 컨벤션 보러가기 (클릭!) ](https://walnut-stinger-e4f.notion.site/Server-Convention-2b3b398212204f819d2abd3480e915c5?pvs=4)
+### ✨ [ 스윗 서버의 기술 스택 보러가기 (클릭!) ](https://walnut-stinger-e4f.notion.site/Server-Architecture-347bbc9ab1054dfc945d18cb4946d0bc?pvs=4)
 
 
 ## 🍩 API Specification
