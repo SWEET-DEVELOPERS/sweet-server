@@ -34,6 +34,7 @@ public enum ErrorCode {
      * 404 Not Found
      */
     ENTITY_NOT_FOUND(HttpStatus.NOT_FOUND, "엔티티를 찾을 수 없습니다."),
+    OPEN_GRAPH_NOT_FOUND(HttpStatus.NOT_FOUND, "오픈 그래프 정보를 찾을 수 없습니다."),
 
     /**
      * 405 Method Not Allowed
