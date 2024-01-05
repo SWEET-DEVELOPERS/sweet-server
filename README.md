@@ -29,7 +29,7 @@
   - [아키텍처 구조](#-아키텍처-구조)
   - [ERD](#-erd)
   - [실행 방법](#-실행-방법)
-- [🍰 Git & Code Convention](#-git-&-code-convention)
+- [🍰 Git & Code Convention](#-git--code-convention)
 - [🍩 API Specification](#-api-specification)
 
 <br />
