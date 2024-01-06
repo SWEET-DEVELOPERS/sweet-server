@@ -1,7 +1,8 @@
 package org.sopt.sweet.domain.member.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.sopt.sweet.domain.member.dto.request.MemberTokenResponseDto;
+import org.sopt.sweet.domain.member.dto.reponse.KakaoUserInfoResponseDto;
+import org.sopt.sweet.domain.member.dto.reponse.MemberTokenResponseDto;
 import org.sopt.sweet.domain.member.service.MemberService;
 import org.sopt.sweet.global.common.SuccessResponse;
 import org.springframework.http.ResponseEntity;
@@ -26,4 +27,12 @@ public class MemberController implements MemberApi{
         final MemberTokenResponseDto memberTokenResponseDto = memberService.getToken(memberId);
         return SuccessResponse.created(memberTokenResponseDto);
     }
+
+
+    @PostMapping("/login")
+    public ResponseEntity<SuccessResponse<?>> kakaoLogin(@RequestParam("code") String code) {
+        KakaoUserInfoResponseDto userInfo = memberService.kakaoCallback(code);
+        return SuccessResponse.ok(userInfo);
+    }
+
 }
