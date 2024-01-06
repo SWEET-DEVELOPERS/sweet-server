@@ -9,7 +9,7 @@ import org.sopt.sweet.global.common.BaseTimeEntity;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-@Builder(access = AccessLevel.PRIVATE)
+@Builder(access = AccessLevel.PUBLIC)
 @Table(name = "member")
 @Entity
 public class Member extends BaseTimeEntity {
@@ -20,7 +20,7 @@ public class Member extends BaseTimeEntity {
     private Long id;
 
     @Column(nullable = false)
-    private String socialId;
+    private Long socialId;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
