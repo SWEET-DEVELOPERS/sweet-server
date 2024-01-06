@@ -1,7 +1,7 @@
 package org.sopt.sweet.domain.member.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.sopt.sweet.domain.member.dto.request.MemberTokenResponseDto;
+import org.sopt.sweet.domain.member.dto.response.MemberTokenResponseDto;
 import org.sopt.sweet.domain.member.service.MemberService;
 import org.sopt.sweet.global.common.SuccessResponse;
 import org.springframework.http.ResponseEntity;

@@ -1,6 +1,6 @@
 package org.sopt.sweet.domain.opengraph.dto;
 
-public record URLRequestDto(
+public record OpengraphRequestDto(
         String BaseURL
 ) {
 }
