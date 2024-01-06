@@ -43,6 +43,12 @@ dependencies {
 
 	//	spring-doc
 	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.1.0'
+
+	// open graph
+	implementation 'net.sourceforge.htmlcleaner:htmlcleaner:2.6'
+
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	implementation('nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect')
 }
 
 tasks.named('test') {
