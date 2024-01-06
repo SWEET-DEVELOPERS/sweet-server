@@ -38,8 +38,9 @@ public class SecurityConfig {
             "api/member/test",
             "api/v1/docs",
             "api/v1/swagger-ui/**",
-            "api/member/token/**"
-            };
+            "api/member/token/**",
+            "api/member/login/**",
+    };
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
