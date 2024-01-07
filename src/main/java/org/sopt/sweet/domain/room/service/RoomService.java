@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.sopt.sweet.domain.member.entity.Member;
 import org.sopt.sweet.domain.member.repository.MemberRepository;
 import org.sopt.sweet.domain.room.dto.request.CreateRoomRequestDto;
+import org.sopt.sweet.domain.room.dto.response.RoomInviteResponseDto;
 import org.sopt.sweet.domain.room.entity.Room;
 import org.sopt.sweet.domain.room.repository.RoomRepository;
 import org.sopt.sweet.global.error.exception.EntityNotFoundException;
@@ -13,8 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.security.SecureRandom;
 
-import static org.sopt.sweet.global.error.ErrorCode.MEMBER_NOT_FOUND;
-import static org.sopt.sweet.global.error.ErrorCode.NAME_LENGTH_EXCEEDED;
+import static org.sopt.sweet.global.error.ErrorCode.*;
 
 @Service
 @RequiredArgsConstructor
@@ -27,7 +27,7 @@ public class RoomService {
     private static final int CODE_LENGTH = 6;
 
     public Long createNewRoom(Long userId, CreateRoomRequestDto createRoomRequestDto) {
-        Member host = findByIdOrThrow(userId);
+        Member host = findMemberByIdOrThrow(userId);
         validateName(createRoomRequestDto.gifteeName());
         Room room = Room.builder()
                 .gifteeName(createRoomRequestDto.gifteeName())
@@ -41,9 +41,26 @@ public class RoomService {
         return roomRepository.save(room).getId();
     }
 
-    private Member findByIdOrThrow(Long userId) {
+    public RoomInviteResponseDto getRoomInviteInfo(Long roomId){
+        Room room = findByIdOrThrow(roomId);
+        return RoomInviteResponseDto.of(
+                room.getId(),
+                room.getGifteeName(),
+                room.getImageUrl(),
+                room.getDeliveryDate(),
+                room.getTournamentStartDate(),
+                room.getTournamentDuration(),
+                room.getInvitationCode());
+    }
+
+    private Member findMemberByIdOrThrow(Long userId) {
         return memberRepository.findById(userId)
                 .orElseThrow(() -> new EntityNotFoundException(MEMBER_NOT_FOUND));
+    }
+
+    private Room findByIdOrThrow(Long roomId) {
+        return roomRepository.findById(roomId)
+                .orElseThrow(() -> new EntityNotFoundException(ROOM_NOT_FOUND));
     }
 
     public boolean isInvitationCodeExists(String code) {
