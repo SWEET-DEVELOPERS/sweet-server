@@ -46,6 +46,7 @@ public class RoomService {
         Room room = findByIdOrThrow(roomId);
         return RoomInviteResponseDto.of(
                 room.getId(),
+                room.getGifterNumber(),
                 room.getGifteeName(),
                 room.getImageUrl(),
                 room.getDeliveryDate(),

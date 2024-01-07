@@ -28,5 +28,4 @@ public class RoomController implements RoomApi {
         final RoomInviteResponseDto roomInviteResponseDto = roomService.getRoomInviteInfo(roomId);
         return SuccessResponse.ok(roomInviteResponseDto);
     }
-
 }

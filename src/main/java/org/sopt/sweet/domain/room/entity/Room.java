@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Entity
 public class Room {
 
-    private static final int DEFAULT_NUMBER = 0;
+    private static final int DEFAULT_NUMBER = 1;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

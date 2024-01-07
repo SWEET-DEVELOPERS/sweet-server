@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 @Builder
 public record RoomInviteResponseDto(
         Long roomId,
+        int gifterNumber,
         String gifteeName,
         String imageUrl,
         LocalDateTime deliveryDate,
@@ -16,6 +17,7 @@ public record RoomInviteResponseDto(
         String invitationCode
 ) {
     public static RoomInviteResponseDto of(Long roomId,
+                                           int gifterNumber,
                                            String gifteeName,
                                            String imageUrl,
                                            LocalDateTime deliveryDate,
@@ -24,6 +26,7 @@ public record RoomInviteResponseDto(
                                            String invitationCode){
         return RoomInviteResponseDto.builder()
                 .roomId(roomId)
+                .gifterNumber(gifterNumber)
                 .gifteeName(gifteeName)
                 .imageUrl(imageUrl)
                 .deliveryDate(deliveryDate)
