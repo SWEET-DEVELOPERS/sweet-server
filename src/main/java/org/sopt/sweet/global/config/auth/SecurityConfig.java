@@ -39,7 +39,8 @@ public class SecurityConfig {
             "api/v1/docs",
             "api/v1/swagger-ui/**",
             "api/member/token/**",
-            "api/opengraph"
+            "api/opengraph",
+            "api/room/invitations/**"
             };
 
     @Bean
