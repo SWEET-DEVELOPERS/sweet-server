@@ -1,4 +1,4 @@
-package org.sopt.sweet.global.external.s3;
+package org.sopt.sweet.global.external.s3.config;
 
 import com.amazonaws.HttpMethod;
 import com.amazonaws.services.s3.AmazonS3;
@@ -14,7 +14,7 @@ import java.util.Date;
 
 @Service
 @RequiredArgsConstructor
-public class FileService {
+public class FileConfig {
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
 
