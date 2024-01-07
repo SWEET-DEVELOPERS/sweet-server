@@ -1,4 +1,4 @@
-package org.sopt.sweet.domain.gifter.dto.request;
+package org.sopt.sweet.domain.room.dto.request;
 
 public record PresignedURLRequestDto(
         String fileName
