@@ -130,12 +130,14 @@
 <br />
 
 ### 📂 아키텍처 구조
-![image](https://github.com/SWEET-DEVELOPERS/sweet-server/assets/101448999/132e84f1-2d6a-450c-bf8e-69b875f86f45)
+![image](https://github.com/SWEET-DEVELOPERS/sweet-server/assets/101448999/388ecb2c-73b2-4441-948f-cd2562d48b4b)
+
 
 <br />
 
 ### 📢 ERD
-![image](https://github.com/SWEET-DEVELOPERS/sweet-server/assets/101448999/af20b047-de05-4009-86db-1d177b1a46ff)
+![sweet-database (1)](https://github.com/SWEET-DEVELOPERS/sweet-server/assets/101448999/c24a6bd9-f798-447f-9148-21b5f621da07)
+
 
 <br />
 
