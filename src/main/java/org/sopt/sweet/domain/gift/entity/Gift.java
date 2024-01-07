@@ -39,12 +39,12 @@ public class Gift {
     private Member member;
 
     @Builder
-    public Gift(String url, String name, int cost, String imgUrl, Room room, Member member) {
+    public Gift(String url, String name, int cost, String imageUrl, Room room, Member member) {
         this.url = url;
         this.name = name;
         this.cost = cost;
         this.score = DEFAULT_SCORE;
-        this.imageUrl = imgUrl;
+        this.imageUrl = imageUrl;
         this.room = room;
         this.member = member;
     }

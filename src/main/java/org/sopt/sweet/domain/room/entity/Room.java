@@ -23,7 +23,7 @@ public class Room {
     @Column(nullable = false)
     private String gifteeName;
 
-    private String img;
+    private String imageUrl;
 
     private int gifterNumber;
 
