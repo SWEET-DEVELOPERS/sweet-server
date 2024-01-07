@@ -3,7 +3,7 @@ package org.sopt.sweet.domain.room.service;
 import lombok.RequiredArgsConstructor;
 import org.sopt.sweet.domain.room.dto.request.PresignedURLRequestDto;
 import org.sopt.sweet.domain.room.dto.response.PresignedURLResponseDto;
-import org.sopt.sweet.global.config.FileService;
+import org.sopt.sweet.global.external.s3.FileService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
