@@ -13,6 +13,7 @@ import org.sopt.sweet.domain.room.dto.request.CreateRoomRequestDto;
 import org.sopt.sweet.global.common.SuccessResponse;
 import org.sopt.sweet.global.config.auth.UserId;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @Tag(name = "선물방", description = "선물방 관련 API")
 public interface RoomApi {
@@ -37,6 +38,26 @@ public interface RoomApi {
                     example = "12345"
             ) @UserId Long userId,
             @Valid @RequestBody CreateRoomRequestDto createRoomRequestDto
+    );
+
+    @Operation(
+            summary = "선물방 초대 조회 API",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(implementation = SuccessResponse.class)
+                            )
+                    )
+            }
+    )
+    ResponseEntity<SuccessResponse<?>> getRoomInviteInfo(
+            @Parameter(
+                    description = "room 고유 id",
+                    required = true,
+                    example = "1"
+            ) @PathVariable Long roomId
     );
 
 }
