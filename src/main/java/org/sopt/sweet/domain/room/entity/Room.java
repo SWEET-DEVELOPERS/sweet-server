@@ -1,33 +1,31 @@
-package org.sopt.sweet.domain.gifter.entity;
+package org.sopt.sweet.domain.room.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
-import org.sopt.sweet.domain.gifter.constant.TournamentDuration;
+import org.sopt.sweet.domain.room.constant.TournamentDuration;
 import org.sopt.sweet.domain.member.entity.Member;
 
 import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
-@Builder(access = AccessLevel.PRIVATE)
-@Table(name = "gifter")
+@Table(name = "room")
 @Entity
-public class Gifter {
+public class Room {
+
+    private static final int DEFAULT_NUMBER = 0;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "gifter_id")
+    @Column(name = "room_id")
     private Long id;
 
     @Column(nullable = false)
     private String gifteeName;
 
-    private String img;
+    private String imageUrl;
 
-    @Builder.Default
-    private int gifterNum = 0;
+    private int gifterNumber;
 
     @Column(nullable = false)
     private LocalDateTime deliveryDate;
@@ -43,4 +41,5 @@ public class Gifter {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "host_id", nullable = false)
     private Member host;
+
 }

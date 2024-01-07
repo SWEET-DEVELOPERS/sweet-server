@@ -1,4 +1,4 @@
-package org.sopt.sweet.domain.opengraph.lib;
+package org.sopt.sweet.global.external.opengraph.lib;
 
 import java.net.URL;
 

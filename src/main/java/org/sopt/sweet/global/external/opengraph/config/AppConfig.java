@@ -1,4 +1,4 @@
-package org.sopt.sweet.domain.opengraph.config;
+package org.sopt.sweet.global.external.opengraph.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

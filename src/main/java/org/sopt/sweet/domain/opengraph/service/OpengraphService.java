@@ -3,7 +3,7 @@ package org.sopt.sweet.domain.opengraph.service;
 import lombok.RequiredArgsConstructor;
 import org.sopt.sweet.domain.opengraph.dto.OpengraphResponseDto;
 import org.sopt.sweet.domain.opengraph.dto.OpengraphRequestDto;
-import org.sopt.sweet.domain.opengraph.lib.OpenGraph;
+import org.sopt.sweet.global.external.opengraph.lib.OpenGraph;
 import org.sopt.sweet.global.error.exception.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

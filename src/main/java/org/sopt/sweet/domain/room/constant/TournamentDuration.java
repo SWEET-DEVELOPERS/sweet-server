@@ -1,4 +1,4 @@
-package org.sopt.sweet.domain.gifter.constant;
+package org.sopt.sweet.domain.room.constant;
 
 public enum TournamentDuration {
     SIX_HOURS(6),

@@ -7,7 +7,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.sopt.sweet.domain.gifter.dto.request.PresignedURLRequestDto;
 import org.sopt.sweet.domain.opengraph.dto.OpengraphRequestDto;
 import org.sopt.sweet.global.common.SuccessResponse;
 import org.springframework.http.ResponseEntity;
