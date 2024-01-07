@@ -41,6 +41,7 @@ public class RoomService {
         return roomRepository.save(room).getId();
     }
 
+    @Transactional(readOnly = true)
     public RoomInviteResponseDto getRoomInviteInfo(Long roomId){
         Room room = findByIdOrThrow(roomId);
         return RoomInviteResponseDto.of(
