@@ -26,7 +26,7 @@ public class Gift {
     @Column(nullable = false)
     private int cost;
 
-    private String img;
+    private String imageUrl;
 
     private int score;
 
@@ -39,12 +39,12 @@ public class Gift {
     private Member member;
 
     @Builder
-    public Gift(String url, String name, int cost, String img, Room room, Member member) {
+    public Gift(String url, String name, int cost, String imgUrl, Room room, Member member) {
         this.url = url;
         this.name = name;
         this.cost = cost;
         this.score = DEFAULT_SCORE;
-        this.img = img;
+        this.imageUrl = imgUrl;
         this.room = room;
         this.member = member;
     }
