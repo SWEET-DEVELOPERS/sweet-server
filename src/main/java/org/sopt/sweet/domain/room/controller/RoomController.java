@@ -18,7 +18,7 @@ public class RoomController implements RoomApi {
 
     private final RoomService roomService;
 
-    @PostMapping("/presignedURL")
+    @PostMapping("/presigned-url")
     public ResponseEntity<SuccessResponse<?>> getPresignedURL(@RequestBody PresignedURLRequestDto presignedURLRequestDto) {
         final PresignedURLResponseDto presignedURLResponseDto = roomService.getPresignedURL(presignedURLRequestDto);
         return SuccessResponse.created(presignedURLResponseDto);
