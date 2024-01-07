@@ -1,4 +1,4 @@
-package org.sopt.sweet.global.config;
+package org.sopt.sweet.global.external.s3;
 
 import com.amazonaws.HttpMethod;
 import com.amazonaws.services.s3.AmazonS3;
