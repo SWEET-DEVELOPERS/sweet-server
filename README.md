@@ -121,6 +121,7 @@
 ┃  ┃  ┃  ┣ 📂 dto
 ┃  ┃  ┃  ┣ 📂 exception
 ┃  ┃  ┃  ┣ 📂 handler
+┃  ┃  ┣ 📂 external
 ┣ 📂 resources
 ┃  ┣ application.yml
 ┣ SweetApplication.class
