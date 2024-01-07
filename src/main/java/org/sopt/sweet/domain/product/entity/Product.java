@@ -23,6 +23,6 @@ public class Product extends BaseTimeEntity {
     @Column(nullable = false)
     private int cost;
 
-    private String img;
+    private String imageUrl;
 
 }
