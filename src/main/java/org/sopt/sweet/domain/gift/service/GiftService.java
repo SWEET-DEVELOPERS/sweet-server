@@ -1,9 +1,76 @@
 package org.sopt.sweet.domain.gift.service;
 
+import lombok.RequiredArgsConstructor;
+import org.sopt.sweet.domain.gift.dto.request.CreateGiftRequestDto;
+import org.sopt.sweet.domain.gift.entity.Gift;
+import org.sopt.sweet.domain.gift.repository.GiftRepository;
+import org.sopt.sweet.domain.member.entity.Member;
+import org.sopt.sweet.domain.member.repository.MemberRepository;
+import org.sopt.sweet.domain.room.entity.Room;
+import org.sopt.sweet.domain.room.entity.RoomMember;
+import org.sopt.sweet.domain.room.repository.RoomMemberRepository;
+import org.sopt.sweet.domain.room.repository.RoomRepository;
+import org.sopt.sweet.global.error.exception.BusinessException;
+import org.sopt.sweet.global.error.exception.EntityNotFoundException;
+import org.sopt.sweet.global.error.exception.ForbiddenException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
+import static org.sopt.sweet.global.error.ErrorCode.*;
+
+@RequiredArgsConstructor
 @Service
 @Transactional
 public class GiftService {
+    private final GiftRepository giftRepository;
+    private final MemberRepository memberRepository;
+    private final RoomRepository roomRepository;
+    private final RoomMemberRepository roomMemberRepository;
+    private static final int MAX_GIFT_COUNT = 2;
+
+    public void createNewGift(Long memberId, CreateGiftRequestDto createGiftRequestDto) {
+        Member member = findMemberByIdOrThrow(memberId);
+        Room room = findRoomByIdOrThrow(createGiftRequestDto.roomId());
+        checkRoomMemberNotExists(room, member);
+        checkGiftCountNotExceeded(room, member);
+        Gift gift = Gift.builder()
+                .url(createGiftRequestDto.url())
+                .name(createGiftRequestDto.name())
+                .cost(createGiftRequestDto.cost())
+                .imageUrl(createGiftRequestDto.imageUrl())
+                .room(room)
+                .member(member)
+                .build();
+        giftRepository.save(gift);
+    }
+
+    private void checkGiftCountNotExceeded(Room room, Member member) {
+        long giftCount = giftRepository.countByRoomAndMember(room, member);
+        if (giftCount >= MAX_GIFT_COUNT) {
+            throw new BusinessException(MEMBER_GIFT_COUNT_EXCEEDED);
+        }
+    }
+
+    private boolean isRoomMemberExists(Room room, Member member) {
+        Optional<RoomMember> existingRoomMember = roomMemberRepository.findByRoomAndMember(room, member);
+        return existingRoomMember.isPresent();
+    }
+
+    private void checkRoomMemberNotExists(Room room, Member member) {
+        if (!isRoomMemberExists(room, member)) {
+            throw new ForbiddenException(MEMBER_NOT_IN_ROOM);
+        }
+    }
+
+    private Member findMemberByIdOrThrow(Long memberId) {
+        return memberRepository.findById(memberId)
+                .orElseThrow(() -> new EntityNotFoundException(MEMBER_NOT_FOUND));
+    }
+
+    private Room findRoomByIdOrThrow(Long roomId) {
+        return roomRepository.findById(roomId)
+                .orElseThrow(() -> new EntityNotFoundException(ROOM_NOT_FOUND));
+    }
 }
