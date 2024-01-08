@@ -25,4 +25,10 @@ public class RoomMember {
     @Column(columnDefinition = "TINYINT(1) default 0")
     private boolean tournamentParticipation;
 
+    @Builder
+    public RoomMember(Room room, Member member){
+        this.room = room;
+        this.member = member;
+    }
+
 }

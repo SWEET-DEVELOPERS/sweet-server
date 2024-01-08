@@ -2,6 +2,7 @@ package org.sopt.sweet.domain.room.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.sopt.sweet.domain.room.dto.request.CreateRoomRequestDto;
+import org.sopt.sweet.domain.room.dto.response.CreateRoomResponseDto;
 import org.sopt.sweet.domain.room.dto.response.RoomInviteResponseDto;
 import org.sopt.sweet.domain.room.service.RoomService;
 import org.sopt.sweet.global.common.SuccessResponse;
@@ -19,8 +20,8 @@ public class RoomController implements RoomApi {
     @PostMapping
     public ResponseEntity<SuccessResponse<?>> createNewRoom(@UserId Long userId,
                                                             @RequestBody CreateRoomRequestDto createRoomRequestDto){
-        final Long roomId = roomService.createNewRoom(userId, createRoomRequestDto);
-        return SuccessResponse.created(roomId);
+        final CreateRoomResponseDto newRoom = roomService.createNewRoom(userId, createRoomRequestDto);
+        return SuccessResponse.created(newRoom);
     }
 
     @GetMapping("/invitations/{roomId}")
