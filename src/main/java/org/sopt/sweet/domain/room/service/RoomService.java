@@ -57,8 +57,8 @@ public class RoomService {
     }
 
     @Transactional(readOnly = true)
-    public RoomInviteResponseDto getRoomInviteInfo(Long roomId){
-        Room room = findByIdOrThrow(roomId);
+    public RoomInviteResponseDto getRoomInviteInfo(String invitationCode){
+        Room room = findByInvitationOrThrow(invitationCode);
         return RoomInviteResponseDto.of(
                 room.getId(),
                 room.getGifterNumber(),
@@ -68,6 +68,11 @@ public class RoomService {
                 room.getTournamentStartDate(),
                 room.getTournamentDuration(),
                 room.getInvitationCode());
+    }
+
+    private Room findByInvitationOrThrow(String invitationCode) {
+        return roomRepository.findByInvitationCode(invitationCode)
+                .orElseThrow(() -> new EntityNotFoundException(ROOM_NOT_FOUND));
     }
 
     private Member findMemberByIdOrThrow(Long userId) {

@@ -24,9 +24,9 @@ public class RoomController implements RoomApi {
         return SuccessResponse.created(newRoom);
     }
 
-    @GetMapping("/invitations/{roomId}")
-    public ResponseEntity<SuccessResponse<?>> getRoomInviteInfo(@PathVariable Long roomId){
-        final RoomInviteResponseDto roomInviteResponseDto = roomService.getRoomInviteInfo(roomId);
+    @GetMapping("/invitations/{invitationCode}")
+    public ResponseEntity<SuccessResponse<?>> getRoomInviteInfo(@PathVariable String invitationCode){
+        final RoomInviteResponseDto roomInviteResponseDto = roomService.getRoomInviteInfo(invitationCode);
         return SuccessResponse.ok(roomInviteResponseDto);
     }
 }

@@ -54,10 +54,10 @@ public interface RoomApi {
     )
     ResponseEntity<SuccessResponse<?>> getRoomInviteInfo(
             @Parameter(
-                    description = "room 고유 id",
+                    description = "room 초대코드",
                     required = true,
                     example = "1"
-            ) @PathVariable Long roomId
+            ) @PathVariable String invitationCode
     );
 
 }
