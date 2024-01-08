@@ -27,7 +27,7 @@ public class RoomService {
     private final RoomRepository roomRepository;
     private final MemberRepository memberRepository;
     private final RoomMemberRepository roomMemberRepository;
-    private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    private static final String CHARACTERS = "abcdefghijklmnopqrstuvwxyz0123456789";
     private static final int CODE_LENGTH = 6;
 
     public CreateRoomResponseDto createNewRoom(Long userId, CreateRoomRequestDto createRoomRequestDto) {
