@@ -12,6 +12,7 @@ public enum ErrorCode {
      * 400 Bad Request
      */
     BAD_REQUEST(HttpStatus.BAD_REQUEST, "잘못된 요청입니다."),
+    NAME_LENGTH_EXCEEDED(HttpStatus.BAD_REQUEST, "이름은 10글자를 초과할 수 없습니다."),
 
     /**
      * 401 Unauthorized
@@ -35,6 +36,7 @@ public enum ErrorCode {
      */
     ENTITY_NOT_FOUND(HttpStatus.NOT_FOUND, "엔티티를 찾을 수 없습니다."),
     OPEN_GRAPH_NOT_FOUND(HttpStatus.NOT_FOUND, "오픈 그래프 정보를 찾을 수 없습니다."),
+    MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 멤버를 찾을 수 없습니다."),
 
     /**
      * 405 Method Not Allowed

@@ -42,4 +42,15 @@ public class Room {
     @JoinColumn(name = "host_id", nullable = false)
     private Member host;
 
+    @Builder
+    public Room(String gifteeName, String imageUrl, LocalDateTime deliveryDate, LocalDateTime tournamentStartDate, TournamentDuration tournamentDuration, String invitationCode, Member host){
+        this.gifteeName = gifteeName;
+        this.imageUrl = imageUrl;
+        this.gifterNumber = DEFAULT_NUMBER;
+        this.deliveryDate = deliveryDate;
+        this.tournamentStartDate = tournamentStartDate;
+        this.tournamentDuration = tournamentDuration;
+        this.invitationCode = invitationCode;
+        this.host = host;
+    }
 }
