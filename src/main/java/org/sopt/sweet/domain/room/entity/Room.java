@@ -53,4 +53,8 @@ public class Room {
         this.invitationCode = invitationCode;
         this.host = host;
     }
+
+    public void setGifterNumber(int gifterNumber) {
+        this.gifterNumber = gifterNumber;
+    }
 }
