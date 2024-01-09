@@ -94,9 +94,8 @@ public class OAuthService {
             System.out.println("카카오 토큰 정보 " + oauthToken);
             System.out.println("프로필 정보 - 닉네임: " + nickname + ", 프로필 이미지: " + profileImage);
 
-            saveMember(socialId, nickname, profileImage);
-
-            return new KakaoUserInfoResponseDto(socialId, nickname, profileImage);
+            KakaoUserInfoResponseDto member = saveMember(socialId, nickname, profileImage);
+            return new KakaoUserInfoResponseDto(member.memberId(),socialId, nickname, profileImage);
 
         } catch (HttpClientErrorException e) {
             System.err.println("Kakao API 요청 실패. 응답 코드: " + e.getRawStatusCode() + ", 응답 내용: " + e.getResponseBodyAsString());
@@ -117,9 +116,10 @@ public class OAuthService {
                     .profileImg(profileImage)
                     .build();
             memberRepository.save(member);
+            return new KakaoUserInfoResponseDto(member.getId(), socialId, nickname, profileImage);
         }
 
-        return new KakaoUserInfoResponseDto(socialId, nickname, profileImage);
+        return new KakaoUserInfoResponseDto(existMember.getId(), socialId, nickname, profileImage);
     }
 
     // 카카오 로그인 시 토큰 저장
