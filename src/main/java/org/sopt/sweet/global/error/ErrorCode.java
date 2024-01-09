@@ -34,6 +34,7 @@ public enum ErrorCode {
      */
     FORBIDDEN(HttpStatus.FORBIDDEN, "리소스 접근 권한이 없습니다."),
     MEMBER_NOT_IN_ROOM(HttpStatus.FORBIDDEN, "해당 선물 방에 존재하지 않는 멤버입니다."),
+    MEMBER_NOT_GIFT_OWNER(HttpStatus.FORBIDDEN, "해당 선물을 등록하지 않은 멤버입니다."),
 
     /**
      * 404 Not Found
@@ -42,6 +43,7 @@ public enum ErrorCode {
     OPEN_GRAPH_NOT_FOUND(HttpStatus.NOT_FOUND, "오픈 그래프 정보를 찾을 수 없습니다."),
     MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 멤버를 찾을 수 없습니다."),
     ROOM_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 선물방을 찾을 수 없습니다."),
+    GIFT_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 선물을 찾을 수 없습니다."),
 
     /**
      * 405 Method Not Allowed

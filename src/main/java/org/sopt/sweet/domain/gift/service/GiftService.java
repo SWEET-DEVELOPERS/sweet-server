@@ -54,6 +54,13 @@ public class GiftService {
         return new MyGiftsResponseDto(myGiftsDtoList);
     }
 
+    public void deleteMyGift(Long memberId, Long giftId){
+        Member member = findMemberByIdOrThrow(memberId);
+        Gift gift = findByIdOrThrow(giftId);
+        validateMemberGiftOwner(member, gift);
+        giftRepository.delete(gift);
+    }
+
     private Gift buildGift(Member member, Room room, CreateGiftRequestDto createGiftRequestDto) {
         return Gift.builder()
                 .url(createGiftRequestDto.url())
@@ -89,6 +96,12 @@ public class GiftService {
         }
     }
 
+    private void validateMemberGiftOwner(Member member, Gift gift) {
+        if (!gift.getMember().equals(member)) {
+            throw new ForbiddenException(MEMBER_NOT_GIFT_OWNER);
+        }
+    }
+
     private Member findMemberByIdOrThrow(Long memberId) {
         return memberRepository.findById(memberId)
                 .orElseThrow(() -> new EntityNotFoundException(MEMBER_NOT_FOUND));
@@ -97,5 +110,10 @@ public class GiftService {
     private Room findRoomByIdOrThrow(Long roomId) {
         return roomRepository.findById(roomId)
                 .orElseThrow(() -> new EntityNotFoundException(ROOM_NOT_FOUND));
+    }
+
+    private Gift findByIdOrThrow(Long giftId){
+        return giftRepository.findById(giftId)
+                .orElseThrow(() -> new EntityNotFoundException(GIFT_NOT_FOUND));
     }
 }
