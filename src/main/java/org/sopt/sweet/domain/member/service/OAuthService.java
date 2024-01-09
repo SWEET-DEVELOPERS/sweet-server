@@ -11,7 +11,6 @@ import org.sopt.sweet.domain.member.entity.Member;
 import org.sopt.sweet.domain.member.entity.OAuthToken;
 import org.sopt.sweet.domain.member.repository.MemberRepository;
 import org.sopt.sweet.global.config.auth.jwt.JwtProvider;
-import org.sopt.sweet.global.error.exception.UnauthorizedException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpEntity;
@@ -26,6 +25,7 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.concurrent.TimeUnit;
+
 @RequiredArgsConstructor
 @Service
 @Transactional
@@ -33,12 +33,6 @@ public class OAuthService {
 
     private final JwtProvider jwtProvider;
     private final MemberRepository memberRepository;
-
-    public MemberTokenResponseDto getToken(Long memberId) {
-        String accessToken = issueNewAccessToken(memberId);
-        String refreshToken = issueNewRefreshToken(memberId);
-        return new MemberTokenResponseDto(memberId, accessToken, refreshToken);
-    }
 
     private String issueNewAccessToken(Long memberId) {
         return jwtProvider.getIssueToken(memberId, true);
@@ -57,6 +51,7 @@ public class OAuthService {
     private final ObjectMapper objectMapper;
     private final RedisTemplate<String, String> redisTemplate;
 
+    // 카카오 로그인 시 회원 정보 조회
     public KakaoUserInfoResponseDto kakaoCallback(String code) {
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
@@ -99,15 +94,9 @@ public class OAuthService {
             System.out.println("카카오 토큰 정보 " + oauthToken);
             System.out.println("프로필 정보 - 닉네임: " + nickname + ", 프로필 이미지: " + profileImage);
 
-            String accessToken = issueNewAccessToken(socialId);
-            String refreshToken = issueNewRefreshToken(socialId);
-
             saveMember(socialId, nickname, profileImage);
 
-            String redisKey = "RT:" + socialId;
-            redisTemplate.opsForValue().set(redisKey, refreshToken,1, TimeUnit.HOURS);
-
-            return new KakaoUserInfoResponseDto(socialId, nickname, profileImage, accessToken, refreshToken);
+            return new KakaoUserInfoResponseDto(socialId, nickname, profileImage);
 
         } catch (HttpClientErrorException e) {
             System.err.println("Kakao API 요청 실패. 응답 코드: " + e.getRawStatusCode() + ", 응답 내용: " + e.getResponseBodyAsString());
@@ -116,32 +105,45 @@ public class OAuthService {
         return null;
     }
 
-
-    public void saveMember(Long SocialId, String nickname, String profileImage) {
-        Member existMember = memberRepository.findBySocialId(SocialId);
+    // 카카오 로그인 시 회원 정보 저장
+    public KakaoUserInfoResponseDto saveMember(Long socialId, String nickname, String profileImage) {
+        Member existMember = memberRepository.findBySocialId(socialId);
 
         if (existMember == null) {
             Member member = Member.builder()
-                    .socialId(SocialId)
+                    .socialId(socialId)
                     .nickName(nickname)
                     .socialType(SocialType.valueOf("KAKAO"))
                     .profileImg(profileImage)
                     .build();
             memberRepository.save(member);
         }
+
+        return new KakaoUserInfoResponseDto(socialId, nickname, profileImage);
     }
 
+    // 카카오 로그인 시 토큰 저장
+    public MemberTokenResponseDto saveToken(Long socialId) {
+        String refreshToken = null;
+        String accessToken = issueNewAccessToken(socialId);
 
+        String redisKey = "RT:" + socialId;
+        String storedRefreshToken = redisTemplate.opsForValue().get(redisKey);
 
-    public String refreshAccessToken(String refreshToken) {
-        try {
-            jwtProvider.validateRefreshToken(refreshToken);
-            Long userId = jwtProvider.getSubject(refreshToken);
-            return issueNewAccessToken(userId);
-        } catch (UnauthorizedException e) {
-            throw e;
+        if (storedRefreshToken != null) {
+            refreshToken = storedRefreshToken;
+        } else {
+            refreshToken = issueNewRefreshToken(socialId);
+            redisTemplate.opsForValue().set(redisKey, refreshToken, 1, TimeUnit.HOURS);
         }
+
+        System.out.println("카카오 로그인 성공 accessToken: " + accessToken + " refreshToken: " + refreshToken);
+
+        return new MemberTokenResponseDto(accessToken, refreshToken);
     }
 
 }
+
+
+
 

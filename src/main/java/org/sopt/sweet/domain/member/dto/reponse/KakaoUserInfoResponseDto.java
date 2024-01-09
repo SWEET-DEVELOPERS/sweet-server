@@ -8,9 +8,7 @@ import org.sopt.sweet.domain.member.entity.OAuthToken;
 public record KakaoUserInfoResponseDto(
         Long socialId,
         String nickname,
-        String profileImage,
-        String accessToken,
-        String refreshToken
+        String profileImage
 ) {
 
 
@@ -18,9 +16,7 @@ public record KakaoUserInfoResponseDto(
         return new KakaoUserInfoResponseDto(
                 member.getSocialId(),
                 member.getNickName(),
-                member.getProfileImg(),
-                oAuthToken.getAccessToken(),
-                oAuthToken.getRefreshToken()
+                member.getProfileImg()
         );
     }
 
