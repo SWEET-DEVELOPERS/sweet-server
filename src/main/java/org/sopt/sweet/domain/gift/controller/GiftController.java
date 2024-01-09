@@ -28,4 +28,10 @@ public class GiftController implements GiftApi {
         final MyGiftsResponseDto myGiftsResponseDto = giftService.getMyGift(userId, myGiftsRequestDto);
         return SuccessResponse.ok(myGiftsResponseDto);
     }
+
+    @DeleteMapping ("/my/{giftId}")
+    public ResponseEntity<SuccessResponse<?>> deleteMyGift(@UserId Long userId, @PathVariable Long giftId) {
+        giftService.deleteMyGift(userId, giftId);
+        return SuccessResponse.ok(null);
+    }
 }
