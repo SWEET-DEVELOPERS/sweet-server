@@ -19,11 +19,10 @@ public record KakaoUserInfoResponseDto(
                 member.getSocialId(),
                 member.getNickName(),
                 member.getProfileImg(),
-                oAuthToken.getAccess_token(),
-                oAuthToken.getRefresh_token()
+                oAuthToken.getAccessToken(),
+                oAuthToken.getRefreshToken()
         );
     }
 
 
 }
-
