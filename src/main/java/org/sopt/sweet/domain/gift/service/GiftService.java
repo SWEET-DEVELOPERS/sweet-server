@@ -2,6 +2,9 @@ package org.sopt.sweet.domain.gift.service;
 
 import lombok.RequiredArgsConstructor;
 import org.sopt.sweet.domain.gift.dto.request.CreateGiftRequestDto;
+import org.sopt.sweet.domain.gift.dto.request.MyGiftsRequestDto;
+import org.sopt.sweet.domain.gift.dto.response.MyGiftDto;
+import org.sopt.sweet.domain.gift.dto.response.MyGiftsResponseDto;
 import org.sopt.sweet.domain.gift.entity.Gift;
 import org.sopt.sweet.domain.gift.repository.GiftRepository;
 import org.sopt.sweet.domain.member.entity.Member;
@@ -16,7 +19,9 @@ import org.sopt.sweet.global.error.exception.ForbiddenException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static org.sopt.sweet.global.error.ErrorCode.*;
 
@@ -35,7 +40,22 @@ public class GiftService {
         Room room = findRoomByIdOrThrow(createGiftRequestDto.roomId());
         checkRoomMemberNotExists(room, member);
         checkGiftCountNotExceeded(room, member);
-        Gift gift = Gift.builder()
+        Gift gift = buildGift(member, room, createGiftRequestDto);
+        giftRepository.save(gift);
+    }
+
+    @Transactional(readOnly = true)
+    public MyGiftsResponseDto getMyGift(Long memberId, MyGiftsRequestDto myGiftsRequestDto) {
+        Member member = findMemberByIdOrThrow(memberId);
+        Room room = findRoomByIdOrThrow(myGiftsRequestDto.roomId());
+        checkRoomMemberNotExists(room, member);
+        List<Gift> gifts = giftRepository.findByRoomAndMember(room, member);
+        List<MyGiftDto> myGiftsDtoList = mapGiftsToMyGiftDtoList(gifts);
+        return new MyGiftsResponseDto(myGiftsDtoList);
+    }
+
+    private Gift buildGift(Member member, Room room, CreateGiftRequestDto createGiftRequestDto) {
+        return Gift.builder()
                 .url(createGiftRequestDto.url())
                 .name(createGiftRequestDto.name())
                 .cost(createGiftRequestDto.cost())
@@ -43,7 +63,12 @@ public class GiftService {
                 .room(room)
                 .member(member)
                 .build();
-        giftRepository.save(gift);
+    }
+
+    private List<MyGiftDto> mapGiftsToMyGiftDtoList(List<Gift> gifts) {
+        return gifts.stream()
+                .map(gift -> MyGiftDto.of(gift.getId(), gift.getImageUrl(), gift.getName(), gift.getCost()))
+                .collect(Collectors.toList());
     }
 
     private void checkGiftCountNotExceeded(Room room, Member member) {
