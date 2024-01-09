@@ -98,13 +98,36 @@ public class RoomService {
         List<RoomMyGiftDto> roomMyGiftDtoList = buildRoomMyGiftDtoList(member, room);
         List<RoomFriendsGiftDto> roomFriendsGiftDtoList = buildRoomFriendsGiftDtoList(member, room);
         List<HotProductGiftDto> hotProductGiftDtoList = buildHotProductGiftDtoList();
-        return RoomMainResponseDto.of(room.getGifterNumber(),
+        return RoomMainResponseDto.of(
+                room.getGifterNumber(),
                 room.getGifteeName(),
                 room.getInvitationCode(),
                 room.getTournamentStartDate(),
                 roomMyGiftDtoList,
                 roomFriendsGiftDtoList,
                 hotProductGiftDtoList);
+    }
+
+    @Transactional(readOnly = true)
+    public RoomDetailResponseDto getRoomDetailInfo(Long memberId, Long roomId){
+        Member member = findMemberByIdOrThrow(memberId);
+        Room room = findByIdOrThrow(roomId);
+        checkRoomHost(member, room);
+        return RoomDetailResponseDto.of(
+                roomId,
+                room.getImageUrl(),
+                room.getGifteeName(),
+                room.getGifterNumber(),
+                room.getDeliveryDate(),
+                room.getTournamentStartDate(),
+                room.getTournamentDuration()
+        );
+    }
+
+    private void checkRoomHost(Member member, Room room){
+        if (!member.equals(room.getHost())) {
+            throw new ForbiddenException(ROOM_OWNER_MISMATCH);
+        }
     }
 
     private List<RoomMyGiftDto> buildRoomMyGiftDtoList(Member member, Room room) {
