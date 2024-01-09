@@ -130,7 +130,7 @@
 <br />
 
 ### 📂 아키텍처 구조
-![image](https://github.com/SWEET-DEVELOPERS/sweet-server/assets/101448999/388ecb2c-73b2-4441-948f-cd2562d48b4b)
+![image](https://github.com/SWEET-DEVELOPERS/sweet-server/assets/101448999/8dae9f9f-e99d-4b0f-a40a-5f34a4cb65eb)
 
 
 <br />
