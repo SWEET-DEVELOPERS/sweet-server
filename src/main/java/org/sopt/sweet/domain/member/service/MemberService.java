@@ -43,93 +43,10 @@ public class MemberService {
     private String issueNewAccessToken(Long memberId) {
         return jwtProvider.getIssueToken(memberId, true);
     }
-
     private String issueNewRefreshToken(Long memberId) {
         return jwtProvider.getIssueToken(memberId, false);
     }
 
-    @Value("${spring.security.oauth2.client.registration.kakao.client-id}")
-    private String clientId;
-
-    @Value("${spring.security.oauth2.client.registration.kakao.redirect-uri}")
-    private String redirectUri;
-
-    private final ObjectMapper objectMapper;
-    private final RedisTemplate<String, String> redisTemplate;
-
-    public KakaoUserInfoResponseDto kakaoCallback(String code) {
-        RestTemplate restTemplate = new RestTemplate();
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
-
-        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-        params.add("grant_type", "authorization_code");
-        params.add("client_id", clientId);
-        params.add("redirect_uri", redirectUri);
-        params.add("code", code);
-
-        HttpEntity<MultiValueMap<String, String>> kakaoTokenRequest =
-                new HttpEntity<>(params, headers);
-
-        try {
-            ResponseEntity<OAuthToken> response = restTemplate.postForEntity(
-                    "https://kauth.kakao.com/oauth/token",
-                    kakaoTokenRequest,
-                    OAuthToken.class
-            );
-
-            OAuthToken oauthToken = response.getBody();
-            headers = new HttpHeaders();
-            headers.add("Authorization", "Bearer " + oauthToken.getAccess_token());
-
-            ResponseEntity<String> profileResponse = restTemplate.exchange(
-                    "https://kapi.kakao.com/v2/user/me",
-                    HttpMethod.GET,
-                    new HttpEntity<>(headers),
-                    String.class
-            );
-
-            JsonElement jsonElement = JsonParser.parseString(profileResponse.getBody());
-            JsonElement properties = jsonElement.getAsJsonObject().get("properties");
-
-            String nickname = properties.getAsJsonObject().get("nickname").getAsString();
-            String profileImage = properties.getAsJsonObject().get("profile_image").getAsString();
-            Long socialId = jsonElement.getAsJsonObject().get("id").getAsLong();
-
-            System.out.println("카카오 토큰 정보 " + oauthToken);
-            System.out.println("프로필 정보 - 닉네임: " + nickname + ", 프로필 이미지: " + profileImage);
-
-            String accessToken = issueNewAccessToken(socialId);
-            String refreshToken = issueNewRefreshToken(socialId);
-
-            saveMember(socialId, nickname, profileImage);
-
-            String redisKey = "RT:" + socialId;
-            redisTemplate.opsForValue().set(redisKey, refreshToken, oauthToken.getRefresh_token_expires_in(), TimeUnit.MILLISECONDS);
-
-            return new KakaoUserInfoResponseDto(socialId, nickname, profileImage, accessToken, refreshToken);
-
-        } catch (HttpClientErrorException e) {
-            System.err.println("Kakao API 요청 실패. 응답 코드: " + e.getRawStatusCode() + ", 응답 내용: " + e.getResponseBodyAsString());
-        }
-
-        return null;
-    }
-
-
-    public void saveMember(Long SocialId, String nickname, String profileImage) {
-        Member existMember = memberRepository.findBySocialId(SocialId);
-
-        if (existMember == null) {
-            Member member = Member.builder()
-                    .socialId(SocialId)
-                    .nickName(nickname)
-                    .socialType(SocialType.valueOf("KAKAO"))
-                    .profileImg(profileImage)
-                    .build();
-            memberRepository.save(member);
-        }
-    }
 
 
 }

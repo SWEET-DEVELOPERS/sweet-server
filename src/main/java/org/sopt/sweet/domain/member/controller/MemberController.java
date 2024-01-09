@@ -29,10 +29,4 @@ public class MemberController implements MemberApi{
     }
 
 
-    @PostMapping("/login")
-    public ResponseEntity<SuccessResponse<?>> kakaoLogin(@RequestParam("code") String code) {
-        KakaoUserInfoResponseDto userInfo = memberService.kakaoCallback(code);
-        return SuccessResponse.ok(userInfo);
-    }
-
 }
