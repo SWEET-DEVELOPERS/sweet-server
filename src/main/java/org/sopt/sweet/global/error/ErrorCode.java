@@ -13,6 +13,8 @@ public enum ErrorCode {
      */
     BAD_REQUEST(HttpStatus.BAD_REQUEST, "잘못된 요청입니다."),
     NAME_LENGTH_EXCEEDED(HttpStatus.BAD_REQUEST, "이름은 10글자를 초과할 수 없습니다."),
+    MEMBER_NUMBER_EXCEEDED(HttpStatus.BAD_REQUEST, "해당 선물방의 최대 인원을 초과하였습니다."),
+    INVITATION_CLOSED(HttpStatus.BAD_REQUEST, "초대가 마감되었습니다."),
 
     /**
      * 401 Unauthorized
@@ -37,6 +39,7 @@ public enum ErrorCode {
     ENTITY_NOT_FOUND(HttpStatus.NOT_FOUND, "엔티티를 찾을 수 없습니다."),
     OPEN_GRAPH_NOT_FOUND(HttpStatus.NOT_FOUND, "오픈 그래프 정보를 찾을 수 없습니다."),
     MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 멤버를 찾을 수 없습니다."),
+    ROOM_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 선물방을 찾을 수 없습니다."),
 
     /**
      * 405 Method Not Allowed
@@ -47,6 +50,7 @@ public enum ErrorCode {
      * 409 Conflict
      */
     CONFLICT(HttpStatus.CONFLICT, "이미 존재하는 리소스입니다."),
+    MEMBER_ALREADY_EXISTS_ROOM(HttpStatus.CONFLICT, "해당 선물방에 이미 참여하였습니다."),
 
     /**
      * 500 Internal Server Error

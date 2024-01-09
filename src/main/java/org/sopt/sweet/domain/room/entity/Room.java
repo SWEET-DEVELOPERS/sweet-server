@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Entity
 public class Room {
 
-    private static final int DEFAULT_NUMBER = 0;
+    private static final int DEFAULT_NUMBER = 1;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -52,5 +52,9 @@ public class Room {
         this.tournamentDuration = tournamentDuration;
         this.invitationCode = invitationCode;
         this.host = host;
+    }
+
+    public void setGifterNumber(int gifterNumber) {
+        this.gifterNumber = gifterNumber;
     }
 }
