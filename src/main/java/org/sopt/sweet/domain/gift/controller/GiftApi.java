@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.sopt.sweet.domain.gift.dto.request.CreateGiftRequestDto;
+import org.sopt.sweet.domain.gift.dto.request.MyGiftsRequestDto;
 import org.sopt.sweet.global.common.SuccessResponse;
 import org.sopt.sweet.global.config.auth.UserId;
 import org.springframework.http.ResponseEntity;
@@ -37,4 +38,26 @@ public interface GiftApi {
             ) @UserId Long userId,
             @Valid @RequestBody CreateGiftRequestDto createGiftRequestDto
     );
+
+    @Operation(
+            summary = "내가 등록한 선물 조회 API",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(implementation = SuccessResponse.class)
+                            )
+                    )
+            },
+            security = @SecurityRequirement(name = "token")
+    )
+    ResponseEntity<SuccessResponse<?>> getMyGift(
+            @Parameter(
+                    description = "authorization token에서 얻은 userId, 임의입력하면 대체됩니다.",
+                    required = true,
+                    example = "12345"
+            ) @UserId Long userId,
+            @Valid @RequestBody MyGiftsRequestDto myGiftsRequestDto
+            );
 }
