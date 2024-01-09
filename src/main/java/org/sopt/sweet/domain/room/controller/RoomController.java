@@ -3,9 +3,7 @@ package org.sopt.sweet.domain.room.controller;
 import lombok.RequiredArgsConstructor;
 import org.sopt.sweet.domain.room.dto.request.CreateRoomRequestDto;
 import org.sopt.sweet.domain.room.dto.request.JoinRoomRequestDto;
-import org.sopt.sweet.domain.room.dto.response.CreateRoomResponseDto;
-import org.sopt.sweet.domain.room.dto.response.JoinRoomResponseDto;
-import org.sopt.sweet.domain.room.dto.response.RoomInviteResponseDto;
+import org.sopt.sweet.domain.room.dto.response.*;
 import org.sopt.sweet.domain.room.service.RoomService;
 import org.sopt.sweet.global.common.SuccessResponse;
 import org.sopt.sweet.global.config.auth.UserId;
@@ -35,5 +33,17 @@ public class RoomController implements RoomApi {
     public ResponseEntity<SuccessResponse<?>> joinRoom(@UserId Long userId, @RequestBody JoinRoomRequestDto joinRoomRequestDto){
         final JoinRoomResponseDto joinRoomResponseDto = roomService.findAndJoinRoom(userId, joinRoomRequestDto);
         return SuccessResponse.ok(joinRoomResponseDto);
+    }
+
+    @GetMapping("/{roomId}")
+    public ResponseEntity<SuccessResponse<?>> getRoomMainInfo(@UserId Long userId, @PathVariable Long roomId){
+        final RoomMainResponseDto roomMainResponseDto = roomService.getRoomMainInfo(userId, roomId);
+        return SuccessResponse.ok(roomMainResponseDto);
+    }
+
+    @GetMapping("/detail/{roomId}")
+    public ResponseEntity<SuccessResponse<?>> getRoomDetailInfo(@UserId Long userId, @PathVariable Long roomId){
+        final RoomDetailResponseDto roomDetailResponseDto = roomService.getRoomDetailInfo(userId, roomId);
+        return SuccessResponse.ok(roomDetailResponseDto);
     }
 }

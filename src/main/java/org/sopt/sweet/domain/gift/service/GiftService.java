@@ -19,6 +19,7 @@ import org.sopt.sweet.global.error.exception.ForbiddenException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -40,6 +41,7 @@ public class GiftService {
         Room room = findRoomByIdOrThrow(createGiftRequestDto.roomId());
         checkRoomMemberNotExists(room, member);
         checkGiftCountNotExceeded(room, member);
+        checkTournamentStartDatePassed(room);
         Gift gift = buildGift(member, room, createGiftRequestDto);
         giftRepository.save(gift);
     }
@@ -76,6 +78,14 @@ public class GiftService {
         return gifts.stream()
                 .map(gift -> MyGiftDto.of(gift.getId(), gift.getImageUrl(), gift.getName(), gift.getCost()))
                 .collect(Collectors.toList());
+    }
+
+    private void checkTournamentStartDatePassed(Room room) {
+        LocalDateTime tournamentStartDate = room.getTournamentStartDate();
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        if (currentDateTime.isAfter(tournamentStartDate)) {
+            throw new BusinessException(TOURNAMENT_START_DATE_PASSED);
+        }
     }
 
     private void checkGiftCountNotExceeded(Room room, Member member) {

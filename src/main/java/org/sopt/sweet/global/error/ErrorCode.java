@@ -16,6 +16,7 @@ public enum ErrorCode {
     MEMBER_NUMBER_EXCEEDED(HttpStatus.BAD_REQUEST, "해당 선물방의 최대 인원을 초과하였습니다."),
     INVITATION_CLOSED(HttpStatus.BAD_REQUEST, "초대가 마감되었습니다."),
     MEMBER_GIFT_COUNT_EXCEEDED(HttpStatus.BAD_REQUEST, "최대 선물 등록 개수를 초과하였습니다."),
+    TOURNAMENT_START_DATE_PASSED(HttpStatus.BAD_REQUEST, "토너먼트 시작 날짜가 지났습니다"),
 
     /**
      * 401 Unauthorized
@@ -35,6 +36,7 @@ public enum ErrorCode {
     FORBIDDEN(HttpStatus.FORBIDDEN, "리소스 접근 권한이 없습니다."),
     MEMBER_NOT_IN_ROOM(HttpStatus.FORBIDDEN, "해당 선물 방에 존재하지 않는 멤버입니다."),
     MEMBER_NOT_GIFT_OWNER(HttpStatus.FORBIDDEN, "해당 선물을 등록하지 않은 멤버입니다."),
+    ROOM_OWNER_MISMATCH(HttpStatus.FORBIDDEN, "해당 선물방의 개설자가 아닙니다."),
 
     /**
      * 404 Not Found
