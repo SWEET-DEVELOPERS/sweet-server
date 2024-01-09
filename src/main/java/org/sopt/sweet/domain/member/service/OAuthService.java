@@ -141,9 +141,30 @@ public class OAuthService {
 
         return new MemberTokenResponseDto(accessToken, refreshToken);
     }
+    public void kakaoLogout(String accessToken, String socialId) {
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", accessToken);
 
+        HttpEntity<String> request = new HttpEntity<>(headers);
+
+        try {
+            restTemplate.exchange(
+                    "https://kapi.kakao.com/v1/user/logout",
+                    HttpMethod.POST,
+                    request,
+                    String.class
+            );
+
+            String redisKey = "RT:" + socialId;
+            redisTemplate.delete(redisKey);
+
+            System.out.println("카카오 로그아웃 성공");
+        } catch (HttpClientErrorException e) {
+            System.err.println("Kakao API 요청 실패. 응답 코드: " + e.getRawStatusCode() + ", 응답 내용: " + e.getResponseBodyAsString());
+        }
+    }
 }
-
 
 
 
