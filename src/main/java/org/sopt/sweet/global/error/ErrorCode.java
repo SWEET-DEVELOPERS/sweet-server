@@ -16,6 +16,7 @@ public enum ErrorCode {
     MEMBER_NUMBER_EXCEEDED(HttpStatus.BAD_REQUEST, "해당 선물방의 최대 인원을 초과하였습니다."),
     INVITATION_CLOSED(HttpStatus.BAD_REQUEST, "초대가 마감되었습니다."),
     MEMBER_GIFT_COUNT_EXCEEDED(HttpStatus.BAD_REQUEST, "최대 선물 등록 개수를 초과하였습니다."),
+    TOURNAMENT_START_DATE_PASSED(HttpStatus.BAD_REQUEST, "토너먼트 시작 날짜가 지났습니다"),
 
     /**
      * 401 Unauthorized
