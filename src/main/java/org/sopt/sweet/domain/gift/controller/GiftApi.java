@@ -14,6 +14,7 @@ import org.sopt.sweet.domain.gift.dto.request.MyGiftsRequestDto;
 import org.sopt.sweet.global.common.SuccessResponse;
 import org.sopt.sweet.global.config.auth.UserId;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @Tag(name = "선물", description = "선물 관련 API")
 public interface GiftApi {
@@ -59,5 +60,27 @@ public interface GiftApi {
                     example = "12345"
             ) @UserId Long userId,
             @Valid @RequestBody MyGiftsRequestDto myGiftsRequestDto
-            );
+    );
+
+    @Operation(
+            summary = "내가 등록한 선물 삭제 API",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(implementation = SuccessResponse.class)
+                            )
+                    )
+            },
+            security = @SecurityRequirement(name = "token")
+    )
+    ResponseEntity<SuccessResponse<?>> deleteMyGift(
+            @Parameter(
+                    description = "authorization token에서 얻은 userId, 임의입력하면 대체됩니다.",
+                    required = true,
+                    example = "12345"
+            ) @UserId Long userId,
+            @PathVariable Long giftId
+    );
 }
