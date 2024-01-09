@@ -9,6 +9,8 @@ import org.sopt.sweet.domain.product.entity.Product;
 import org.sopt.sweet.domain.product.repository.ProductRepository;
 import org.sopt.sweet.domain.room.dto.request.CreateRoomRequestDto;
 import org.sopt.sweet.domain.room.dto.request.JoinRoomRequestDto;
+import org.sopt.sweet.domain.room.dto.request.RoomImageRequestDto;
+import org.sopt.sweet.domain.room.dto.request.RoomNameRequestDto;
 import org.sopt.sweet.domain.room.dto.response.*;
 import org.sopt.sweet.domain.room.entity.Room;
 import org.sopt.sweet.domain.room.entity.RoomMember;
@@ -122,6 +124,22 @@ public class RoomService {
                 room.getTournamentStartDate(),
                 room.getTournamentDuration()
         );
+    }
+
+    public void modifyRoomThumbnail(Long memberId, Long roomId, RoomImageRequestDto roomImageRequestDto){
+        Member member = findMemberByIdOrThrow(memberId);
+        Room room = findByIdOrThrow(roomId);
+        checkRoomHost(member, room);
+        room.setImageUrl(roomImageRequestDto.imageUrl());
+        roomRepository.save(room);
+    }
+
+    public void modifyRoomGifteeName(Long memberId, Long roomId, RoomNameRequestDto roomNameRequestDto){
+        Member member = findMemberByIdOrThrow(memberId);
+        Room room = findByIdOrThrow(roomId);
+        checkRoomHost(member, room);
+        room.setGifteeName(roomNameRequestDto.gifteeName());
+        roomRepository.save(room);
     }
 
     private void checkRoomHost(Member member, Room room){

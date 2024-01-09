@@ -11,6 +11,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.sopt.sweet.domain.room.dto.request.CreateRoomRequestDto;
 import org.sopt.sweet.domain.room.dto.request.JoinRoomRequestDto;
+import org.sopt.sweet.domain.room.dto.request.RoomImageRequestDto;
+import org.sopt.sweet.domain.room.dto.request.RoomNameRequestDto;
 import org.sopt.sweet.global.common.SuccessResponse;
 import org.sopt.sweet.global.config.auth.UserId;
 import org.springframework.http.ResponseEntity;
@@ -133,6 +135,60 @@ public interface RoomApi {
                     required = true,
                     example = "1"
             ) @PathVariable Long roomId
+    );
+
+    @Operation(
+            summary = "선물방 썸네일 수정 API",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(implementation = SuccessResponse.class)
+                            )
+                    )
+            },
+            security = @SecurityRequirement(name = "token")
+    )
+    ResponseEntity<SuccessResponse<?>> modifyRoomThumbnail(
+            @Parameter(
+                    description = "authorization token에서 얻은 userId, 임의입력하면 대체됩니다.",
+                    required = true,
+                    example = "12345"
+            ) @UserId Long userId,
+            @Parameter(
+                    description = "room 고유 id",
+                    required = true,
+                    example = "1"
+            ) @PathVariable Long roomId,
+            @RequestBody RoomImageRequestDto roomImageRequestDto
+    );
+
+    @Operation(
+            summary = "선물방 이름 수정 API",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(implementation = SuccessResponse.class)
+                            )
+                    )
+            },
+            security = @SecurityRequirement(name = "token")
+    )
+    ResponseEntity<SuccessResponse<?>> modifyRoomGifteeName(
+            @Parameter(
+                    description = "authorization token에서 얻은 userId, 임의입력하면 대체됩니다.",
+                    required = true,
+                    example = "12345"
+            ) @UserId Long userId,
+            @Parameter(
+                    description = "room 고유 id",
+                    required = true,
+                    example = "1"
+            ) @PathVariable Long roomId,
+            @RequestBody RoomNameRequestDto roomNameRequestDto
     );
 
 }

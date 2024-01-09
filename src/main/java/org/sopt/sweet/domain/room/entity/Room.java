@@ -57,4 +57,10 @@ public class Room {
     public void setGifterNumber(int gifterNumber) {
         this.gifterNumber = gifterNumber;
     }
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+    public void setGifteeName(String gifteeName) {
+        this.gifteeName = gifteeName;
+    }
 }
