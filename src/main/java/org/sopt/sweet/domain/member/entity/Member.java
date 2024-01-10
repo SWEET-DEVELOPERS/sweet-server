@@ -8,8 +8,6 @@ import org.sopt.sweet.global.common.BaseTimeEntity;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
-@Builder(access = AccessLevel.PUBLIC) //수정해야함
 @Table(name = "member")
 @Entity
 public class Member extends BaseTimeEntity {

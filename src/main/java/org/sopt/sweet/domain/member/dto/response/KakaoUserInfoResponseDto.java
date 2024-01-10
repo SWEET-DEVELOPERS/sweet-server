@@ -1,8 +1,7 @@
-package org.sopt.sweet.domain.member.dto.reponse;
+package org.sopt.sweet.domain.member.dto.response;
 
 
 import org.sopt.sweet.domain.member.entity.Member;
-import org.sopt.sweet.domain.member.entity.OAuthToken;
 
 
 public record KakaoUserInfoResponseDto(

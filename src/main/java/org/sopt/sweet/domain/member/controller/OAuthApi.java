@@ -51,11 +51,11 @@ public interface OAuthApi {
     ResponseEntity<SuccessResponse<?>> kakaoLogout(
             @RequestHeader("Authorization") String accessToken,
             @Parameter(
-                    description = "카카오 회원 고유 아이디",
+                    description = "멤버 아이디",
                     required = true,
-                    example = "123456789"
+                    example = "1"
             )
-            @RequestBody String socialId
+            @RequestBody String memberId
     );
 
 }

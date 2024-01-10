@@ -1,4 +1,4 @@
-package org.sopt.sweet.domain.member.dto.reponse;
+package org.sopt.sweet.domain.member.dto.response;
 
 import lombok.Builder;
 

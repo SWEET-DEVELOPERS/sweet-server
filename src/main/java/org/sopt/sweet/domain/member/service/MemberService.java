@@ -1,7 +1,7 @@
 package org.sopt.sweet.domain.member.service;
 
 import lombok.RequiredArgsConstructor;
-import org.sopt.sweet.domain.member.dto.reponse.MemberTokenResponseDto;
+import org.sopt.sweet.domain.member.dto.response.MemberTokenResponseDto;
 import org.sopt.sweet.domain.member.repository.MemberRepository;
 import org.sopt.sweet.global.config.auth.jwt.JwtProvider;
 import org.springframework.stereotype.Service;
