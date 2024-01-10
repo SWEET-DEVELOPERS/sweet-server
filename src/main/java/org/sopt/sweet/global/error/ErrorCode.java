@@ -17,6 +17,7 @@ public enum ErrorCode {
     INVITATION_CLOSED(HttpStatus.BAD_REQUEST, "초대가 마감되었습니다."),
     MEMBER_GIFT_COUNT_EXCEEDED(HttpStatus.BAD_REQUEST, "최대 선물 등록 개수를 초과하였습니다."),
     TOURNAMENT_START_DATE_PASSED(HttpStatus.BAD_REQUEST, "토너먼트 시작 날짜가 지났습니다"),
+    ROOM_OWNER_CANNOT_DELETE_SELF(HttpStatus.BAD_REQUEST, "방 개설자는 스스로를 삭제할 수 없습니다."),
 
     /**
      * 401 Unauthorized

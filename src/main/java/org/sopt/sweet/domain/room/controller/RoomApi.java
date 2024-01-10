@@ -191,4 +191,61 @@ public interface RoomApi {
             @RequestBody RoomNameRequestDto roomNameRequestDto
     );
 
+    @Operation(
+            summary = "선물방 참여자 상세 조회 API",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(implementation = SuccessResponse.class)
+                            )
+                    )
+            },
+            security = @SecurityRequirement(name = "token")
+    )
+    ResponseEntity<SuccessResponse<?>> getRoomMembers(
+            @Parameter(
+                    description = "authorization token에서 얻은 userId, 임의입력하면 대체됩니다.",
+                    required = true,
+                    example = "12345"
+            ) @UserId Long userId,
+            @Parameter(
+                    description = "room 고유 id",
+                    required = true,
+                    example = "1"
+            ) @PathVariable Long roomId
+    );
+
+    @Operation(
+            summary = "선물방 참여자 강제 삭제 API",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(implementation = SuccessResponse.class)
+                            )
+                    )
+            },
+            security = @SecurityRequirement(name = "token")
+    )
+    ResponseEntity<SuccessResponse<?>> deleteRoomMember(
+            @Parameter(
+                    description = "authorization token에서 얻은 userId, 임의입력하면 대체됩니다.",
+                    required = true,
+                    example = "12345"
+            ) @UserId Long userId,
+            @Parameter(
+                    description = "room 고유 id",
+                    required = true,
+                    example = "1"
+            ) @PathVariable Long roomId,
+            @Parameter(
+                    description = "강퇴하려는 member id",
+                    required = true,
+                    example = "1"
+            ) @PathVariable Long memberId
+    );
+
 }

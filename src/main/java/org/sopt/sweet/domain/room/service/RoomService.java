@@ -142,9 +142,50 @@ public class RoomService {
         roomRepository.save(room);
     }
 
+    @Transactional(readOnly = true)
+    public RoomMembersResponseDto getRoomMembers(Long memberId, Long roomId){
+        Member member = findMemberByIdOrThrow(memberId);
+        Room room = findByIdOrThrow(roomId);
+        checkRoomHost(member, room);
+        List<RoomMember> roomMembers = roomMemberRepository.findByRoomId(roomId);
+        List<RoomMemberDto> roomMemberDtoList = mapToRoomMemberDtoList(roomMembers);
+        return RoomMembersResponseDto.of(memberId, room.getGifterNumber(), roomMemberDtoList);
+    }
+
+    public void deleteRoomMember(Long memberId, Long roomId, Long deleteMemberId){
+        Member member = findMemberByIdOrThrow(memberId);
+        Member deleteMember = findMemberByIdOrThrow(deleteMemberId);
+        Room room = findByIdOrThrow(roomId);
+        checkRoomHost(member, room);
+        checkDeleteHostSelf(member, deleteMember);
+        deleteGiftsByRoomAndMember(room, deleteMember);
+        deleteRoomMemberData(room, deleteMember);
+        decrementGifterNumber(room);
+    }
+
+    private List<RoomMemberDto> mapToRoomMemberDtoList(List<RoomMember> roomMembers) {
+        return roomMembers.stream()
+                .map(this::mapToRoomMemberDto)
+                .collect(Collectors.toList());
+    }
+
+    private RoomMemberDto mapToRoomMemberDto(RoomMember roomMember) {
+        return RoomMemberDto.of(
+                roomMember.getMember().getId(),
+                roomMember.getMember().getProfileImg(),
+                roomMember.getMember().getNickName()
+        );
+    }
+
     private void checkRoomHost(Member member, Room room){
         if (!member.equals(room.getHost())) {
             throw new ForbiddenException(ROOM_OWNER_MISMATCH);
+        }
+    }
+
+    private void checkDeleteHostSelf(Member member, Member deleteMember) {
+        if (member.equals(deleteMember)) {
+            throw new BusinessException(ROOM_OWNER_CANNOT_DELETE_SELF);
         }
     }
 
@@ -186,6 +227,22 @@ public class RoomService {
                         product.getCost()
                 ))
                 .collect(Collectors.toList());
+    }
+
+    private void deleteGiftsByRoomAndMember(Room room, Member deleteMember) {
+        List<Gift> giftsToDelete = giftRepository.findByRoomAndMember(room, deleteMember);
+        giftRepository.deleteAll(giftsToDelete);
+    }
+
+    private void deleteRoomMemberData(Room room, Member deleteMember) {
+        RoomMember roomMemberToDelete = roomMemberRepository.findByRoomAndMember(room, deleteMember)
+                .orElseThrow(() -> new EntityNotFoundException(MEMBER_NOT_FOUND));
+        roomMemberRepository.delete(roomMemberToDelete);
+    }
+
+    private void decrementGifterNumber(Room room) {
+        room.setGifterNumber(room.getGifterNumber() - 1);
+        roomRepository.save(room);
     }
 
     private void joinRoom(Member member, Room room) {
