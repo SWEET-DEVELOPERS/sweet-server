@@ -60,4 +60,12 @@ public class RoomController implements RoomApi {
         roomService.modifyRoomGifteeName(userId, roomId, roomNameRequestDto);
         return SuccessResponse.ok(null);
     }
+
+    @GetMapping("/{roomId}/members")
+    public ResponseEntity<SuccessResponse<?>> getRoomMembers(@UserId Long userId, @PathVariable Long roomId){
+        final RoomMembersResponseDto roomMembersResponseDto = roomService.getRoomMembers(userId, roomId);
+        return SuccessResponse.ok(roomMembersResponseDto);
+    }
+
+
 }
