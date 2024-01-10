@@ -53,14 +53,14 @@ dependencies {
     //redis
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 
-	  // open graph
-	  implementation 'net.sourceforge.htmlcleaner:htmlcleaner:2.6'
+    // open graph
+    implementation 'net.sourceforge.htmlcleaner:htmlcleaner:2.6'
 
-	  implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-	  implementation('nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect')
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation('nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect')
 
-	  // aws
-	  implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
+    // aws
+    implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
 }
 
 tasks.named('test') {

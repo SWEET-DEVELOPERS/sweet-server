@@ -16,9 +16,11 @@ import org.sopt.sweet.domain.room.entity.Room;
 import org.sopt.sweet.domain.room.entity.RoomMember;
 import org.sopt.sweet.domain.room.repository.RoomMemberRepository;
 import org.sopt.sweet.domain.room.repository.RoomRepository;
-import org.sopt.sweet.global.error.exception.*;
+import org.sopt.sweet.global.error.exception.BusinessException;
+import org.sopt.sweet.global.error.exception.EntityNotFoundException;
+import org.sopt.sweet.global.error.exception.ForbiddenException;
+import org.sopt.sweet.global.error.exception.InvalidValueException;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -111,7 +113,7 @@ public class RoomService {
     }
 
     @Transactional(readOnly = true)
-    public RoomDetailResponseDto getRoomDetailInfo(Long memberId, Long roomId){
+    public RoomDetailResponseDto getRoomDetailInfo(Long memberId, Long roomId) {
         Member member = findMemberByIdOrThrow(memberId);
         Room room = findByIdOrThrow(roomId);
         checkRoomHost(member, room);
@@ -126,7 +128,7 @@ public class RoomService {
         );
     }
 
-    public void modifyRoomThumbnail(Long memberId, Long roomId, RoomImageRequestDto roomImageRequestDto){
+    public void modifyRoomThumbnail(Long memberId, Long roomId, RoomImageRequestDto roomImageRequestDto) {
         Member member = findMemberByIdOrThrow(memberId);
         Room room = findByIdOrThrow(roomId);
         checkRoomHost(member, room);
@@ -134,7 +136,7 @@ public class RoomService {
         roomRepository.save(room);
     }
 
-    public void modifyRoomGifteeName(Long memberId, Long roomId, RoomNameRequestDto roomNameRequestDto){
+    public void modifyRoomGifteeName(Long memberId, Long roomId, RoomNameRequestDto roomNameRequestDto) {
         Member member = findMemberByIdOrThrow(memberId);
         Room room = findByIdOrThrow(roomId);
         checkRoomHost(member, room);
@@ -143,7 +145,7 @@ public class RoomService {
     }
 
     @Transactional(readOnly = true)
-    public RoomMembersResponseDto getRoomMembers(Long memberId, Long roomId){
+    public RoomMembersResponseDto getRoomMembers(Long memberId, Long roomId) {
         Member member = findMemberByIdOrThrow(memberId);
         Room room = findByIdOrThrow(roomId);
         checkRoomHost(member, room);
@@ -152,7 +154,7 @@ public class RoomService {
         return RoomMembersResponseDto.of(memberId, room.getGifterNumber(), roomMemberDtoList);
     }
 
-    public void deleteRoomMember(Long memberId, Long roomId, Long deleteMemberId){
+    public void deleteRoomMember(Long memberId, Long roomId, Long deleteMemberId) {
         Member member = findMemberByIdOrThrow(memberId);
         Member deleteMember = findMemberByIdOrThrow(deleteMemberId);
         Room room = findByIdOrThrow(roomId);
@@ -177,7 +179,7 @@ public class RoomService {
         );
     }
 
-    private void checkRoomHost(Member member, Room room){
+    private void checkRoomHost(Member member, Room room) {
         if (!member.equals(room.getHost())) {
             throw new ForbiddenException(ROOM_OWNER_MISMATCH);
         }
@@ -250,7 +252,7 @@ public class RoomService {
         checkMaxParticipants(room);
         checkTournamentStartDate(room);
         createRoomMember(room, member);
-        room.setGifterNumber(room.getGifterNumber()+1);
+        room.setGifterNumber(room.getGifterNumber() + 1);
     }
 
     private void checkMaxParticipants(Room room) {
