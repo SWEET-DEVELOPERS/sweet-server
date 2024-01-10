@@ -41,10 +41,10 @@ dependencies {
     implementation group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.11.2'
     implementation group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.2'
 
-    //	spring-doc
+    // spring-doc
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.1.0'
 
-   //oauth2
+    //oauth2
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 
     // gson
@@ -53,6 +53,14 @@ dependencies {
     //redis
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 
+	  // open graph
+	  implementation 'net.sourceforge.htmlcleaner:htmlcleaner:2.6'
+
+	  implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	  implementation('nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect')
+
+	  // aws
+	  implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
 }
 
 tasks.named('test') {

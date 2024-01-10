@@ -41,7 +41,9 @@ public class SecurityConfig {
             "api/member/token/**",
             "api/oauth/kakao/login/**",
             "api/oauth/kakao/logout/**",
-    };
+            "api/opengraph",
+            "api/room/invitations/**"
+            };
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
