@@ -134,7 +134,7 @@ public class OAuthService {
             refreshToken = storedRefreshToken;
         } else {
             refreshToken = issueNewRefreshToken(memberId);
-            redisTemplate.opsForValue().set(redisKey, refreshToken, 1, TimeUnit.HOURS);
+            redisTemplate.opsForValue().set(redisKey, refreshToken, 7, TimeUnit.DAYS);
         }
 
         System.out.println("카카오 로그인 성공 memberId: " + memberId + " accessToken :" + accessToken + " refreshToken: " + refreshToken);
