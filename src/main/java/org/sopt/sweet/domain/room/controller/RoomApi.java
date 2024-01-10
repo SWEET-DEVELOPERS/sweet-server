@@ -191,4 +191,30 @@ public interface RoomApi {
             @RequestBody RoomNameRequestDto roomNameRequestDto
     );
 
+    @Operation(
+            summary = "선물방 참여자 상세 조회 API",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(implementation = SuccessResponse.class)
+                            )
+                    )
+            },
+            security = @SecurityRequirement(name = "token")
+    )
+    ResponseEntity<SuccessResponse<?>> getRoomMembers(
+            @Parameter(
+                    description = "authorization token에서 얻은 userId, 임의입력하면 대체됩니다.",
+                    required = true,
+                    example = "12345"
+            ) @UserId Long userId,
+            @Parameter(
+                    description = "room 고유 id",
+                    required = true,
+                    example = "1"
+            ) @PathVariable Long roomId
+    );
+
 }
