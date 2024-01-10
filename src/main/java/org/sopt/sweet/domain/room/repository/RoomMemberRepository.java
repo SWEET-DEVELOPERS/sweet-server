@@ -5,8 +5,10 @@ import org.sopt.sweet.domain.room.entity.Room;
 import org.sopt.sweet.domain.room.entity.RoomMember;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface RoomMemberRepository extends JpaRepository<RoomMember, Long> {
     Optional<RoomMember> findByRoomAndMember(Room room, Member member);
+    List<RoomMember> findByRoomId(Long roomId);
 }

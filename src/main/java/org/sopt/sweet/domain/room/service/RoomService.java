@@ -142,6 +142,30 @@ public class RoomService {
         roomRepository.save(room);
     }
 
+    @Transactional(readOnly = true)
+    public RoomMembersResponseDto getRoomMembers(Long memberId, Long roomId){
+        Member member = findMemberByIdOrThrow(memberId);
+        Room room = findByIdOrThrow(roomId);
+        checkRoomHost(member, room);
+        List<RoomMember> roomMembers = roomMemberRepository.findByRoomId(roomId);
+        List<RoomMemberDto> roomMemberDtoList = mapToRoomMemberDtoList(roomMembers);
+        return RoomMembersResponseDto.of(memberId, room.getGifterNumber(), roomMemberDtoList);
+    }
+
+    private List<RoomMemberDto> mapToRoomMemberDtoList(List<RoomMember> roomMembers) {
+        return roomMembers.stream()
+                .map(this::mapToRoomMemberDto)
+                .collect(Collectors.toList());
+    }
+
+    private RoomMemberDto mapToRoomMemberDto(RoomMember roomMember) {
+        return RoomMemberDto.of(
+                roomMember.getMember().getId(),
+                roomMember.getMember().getProfileImg(),
+                roomMember.getMember().getNickName()
+        );
+    }
+
     private void checkRoomHost(Member member, Room room){
         if (!member.equals(room.getHost())) {
             throw new ForbiddenException(ROOM_OWNER_MISMATCH);
