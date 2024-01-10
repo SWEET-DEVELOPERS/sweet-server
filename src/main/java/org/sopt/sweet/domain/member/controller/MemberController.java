@@ -26,4 +26,6 @@ public class MemberController implements MemberApi{
         final MemberTokenResponseDto memberTokenResponseDto = memberService.getToken(memberId);
         return SuccessResponse.created(memberTokenResponseDto);
     }
+
+
 }
