@@ -49,13 +49,11 @@ public interface OAuthApi {
     @Operation(summary = "카카오 로그아웃")
     @PostMapping("/api/oauth/kakao/logout")
     ResponseEntity<SuccessResponse<?>> kakaoLogout(
-            @RequestHeader("Authorization") String accessToken,
             @Parameter(
-                    description = "멤버 아이디",
+                    description = "authorization token에서 얻은 userId, 임의입력하면 대체됩니다.",
                     required = true,
-                    example = "1"
-            )
-            @RequestBody String memberId
+                    example = "12345"
+            ) @UserId Long userId
     );
 
 }
