@@ -18,7 +18,7 @@ public interface MemberApi {
                     @ApiResponse(responseCode = "404", content = @Content)
             }
     )
-    @Operation(summary = "프로필을 조회")
+    @Operation(summary = "스웨거 테스트용 API")
     ResponseEntity<SuccessResponse<?>> testSwagger(
     );
 
