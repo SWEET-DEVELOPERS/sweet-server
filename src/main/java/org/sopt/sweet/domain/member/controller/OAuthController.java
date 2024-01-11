@@ -20,14 +20,16 @@ public class OAuthController implements OAuthApi {
 
     @PostMapping("/kakao/login")
     public ResponseEntity<SuccessResponse<?>> kakaoLogin(@RequestParam("code") String code) {
-        KakaoUserInfoResponseDto userInfo = oAuthService.kakaoCallback(code);
-        MemberTokenResponseDto memberToken = oAuthService.saveToken(userInfo.socialId());
+        //KakaoUserInfoResponseDto userInfo = oAuthService.kakaoCallback(code);
+        //MemberTokenResponseDto memberToken = oAuthService.saveToken(userInfo.socialId());
 
-        Map<String, Object> loginResponse = new HashMap<>();
-        loginResponse.put("userInfo", userInfo);
-        loginResponse.put("memberToken", memberToken);
+        //Map<String, Object> loginResponse = new HashMap<>();
+        //loginResponse.put("userInfo", userInfo);
+        //loginResponse.put("memberToken", memberToken);
+        //return SuccessResponse.ok(loginResponse);
+        String response = "code"+code;
+        return SuccessResponse.ok(response);
 
-        return SuccessResponse.ok(loginResponse);
     }
 
 
@@ -36,6 +38,7 @@ public class OAuthController implements OAuthApi {
         oAuthService.kakaoLogout(accessToken, socialId);
         return SuccessResponse.ok("로그아웃 성공");
     }
+
 
 
 }
