@@ -19,7 +19,7 @@ import java.util.Map;
 public class OAuthController implements OAuthApi {
     private final OAuthService oAuthService;
 
-    @PostMapping("/kakao/login")
+    @GetMapping("/kakao/login")
     public ResponseEntity<SuccessResponse<?>> kakaoLogin(@RequestParam("code") String code) {
         KakaoUserInfoResponseDto userInfo = oAuthService.kakaoCallback(code);
         MemberTokenResponseDto memberToken = oAuthService.saveToken(userInfo.memberId());
