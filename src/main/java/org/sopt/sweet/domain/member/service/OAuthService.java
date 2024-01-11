@@ -48,6 +48,9 @@ public class OAuthService {
     @Value("${spring.security.oauth2.client.registration.kakao.redirect-uri}")
     private String redirectUri;
 
+    @Value("${jwt.refresh-token-expire-time}")
+    private long REFRESH_TOKEN_EXPIRE_TIME;
+
     private final ObjectMapper objectMapper;
     private final RedisTemplate<String, String> redisTemplate;
 
@@ -122,6 +125,7 @@ public class OAuthService {
         return new KakaoUserInfoResponseDto(existMember.getId(), socialId, nickname, profileImage);
     }
 
+
     // 카카오 로그인 시 토큰 저장
     public MemberTokenResponseDto saveToken(Long memberId) {
         String refreshToken = null;
@@ -134,7 +138,7 @@ public class OAuthService {
             refreshToken = storedRefreshToken;
         } else {
             refreshToken = issueNewRefreshToken(memberId);
-            redisTemplate.opsForValue().set(redisKey, refreshToken, 7, TimeUnit.DAYS);
+            redisTemplate.opsForValue().set(redisKey, refreshToken, REFRESH_TOKEN_EXPIRE_TIME, TimeUnit.SECONDS);
         }
 
         System.out.println("카카오 로그인 성공 memberId: " + memberId + " accessToken :" + accessToken + " refreshToken: " + refreshToken);
@@ -143,33 +147,18 @@ public class OAuthService {
     }
 
 
-    public void kakaoLogout(String accessToken, String memberId) {
-        RestTemplate restTemplate = new RestTemplate();
+    public void kakaoLogout(Long memberId) {
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("Authorization", accessToken);
+        String redisKey = "RT:" + memberId;
+        redisTemplate.delete(redisKey);
 
-        HttpEntity<String> request = new HttpEntity<>(headers);
-
-        try {
-            restTemplate.exchange(
-                    "https://kapi.kakao.com/v1/user/logout",
-                    HttpMethod.POST,
-                    request,
-                    String.class
-            );
-
-            String redisKey = "RT:" + memberId;
-            redisTemplate.delete(redisKey);
-
-            System.out.println("카카오 로그아웃 성공");
-        } catch (HttpClientErrorException e) {
-            System.err.println("Kakao API 요청 실패. 응답 코드: " + e.getRawStatusCode() + ", 응답 내용: " + e.getResponseBodyAsString());
-        }
+        System.out.println("카카오 로그아웃 성공 :" + memberId);
     }
 
-
 }
+
+
+
 
 
 

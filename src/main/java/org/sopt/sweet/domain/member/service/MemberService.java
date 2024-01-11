@@ -31,15 +31,3 @@ public class MemberService {
 
 
 }
-
-
-
-
-
-
-
-
-
-
-
-

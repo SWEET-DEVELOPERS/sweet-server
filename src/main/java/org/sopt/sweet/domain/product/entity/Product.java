@@ -6,8 +6,6 @@ import org.sopt.sweet.global.common.BaseTimeEntity;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
-@Builder(access = AccessLevel.PRIVATE)
 @Table(name = "product")
 @Entity
 public class Product extends BaseTimeEntity {
@@ -25,6 +23,6 @@ public class Product extends BaseTimeEntity {
     @Column(nullable = false)
     private int cost;
 
-    private String img;
+    private String imageUrl;
 
 }
