@@ -5,6 +5,7 @@ import org.sopt.sweet.domain.member.dto.response.KakaoUserInfoResponseDto;
 import org.sopt.sweet.domain.member.dto.response.MemberTokenResponseDto;
 import org.sopt.sweet.domain.member.service.OAuthService;
 import org.sopt.sweet.global.common.SuccessResponse;
+import org.sopt.sweet.global.config.auth.UserId;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,7 +22,7 @@ public class OAuthController implements OAuthApi {
     @PostMapping("/kakao/login")
     public ResponseEntity<SuccessResponse<?>> kakaoLogin(@RequestParam("code") String code) {
         KakaoUserInfoResponseDto userInfo = oAuthService.kakaoCallback(code);
-        MemberTokenResponseDto memberToken = oAuthService.saveToken(userInfo.socialId());
+        MemberTokenResponseDto memberToken = oAuthService.saveToken(userInfo.memberId());
 
         Map<String, Object> loginResponse = new HashMap<>();
         loginResponse.put("userInfo", userInfo);
@@ -32,8 +33,8 @@ public class OAuthController implements OAuthApi {
 
 
     @PostMapping("/kakao/logout")
-    public ResponseEntity<SuccessResponse<?>> kakaoLogout(@RequestHeader("Authorization") String accessToken,@RequestBody String socialId) {
-        oAuthService.kakaoLogout(accessToken, socialId);
+    public ResponseEntity<SuccessResponse<?>> kakaoLogout(@UserId Long userId) {
+        oAuthService.kakaoLogout(userId);
         return SuccessResponse.ok("로그아웃 성공");
     }
 
