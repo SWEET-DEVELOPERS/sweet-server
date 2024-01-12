@@ -138,7 +138,7 @@ public class GiftService {
 
     private List<TournamentListsResponseDto> mapGiftsToTournamentLists(List<Gift> gifts) {
         return gifts.stream()
-                .map(gift -> TournamentListsResponseDto.of(gift.getId(), gift.getImageUrl(), gift.getName(), gift.getCost()))
+                .map(gift -> TournamentListsResponseDto.of(gift.getId(), gift.getImageUrl(), gift.getName(), gift.getCost(), gift.getUrl()))
                 .collect(Collectors.toList());
     }
 

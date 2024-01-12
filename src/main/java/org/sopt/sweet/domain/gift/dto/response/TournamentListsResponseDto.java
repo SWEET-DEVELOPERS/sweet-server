@@ -9,14 +9,16 @@ public record TournamentListsResponseDto(
         Long giftId,
         String imageUrl,
         String name,
-        int cost
+        int cost,
+        String url
 ) {
-    public static TournamentListsResponseDto of(Long giftId, String imageUrl, String name, int cost) {
+    public static TournamentListsResponseDto of(Long giftId, String imageUrl, String name, int cost, String url) {
         return TournamentListsResponseDto.builder()
                 .giftId(giftId)
                 .imageUrl(imageUrl)
                 .name(name)
                 .cost(cost)
+                .url(url)
                 .build();
     }
 
