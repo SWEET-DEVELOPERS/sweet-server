@@ -144,4 +144,41 @@ public interface GiftApi {
             ) @UserId Long userId,
             @Valid @RequestBody TournamentScoreRequestDto tournamentScoreRequestDto
             );
+
+
+    @Operation(
+            summary = "토너먼트 정보 조회 API",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(implementation = SuccessResponse.class)
+                            )
+                    ),
+                    @ApiResponse(
+                            responseCode = "404",
+                            description = "토너먼트나 사용자가 존재하지 않음",
+                            content = @Content
+                    ),
+                    @ApiResponse(
+                            responseCode = "403",
+                            description = "토너먼트 시작일이 지났거나 사용자가 방에 속해있지 않음",
+                            content = @Content
+                    )
+            },
+            security = @SecurityRequirement(name = "token")
+    )
+    ResponseEntity<SuccessResponse<?>> getTournamentInfo(
+            @Parameter(
+                    description = "authorization token에서 얻은 userId, 임의입력하면 대체됩니다.",
+                    required = true,
+                    example = "12345"
+            ) @UserId Long userId,
+            @Parameter(
+                    description = "조회하려는 토너먼트가 진행 중인 방의 ID",
+                    required = true,
+                    example = "2"
+            ) @PathVariable Long roomId
+    );
 }
