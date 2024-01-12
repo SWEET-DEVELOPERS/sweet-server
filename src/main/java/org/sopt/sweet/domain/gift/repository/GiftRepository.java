@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface GiftRepository extends JpaRepository<Gift, Long> {
     long countByRoomAndMember(Room room, Member member);
@@ -19,4 +20,5 @@ public interface GiftRepository extends JpaRepository<Gift, Long> {
     List<Gift> findLatestGiftsByRoomAndNotMember(@Param("room") Room room, @Param("member") Member member, Pageable pageable);
 
     List<Gift> findByRoom(Room room);
+
 }
