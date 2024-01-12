@@ -31,4 +31,8 @@ public class RoomMember {
         this.member = member;
     }
 
+    public void setTournamentParticipation(boolean tournamentParticipation) {
+        this.tournamentParticipation = tournamentParticipation;
+    }
+
 }

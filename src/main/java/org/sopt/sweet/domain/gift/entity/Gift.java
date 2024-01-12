@@ -48,4 +48,12 @@ public class Gift {
         this.room = room;
         this.member = member;
     }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+
+
+
 }

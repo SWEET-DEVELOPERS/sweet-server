@@ -3,8 +3,10 @@ package org.sopt.sweet.domain.gift.controller;
 import lombok.RequiredArgsConstructor;
 import org.sopt.sweet.domain.gift.dto.request.CreateGiftRequestDto;
 import org.sopt.sweet.domain.gift.dto.request.MyGiftsRequestDto;
+import org.sopt.sweet.domain.gift.dto.request.TournamentScoreRequestDto;
 import org.sopt.sweet.domain.gift.dto.response.MyGiftsResponseDto;
 import org.sopt.sweet.domain.gift.dto.response.TournamentListsResponseDto;
+import org.sopt.sweet.domain.gift.dto.response.TournamentInfoDto;
 import org.sopt.sweet.domain.gift.service.GiftService;
 import org.sopt.sweet.global.common.SuccessResponse;
 import org.sopt.sweet.global.config.auth.UserId;
@@ -43,6 +45,19 @@ public class GiftController implements GiftApi {
         List<TournamentListsResponseDto> tournamentGiftList = giftService.getTournamentGiftList(roomId);
         return SuccessResponse.ok(tournamentGiftList);
     }
+
+    @PostMapping("/tonermant-score")
+    public ResponseEntity<SuccessResponse<?>> evaluateTournamentScore(@UserId Long userId, @RequestBody TournamentScoreRequestDto tournamentScoreRequestDto) {
+        giftService.evaluateTournamentScore(tournamentScoreRequestDto);
+        return SuccessResponse.created(null);
+    }
+
+    @GetMapping("tournament-info/{roomId}")
+    public ResponseEntity<SuccessResponse<?>> getTournamentInfo(@UserId Long userId, @PathVariable Long roomId) {
+        final TournamentInfoDto tournamentInfo = giftService.getTournamentInfo(userId, roomId);
+        return SuccessResponse.ok(tournamentInfo);
+    }
+
 
 
 
