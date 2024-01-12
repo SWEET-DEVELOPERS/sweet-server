@@ -39,8 +39,8 @@ public class GiftService {
     private final RoomRepository roomRepository;
     private final RoomMemberRepository roomMemberRepository;
     private static final int MAX_GIFT_COUNT = 2;
-    private static final int FirstPlaceScore = 10;
-    private static final int SecondPlaceScore = 5;
+    private static final int FIRST_PLACE_SCORE = 10;
+    private static final int SECOND_PLACE_SCORE= 5;
 
     public void createNewGift(Long memberId, CreateGiftRequestDto createGiftRequestDto) {
         Member member = findMemberByIdOrThrow(memberId);
@@ -155,8 +155,8 @@ public class GiftService {
 
     public void evaluateTournamentScore(TournamentScoreRequestDto tournamentScoreRequestDto) {
 
-        Gift firstPlaceGift = updateScore(tournamentScoreRequestDto.firstPlaceGiftId(), FirstPlaceScore);
-        Gift secondPlaceGift = updateScore(tournamentScoreRequestDto.secondPlaceGiftId(), SecondPlaceScore);
+        Gift firstPlaceGift = updateScore(tournamentScoreRequestDto.firstPlaceGiftId(), FIRST_PLACE_SCORE);
+        Gift secondPlaceGift = updateScore(tournamentScoreRequestDto.secondPlaceGiftId(), SECOND_PLACE_SCORE);
 
         giftRepository.save(firstPlaceGift);
         giftRepository.save(secondPlaceGift);
