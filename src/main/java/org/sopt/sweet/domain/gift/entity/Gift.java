@@ -4,12 +4,13 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.sopt.sweet.domain.room.entity.Room;
 import org.sopt.sweet.domain.member.entity.Member;
+import org.sopt.sweet.global.common.BaseTimeEntity;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "gift")
 @Entity
-public class Gift {
+public class Gift extends BaseTimeEntity {
 
     private static final int DEFAULT_SCORE = 0;
 
