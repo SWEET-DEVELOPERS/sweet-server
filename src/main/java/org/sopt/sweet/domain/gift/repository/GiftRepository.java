@@ -21,4 +21,6 @@ public interface GiftRepository extends JpaRepository<Gift, Long> {
 
     List<Gift> findByRoom(Room room);
     List<Gift> findByRoomOrderByScoreDesc(Room room);
+
+    List<Gift> findByRoomAndMemberNot(Room room, Member member);
 }
