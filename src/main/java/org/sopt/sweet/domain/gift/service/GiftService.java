@@ -22,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -223,5 +224,25 @@ public class GiftService {
         return rankingResponse;
     }
 
+    public List<FriendGiftDto> getFriendGift(Long memberId, Long roomId) {
+        Member member = findMemberByIdOrThrow(memberId);
+        Room room = findRoomByIdOrThrow(roomId);
+        checkRoomMemberNotExists(room, member);
+        List<Gift> gifts = giftRepository.findByRoomAndMemberNot(room, member);
+        return mapGiftsToFriendGiftDtoList(gifts);
+    }
 
+
+    private List<FriendGiftDto> mapGiftsToFriendGiftDtoList(List<Gift> gifts) {
+        return gifts.stream()
+                .sorted(Comparator.comparing(Gift::getCreateDate).reversed())
+                .map(gift -> FriendGiftDto.of(gift))
+                .collect(Collectors.toList());
+    }
+
+    public TournamentStartDateResponseDto getTournamentStartDate(Long roomId) {
+        Room room = findRoomByIdOrThrow(roomId);
+        LocalDateTime tournamentStartDate = room.getTournamentStartDate();
+        return new TournamentStartDateResponseDto(tournamentStartDate);
+    }
 }
