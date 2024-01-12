@@ -7,10 +7,12 @@ import org.sopt.sweet.domain.gift.dto.request.TournamentScoreRequestDto;
 import org.sopt.sweet.domain.gift.dto.response.MyGiftDto;
 import org.sopt.sweet.domain.gift.dto.response.MyGiftsResponseDto;
 import org.sopt.sweet.domain.gift.dto.response.TournamentListsResponseDto;
+import org.sopt.sweet.domain.gift.dto.response.TournamentInfoDto;
 import org.sopt.sweet.domain.gift.entity.Gift;
 import org.sopt.sweet.domain.gift.repository.GiftRepository;
 import org.sopt.sweet.domain.member.entity.Member;
 import org.sopt.sweet.domain.member.repository.MemberRepository;
+import org.sopt.sweet.domain.room.constant.TournamentDuration;
 import org.sopt.sweet.domain.room.entity.Room;
 import org.sopt.sweet.domain.room.entity.RoomMember;
 import org.sopt.sweet.domain.room.repository.RoomMemberRepository;
@@ -37,6 +39,8 @@ public class GiftService {
     private final RoomRepository roomRepository;
     private final RoomMemberRepository roomMemberRepository;
     private static final int MAX_GIFT_COUNT = 2;
+    private static final int FirstPlaceScore = 10;
+    private static final int SecondPlaceScore = 5;
 
     public void createNewGift(Long memberId, CreateGiftRequestDto createGiftRequestDto) {
         Member member = findMemberByIdOrThrow(memberId);
@@ -58,7 +62,7 @@ public class GiftService {
         return new MyGiftsResponseDto(myGiftsDtoList);
     }
 
-    public void deleteMyGift(Long memberId, Long giftId){
+    public void deleteMyGift(Long memberId, Long giftId) {
         Member member = findMemberByIdOrThrow(memberId);
         Gift gift = findByIdOrThrow(giftId);
         validateMemberGiftOwner(member, gift);
@@ -124,10 +128,12 @@ public class GiftService {
                 .orElseThrow(() -> new EntityNotFoundException(ROOM_NOT_FOUND));
     }
 
+
     private Gift findByIdOrThrow(Long giftId) {
         return giftRepository.findById(giftId)
                 .orElseThrow(() -> new EntityNotFoundException(GIFT_NOT_FOUND));
     }
+
     private Room findGiftByIdOrThrow(Long roomId) {
         return roomRepository.findById(roomId)
                 .orElseThrow(() -> new EntityNotFoundException(GIFT_NOT_FOUND));
@@ -148,24 +154,37 @@ public class GiftService {
     }
 
     public void evaluateTournamentScore(TournamentScoreRequestDto tournamentScoreRequestDto) {
-        int firstPlaceScore = 10;
-        int secondPlaceScore = 5;
 
-        Gift firstPlaceGift = updateScore(tournamentScoreRequestDto.firstPlaceGiftId(), firstPlaceScore);
-        Gift secondPlaceGift = updateScore(tournamentScoreRequestDto.secondPlaceGiftId(), secondPlaceScore);
-
+        Gift firstPlaceGift = updateScore(tournamentScoreRequestDto.firstPlaceGiftId(), FirstPlaceScore);
+        Gift secondPlaceGift = updateScore(tournamentScoreRequestDto.secondPlaceGiftId(), SecondPlaceScore);
 
         giftRepository.save(firstPlaceGift);
         giftRepository.save(secondPlaceGift);
-       }
-
+    }
 
 
     private Gift updateScore(Long giftId, int score) {
         Gift gift = findByIdOrThrow(giftId);
-        int newScore = gift.getScore()+score;
+        int newScore = gift.getScore() + score;
         gift.setScore(newScore);
         return gift;
+    }
+
+    public TournamentInfoDto getTournamentInfo(Long memberId, Long roomId) {
+        Room room = findRoomByIdOrThrow(roomId);
+        LocalDateTime tournamentStartDate = room.getTournamentStartDate();
+        TournamentDuration tournamentDuration = room.getTournamentDuration();
+        int totalParticipantsCount = room.getGifterNumber();
+        updateTournamentParticipation(memberId, roomId);
+        int participatingMembersCount = roomMemberRepository.countByRoomIdAndTournamentParticipationIsTrue(roomId);
+        return new TournamentInfoDto(tournamentStartDate, tournamentDuration, totalParticipantsCount, participatingMembersCount);
+    }
+
+    public void updateTournamentParticipation(Long memberId, Long roomId) {
+        System.out.println(roomId + " " + memberId);
+        RoomMember roomMember = roomMemberRepository.findByRoomIdAndMemberId(roomId, memberId);
+        roomMember.setTournamentParticipation(true);
+        roomMemberRepository.save(roomMember);
     }
 
 
