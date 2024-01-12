@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.sopt.sweet.domain.gift.dto.request.CreateGiftRequestDto;
 import org.sopt.sweet.domain.gift.dto.request.MyGiftsRequestDto;
+import org.sopt.sweet.domain.gift.dto.request.TournamentScoreRequestDto;
 import org.sopt.sweet.global.common.SuccessResponse;
 import org.sopt.sweet.global.config.auth.UserId;
 import org.springframework.http.ResponseEntity;
@@ -122,4 +123,25 @@ public interface GiftApi {
             ) @PathVariable Long roomId
     );
 
+    @Operation(
+            summary = "선물 토너먼트 점수 등록 API",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "201",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(implementation = SuccessResponse.class)
+                            )
+                    )
+            },
+            security = @SecurityRequirement(name = "token")
+    )
+    ResponseEntity<SuccessResponse<?>> evaluateTournamentScore(
+            @Parameter(
+                    description = "authorization token에서 얻은 userId, 임의입력하면 대체됩니다.",
+                    required = true,
+                    example = "12345"
+            ) @UserId Long userId,
+            @Valid @RequestBody TournamentScoreRequestDto tournamentScoreRequestDto
+            );
 }
