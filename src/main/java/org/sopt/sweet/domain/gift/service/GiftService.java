@@ -3,6 +3,7 @@ package org.sopt.sweet.domain.gift.service;
 import lombok.RequiredArgsConstructor;
 import org.sopt.sweet.domain.gift.dto.request.CreateGiftRequestDto;
 import org.sopt.sweet.domain.gift.dto.request.MyGiftsRequestDto;
+import org.sopt.sweet.domain.gift.dto.request.TournamentScoreRequestDto;
 import org.sopt.sweet.domain.gift.dto.response.MyGiftDto;
 import org.sopt.sweet.domain.gift.dto.response.MyGiftsResponseDto;
 import org.sopt.sweet.domain.gift.dto.response.TournamentListsResponseDto;
@@ -127,6 +128,10 @@ public class GiftService {
         return giftRepository.findById(giftId)
                 .orElseThrow(() -> new EntityNotFoundException(GIFT_NOT_FOUND));
     }
+    private Room findGiftByIdOrThrow(Long roomId) {
+        return roomRepository.findById(roomId)
+                .orElseThrow(() -> new EntityNotFoundException(GIFT_NOT_FOUND));
+    }
 
 
     @Transactional(readOnly = true)
@@ -141,5 +146,29 @@ public class GiftService {
                 .map(gift -> TournamentListsResponseDto.of(gift.getId(), gift.getImageUrl(), gift.getName(), gift.getCost(), gift.getUrl()))
                 .collect(Collectors.toList());
     }
+
+    public void evaluateTournamentScore(TournamentScoreRequestDto tournamentScoreRequestDto) {
+        int firstPlaceScore = 10;
+        int secondPlaceScore = 5;
+
+        Gift firstPlaceGift = updateScore(tournamentScoreRequestDto.firstPlaceGiftId(), firstPlaceScore);
+        Gift secondPlaceGift = updateScore(tournamentScoreRequestDto.secondPlaceGiftId(), secondPlaceScore);
+
+
+        giftRepository.save(firstPlaceGift);
+        giftRepository.save(secondPlaceGift);
+       }
+
+
+
+    private Gift updateScore(Long giftId, int score) {
+        Gift gift = findByIdOrThrow(giftId);
+        int newScore = gift.getScore()+score;
+        gift.setScore(newScore);
+        return gift;
+    }
+
+
+
 
 }
