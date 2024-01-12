@@ -7,6 +7,7 @@ import org.sopt.sweet.domain.gift.dto.request.TournamentScoreRequestDto;
 import org.sopt.sweet.domain.gift.dto.response.MyGiftsResponseDto;
 import org.sopt.sweet.domain.gift.dto.response.TournamentListsResponseDto;
 import org.sopt.sweet.domain.gift.dto.response.TournamentInfoDto;
+import org.sopt.sweet.domain.gift.dto.response.TournamentRankingResponseDto;
 import org.sopt.sweet.domain.gift.service.GiftService;
 import org.sopt.sweet.global.common.SuccessResponse;
 import org.sopt.sweet.global.config.auth.UserId;
@@ -57,6 +58,16 @@ public class GiftController implements GiftApi {
         final TournamentInfoDto tournamentInfo = giftService.getTournamentInfo(userId, roomId);
         return SuccessResponse.ok(tournamentInfo);
     }
+
+    @GetMapping("ranking/{roomId}")
+    public ResponseEntity<SuccessResponse<?>> getRanking(@UserId Long userId, @PathVariable Long roomId) {
+        final List<TournamentRankingResponseDto> ranking = giftService.getTournamentRanking(roomId);
+        return SuccessResponse.ok(ranking);
+    }
+
+
+
+
 
 
 

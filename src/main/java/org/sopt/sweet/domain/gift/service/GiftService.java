@@ -4,10 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.sopt.sweet.domain.gift.dto.request.CreateGiftRequestDto;
 import org.sopt.sweet.domain.gift.dto.request.MyGiftsRequestDto;
 import org.sopt.sweet.domain.gift.dto.request.TournamentScoreRequestDto;
-import org.sopt.sweet.domain.gift.dto.response.MyGiftDto;
-import org.sopt.sweet.domain.gift.dto.response.MyGiftsResponseDto;
-import org.sopt.sweet.domain.gift.dto.response.TournamentListsResponseDto;
-import org.sopt.sweet.domain.gift.dto.response.TournamentInfoDto;
+import org.sopt.sweet.domain.gift.dto.response.*;
 import org.sopt.sweet.domain.gift.entity.Gift;
 import org.sopt.sweet.domain.gift.repository.GiftRepository;
 import org.sopt.sweet.domain.member.entity.Member;
@@ -24,6 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -40,7 +38,7 @@ public class GiftService {
     private final RoomMemberRepository roomMemberRepository;
     private static final int MAX_GIFT_COUNT = 2;
     private static final int FIRST_PLACE_SCORE = 10;
-    private static final int SECOND_PLACE_SCORE= 5;
+    private static final int SECOND_PLACE_SCORE = 5;
 
     public void createNewGift(Long memberId, CreateGiftRequestDto createGiftRequestDto) {
         Member member = findMemberByIdOrThrow(memberId);
@@ -191,6 +189,39 @@ public class GiftService {
     }
 
 
+    public List<TournamentRankingResponseDto> getTournamentRanking(Long roomId) {
+        Room room = findRoomByIdOrThrow(roomId);
+
+        List<Gift> gifts = giftRepository.findByRoomOrderByScoreDesc(room);
+        List<TournamentRankingResponseDto> rankingResponse = mapGiftsToTournamentRanking(gifts);
+        return rankingResponse;
+    }
+
+    private List<TournamentRankingResponseDto> mapGiftsToTournamentRanking(List<Gift> gifts) {
+        List<TournamentRankingResponseDto> rankingResponse = new ArrayList<>();
+        int rank = 0;
+        int currentScore = Integer.MAX_VALUE;
+
+        for (Gift gift : gifts) {
+            int giftScore = gift.getScore();
+            if (giftScore < currentScore) {
+                rank++;
+            }
+
+            rankingResponse.add(TournamentRankingResponseDto.of(
+                    (long) rank,
+                    gift.getId(),
+                    gift.getImageUrl(),
+                    gift.getName(),
+                    gift.getCost(),
+                    gift.getUrl()
+            ));
+
+            currentScore = giftScore;
+        }
+
+        return rankingResponse;
+    }
 
 
 }

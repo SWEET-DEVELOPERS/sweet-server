@@ -20,5 +20,5 @@ public interface GiftRepository extends JpaRepository<Gift, Long> {
     List<Gift> findLatestGiftsByRoomAndNotMember(@Param("room") Room room, @Param("member") Member member, Pageable pageable);
 
     List<Gift> findByRoom(Room room);
-
+    List<Gift> findByRoomOrderByScoreDesc(Room room);
 }
