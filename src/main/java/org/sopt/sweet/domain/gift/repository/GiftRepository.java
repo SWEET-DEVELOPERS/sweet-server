@@ -17,4 +17,6 @@ public interface GiftRepository extends JpaRepository<Gift, Long> {
 
     @Query("SELECT g FROM Gift g WHERE g.room = :room AND g.member <> :member ORDER BY g.id DESC")
     List<Gift> findLatestGiftsByRoomAndNotMember(@Param("room") Room room, @Param("member") Member member, Pageable pageable);
+
+    List<Gift> findByRoom(Room room);
 }

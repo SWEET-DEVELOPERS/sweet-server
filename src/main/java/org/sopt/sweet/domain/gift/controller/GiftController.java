@@ -4,11 +4,14 @@ import lombok.RequiredArgsConstructor;
 import org.sopt.sweet.domain.gift.dto.request.CreateGiftRequestDto;
 import org.sopt.sweet.domain.gift.dto.request.MyGiftsRequestDto;
 import org.sopt.sweet.domain.gift.dto.response.MyGiftsResponseDto;
+import org.sopt.sweet.domain.gift.dto.response.TournamentListsResponseDto;
 import org.sopt.sweet.domain.gift.service.GiftService;
 import org.sopt.sweet.global.common.SuccessResponse;
 import org.sopt.sweet.global.config.auth.UserId;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @RequestMapping("/api/gift")
@@ -34,4 +37,13 @@ public class GiftController implements GiftApi {
         giftService.deleteMyGift(userId, giftId);
         return SuccessResponse.ok(null);
     }
+
+    @GetMapping("/tonermant/{roomId}")
+    public ResponseEntity<SuccessResponse<?>> getTournamentGiftList(@UserId Long userId,@PathVariable Long roomId) {
+        List<TournamentListsResponseDto> tournamentGiftList = giftService.getTournamentGiftList(roomId);
+        return SuccessResponse.ok(tournamentGiftList);
+    }
+
+
+
 }
