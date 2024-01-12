@@ -12,10 +12,14 @@ import jakarta.validation.Valid;
 import org.sopt.sweet.domain.gift.dto.request.CreateGiftRequestDto;
 import org.sopt.sweet.domain.gift.dto.request.MyGiftsRequestDto;
 import org.sopt.sweet.domain.gift.dto.request.TournamentScoreRequestDto;
+import org.sopt.sweet.domain.gift.dto.response.TournamentRankingResponseDto;
 import org.sopt.sweet.global.common.SuccessResponse;
 import org.sopt.sweet.global.config.auth.UserId;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+
+import java.util.List;
 
 @Tag(name = "선물", description = "선물 관련 API")
 public interface GiftApi {
@@ -180,5 +184,39 @@ public interface GiftApi {
                     required = true,
                     example = "2"
             ) @PathVariable Long roomId
+    );
+
+    @Operation(
+            summary = "토너먼트 랭킹 조회 API",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "토너먼트 랭킹 조회 성공",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(implementation = SuccessResponse.class)
+                            )
+                    ),
+                    @ApiResponse(
+                            responseCode = "404",
+                            description = "토너먼트나 사용자가 존재하지 않음",
+                            content = @Content
+                    ),
+                    @ApiResponse(
+                            responseCode = "403",
+                            description = "토너먼트 시작일이 지났거나 사용자가 방에 속해있지 않음",
+                            content = @Content
+                    )
+            },
+            security = @SecurityRequirement(name = "token")
+    )
+    @GetMapping("ranking/{roomId}")
+    ResponseEntity<SuccessResponse<?>> getRanking(
+            @Parameter(
+                    description = "authorization token에서 얻은 userId, 임의입력하면 대체됩니다.",
+                    required = true,
+                    example = "12345"
+            ) @UserId Long userId,
+            @PathVariable Long roomId
     );
 }
