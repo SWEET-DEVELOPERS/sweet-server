@@ -172,16 +172,19 @@ public class GiftService {
 
     public TournamentInfoDto getTournamentInfo(Long memberId, Long roomId) {
         Room room = findRoomByIdOrThrow(roomId);
+
         LocalDateTime tournamentStartDate = room.getTournamentStartDate();
         TournamentDuration tournamentDuration = room.getTournamentDuration();
         int totalParticipantsCount = room.getGifterNumber();
+
         updateTournamentParticipation(memberId, roomId);
+
         int participatingMembersCount = roomMemberRepository.countByRoomIdAndTournamentParticipationIsTrue(roomId);
+
         return new TournamentInfoDto(tournamentStartDate, tournamentDuration, totalParticipantsCount, participatingMembersCount);
     }
 
     public void updateTournamentParticipation(Long memberId, Long roomId) {
-        System.out.println(roomId + " " + memberId);
         RoomMember roomMember = roomMemberRepository.findByRoomIdAndMemberId(roomId, memberId);
         roomMember.setTournamentParticipation(true);
         roomMemberRepository.save(roomMember);
