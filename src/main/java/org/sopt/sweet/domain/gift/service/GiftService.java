@@ -5,6 +5,7 @@ import org.sopt.sweet.domain.gift.dto.request.CreateGiftRequestDto;
 import org.sopt.sweet.domain.gift.dto.request.MyGiftsRequestDto;
 import org.sopt.sweet.domain.gift.dto.response.MyGiftDto;
 import org.sopt.sweet.domain.gift.dto.response.MyGiftsResponseDto;
+import org.sopt.sweet.domain.gift.dto.response.TournamentListsResponseDto;
 import org.sopt.sweet.domain.gift.entity.Gift;
 import org.sopt.sweet.domain.gift.repository.GiftRepository;
 import org.sopt.sweet.domain.member.entity.Member;
@@ -122,8 +123,23 @@ public class GiftService {
                 .orElseThrow(() -> new EntityNotFoundException(ROOM_NOT_FOUND));
     }
 
-    private Gift findByIdOrThrow(Long giftId){
+    private Gift findByIdOrThrow(Long giftId) {
         return giftRepository.findById(giftId)
                 .orElseThrow(() -> new EntityNotFoundException(GIFT_NOT_FOUND));
     }
+
+
+    @Transactional(readOnly = true)
+    public List<TournamentListsResponseDto> getTournamentGiftList(Long roomId) {
+        Room room = findRoomByIdOrThrow(roomId);
+        List<Gift> gifts = giftRepository.findByRoom(room);
+        return mapGiftsToTournamentLists(gifts);
+    }
+
+    private List<TournamentListsResponseDto> mapGiftsToTournamentLists(List<Gift> gifts) {
+        return gifts.stream()
+                .map(gift -> TournamentListsResponseDto.of(gift.getId(), gift.getImageUrl(), gift.getName(), gift.getCost()))
+                .collect(Collectors.toList());
+    }
+
 }
