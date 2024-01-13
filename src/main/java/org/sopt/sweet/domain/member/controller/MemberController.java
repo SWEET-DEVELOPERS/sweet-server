@@ -1,9 +1,7 @@
 package org.sopt.sweet.domain.member.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.sopt.sweet.domain.member.dto.response.ActiveRoomResponseDto;
-import org.sopt.sweet.domain.member.dto.response.ClosedRoomResponseDto;
-import org.sopt.sweet.domain.member.dto.response.MemberTokenResponseDto;
+import org.sopt.sweet.domain.member.dto.response.*;
 import org.sopt.sweet.domain.member.service.MemberService;
 import org.sopt.sweet.global.common.SuccessResponse;
 import org.sopt.sweet.global.config.auth.UserId;
@@ -42,6 +40,19 @@ public class MemberController implements MemberApi{
     public ResponseEntity<SuccessResponse<?>> getActiveRoom(@UserId Long userId) {
         final List<ActiveRoomResponseDto>activeRoomResponseDto = memberService.getActiveRoom(userId);
         return SuccessResponse.ok(activeRoomResponseDto);
+    }
+
+    @GetMapping("/mypage")
+    public MyPageResponseDto getMyPage(@UserId Long userId) {
+        List<ClosedRoomResponseDto> top2ClosedRooms = memberService.getTop2ClosedRooms(userId);
+        List<ActiveRoomResponseDto> top2ActiveRooms = memberService.getTop2ActiveRooms(userId);
+        MemberInfoDto MemberInfo = memberService.getMemberInfo(userId);
+
+        return new MyPageResponseDto(
+                MemberInfo,
+                top2ClosedRooms,
+                top2ActiveRooms
+        );
     }
 
 }
