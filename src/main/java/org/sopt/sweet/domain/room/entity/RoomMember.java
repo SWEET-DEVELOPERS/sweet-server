@@ -3,11 +3,12 @@ package org.sopt.sweet.domain.room.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.sopt.sweet.domain.member.entity.Member;
+import org.sopt.sweet.global.common.BaseTimeEntity;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-public class RoomMember {
+public class RoomMember extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
