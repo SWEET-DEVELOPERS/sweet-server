@@ -1,11 +1,15 @@
 package org.sopt.sweet.domain.member.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.sopt.sweet.domain.member.dto.response.ClosedRoomResponseDto;
 import org.sopt.sweet.domain.member.dto.response.MemberTokenResponseDto;
 import org.sopt.sweet.domain.member.service.MemberService;
 import org.sopt.sweet.global.common.SuccessResponse;
+import org.sopt.sweet.global.config.auth.UserId;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @RequestMapping("/api/member")
@@ -25,6 +29,12 @@ public class MemberController implements MemberApi{
     public ResponseEntity<SuccessResponse<?>> getToken(@PathVariable Long memberId){
         final MemberTokenResponseDto memberTokenResponseDto = memberService.getToken(memberId);
         return SuccessResponse.created(memberTokenResponseDto);
+    }
+
+    @GetMapping("closed-room")
+    public ResponseEntity<SuccessResponse<?>> getClosedRoom(@UserId Long userId) {
+        final List<ClosedRoomResponseDto> closedRoomResponseDto = memberService.getClosedRoom(userId);
+        return SuccessResponse.ok(closedRoomResponseDto);
     }
 
 
