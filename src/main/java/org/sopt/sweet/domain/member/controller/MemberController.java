@@ -1,6 +1,7 @@
 package org.sopt.sweet.domain.member.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.sopt.sweet.domain.member.dto.response.ActiveRoomResponseDto;
 import org.sopt.sweet.domain.member.dto.response.ClosedRoomResponseDto;
 import org.sopt.sweet.domain.member.dto.response.MemberTokenResponseDto;
 import org.sopt.sweet.domain.member.service.MemberService;
@@ -31,11 +32,16 @@ public class MemberController implements MemberApi{
         return SuccessResponse.created(memberTokenResponseDto);
     }
 
-    @GetMapping("closed-room")
+    @GetMapping("/closed-room")
     public ResponseEntity<SuccessResponse<?>> getClosedRoom(@UserId Long userId) {
         final List<ClosedRoomResponseDto> closedRoomResponseDto = memberService.getClosedRoom(userId);
         return SuccessResponse.ok(closedRoomResponseDto);
     }
 
+    @GetMapping("/active-room")
+    public ResponseEntity<SuccessResponse<?>> getActiveRoom(@UserId Long userId) {
+        final List<ActiveRoomResponseDto>activeRoomResponseDto = memberService.getActiveRoom(userId);
+        return SuccessResponse.ok(activeRoomResponseDto);
+    }
 
 }
