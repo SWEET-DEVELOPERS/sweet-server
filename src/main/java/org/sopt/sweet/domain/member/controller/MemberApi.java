@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.sopt.sweet.domain.member.dto.response.MyPageResponseDto;
 import org.sopt.sweet.global.common.SuccessResponse;
 import org.sopt.sweet.global.config.auth.UserId;
 import org.springframework.http.ResponseEntity;
@@ -85,6 +86,33 @@ public interface MemberApi {
     )
     @GetMapping("active-room")
     public ResponseEntity<SuccessResponse<?>> getActiveRoom(
+            @Parameter(
+                    description = "Authorization token에서 얻은 userId, 임의입력하면 대체됩니다.",
+                    required = true,
+                    example = "12345"
+            ) @UserId Long userId
+    );
+
+    @Operation(
+            summary = "마이페이지 조회 API",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(implementation = SuccessResponse.class)
+                            )
+                    ),
+                    @ApiResponse(
+                            responseCode = "401",
+                            description = "Unauthorized",
+                            content = @Content
+                    )
+            },
+            security = @SecurityRequirement(name = "token")
+    )
+    @GetMapping("/mypage")
+    public MyPageResponseDto getMyPage(
             @Parameter(
                     description = "Authorization token에서 얻은 userId, 임의입력하면 대체됩니다.",
                     required = true,
