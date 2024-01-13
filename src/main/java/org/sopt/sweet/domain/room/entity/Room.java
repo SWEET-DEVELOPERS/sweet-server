@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.sopt.sweet.domain.room.constant.TournamentDuration;
 import org.sopt.sweet.domain.member.entity.Member;
+import org.sopt.sweet.global.common.BaseTimeEntity;
 
 import java.time.LocalDateTime;
 
@@ -11,7 +12,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "room")
 @Entity
-public class Room {
+public class Room extends BaseTimeEntity {
 
     private static final int DEFAULT_NUMBER = 1;
 
