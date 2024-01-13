@@ -32,6 +32,11 @@ public interface ProductApi {
                     description = "authorization token에서 얻은 userId, 임의입력하면 대체됩니다.",
                     required = true,
                     example = "12345"
-            ) @UserId Long userId
+            ) @UserId Long userId,
+            @Parameter(
+                    description = "선물방 id",
+                    required = true,
+                    example = "1"
+            ) @PathVariable Long roomId
     );
 }
