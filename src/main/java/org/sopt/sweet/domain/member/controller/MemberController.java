@@ -31,11 +31,29 @@ public class MemberController implements MemberApi{
         return SuccessResponse.created(memberTokenResponseDto);
     }
 
-    @GetMapping("closed-room")
+    @GetMapping("/closed-room")
     public ResponseEntity<SuccessResponse<?>> getClosedRoom(@UserId Long userId) {
         final List<ClosedRoomResponseDto> closedRoomResponseDto = memberService.getClosedRoom(userId);
         return SuccessResponse.ok(closedRoomResponseDto);
     }
 
+    @GetMapping("/active-room")
+    public ResponseEntity<SuccessResponse<?>> getActiveRoom(@UserId Long userId) {
+        final List<ActiveRoomResponseDto>activeRoomResponseDto = memberService.getActiveRoom(userId);
+        return SuccessResponse.ok(activeRoomResponseDto);
+    }
+
+    @GetMapping("/mypage")
+    public MyPageResponseDto getMyPage(@UserId Long userId) {
+        List<ClosedRoomResponseDto> top2ClosedRooms = memberService.getTop2ClosedRooms(userId);
+        List<ActiveRoomResponseDto> top2ActiveRooms = memberService.getTop2ActiveRooms(userId);
+        MemberInfoDto MemberInfo = memberService.getMemberInfo(userId);
+
+        return new MyPageResponseDto(
+                MemberInfo,
+                top2ClosedRooms,
+                top2ActiveRooms
+        );
+    }
 
 }
