@@ -120,4 +120,5 @@ public interface MemberApi {
             ) @UserId Long userId
     );
 
+
 }

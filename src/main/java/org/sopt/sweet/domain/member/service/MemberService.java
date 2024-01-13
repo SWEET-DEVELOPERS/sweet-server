@@ -1,6 +1,7 @@
 package org.sopt.sweet.domain.member.service;
 
 import lombok.RequiredArgsConstructor;
+
 import org.sopt.sweet.domain.member.dto.response.ActiveRoomResponseDto;
 import org.sopt.sweet.domain.member.dto.response.ClosedRoomResponseDto;
 import org.sopt.sweet.domain.member.dto.response.MemberInfoDto;
