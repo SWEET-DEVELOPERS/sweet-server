@@ -65,4 +65,31 @@ public interface MemberApi {
             ) @UserId Long userId
     );
 
+    @Operation(
+            summary = "진행중인 선물방 조회 API",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(implementation = SuccessResponse.class)
+                            )
+                    ),
+                    @ApiResponse(
+                            responseCode = "401",
+                            description = "Unauthorized",
+                            content = @Content
+                    )
+            },
+            security = @SecurityRequirement(name = "token")
+    )
+    @GetMapping("active-room")
+    public ResponseEntity<SuccessResponse<?>> getActiveRoom(
+            @Parameter(
+                    description = "Authorization token에서 얻은 userId, 임의입력하면 대체됩니다.",
+                    required = true,
+                    example = "12345"
+            ) @UserId Long userId
+    );
+
 }
