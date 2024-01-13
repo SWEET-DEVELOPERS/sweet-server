@@ -1,8 +1,7 @@
 package org.sopt.sweet.domain.member.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.sopt.sweet.domain.member.dto.response.ClosedRoomResponseDto;
-import org.sopt.sweet.domain.member.dto.response.MemberTokenResponseDto;
+import org.sopt.sweet.domain.member.dto.response.*;
 import org.sopt.sweet.domain.member.service.MemberService;
 import org.sopt.sweet.global.common.SuccessResponse;
 import org.sopt.sweet.global.config.auth.UserId;
