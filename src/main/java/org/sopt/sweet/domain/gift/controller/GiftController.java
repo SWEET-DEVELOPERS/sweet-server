@@ -6,7 +6,6 @@ import org.sopt.sweet.domain.gift.dto.request.MyGiftsRequestDto;
 import org.sopt.sweet.domain.gift.dto.request.TournamentScoreRequestDto;
 import org.sopt.sweet.domain.gift.dto.response.*;
 import org.sopt.sweet.domain.gift.service.GiftService;
-import org.sopt.sweet.domain.room.entity.Room;
 import org.sopt.sweet.global.common.SuccessResponse;
 import org.sopt.sweet.global.config.auth.UserId;
 import org.springframework.http.ResponseEntity;
@@ -35,14 +34,14 @@ public class GiftController implements GiftApi {
         return SuccessResponse.ok(myGiftsResponseDto);
     }
 
-    @DeleteMapping ("/my/{giftId}")
+    @DeleteMapping("/my/{giftId}")
     public ResponseEntity<SuccessResponse<?>> deleteMyGift(@UserId Long userId, @PathVariable Long giftId) {
         giftService.deleteMyGift(userId, giftId);
         return SuccessResponse.ok(null);
     }
 
     @GetMapping("/tonermant/{roomId}")
-    public ResponseEntity<SuccessResponse<?>> getTournamentGiftList(@UserId Long userId,@PathVariable Long roomId) {
+    public ResponseEntity<SuccessResponse<?>> getTournamentGiftList(@UserId Long userId, @PathVariable Long roomId) {
         List<TournamentListsResponseDto> tournamentGiftList = giftService.getTournamentGiftList(roomId);
         return SuccessResponse.ok(tournamentGiftList);
     }
@@ -76,11 +75,6 @@ public class GiftController implements GiftApi {
         return SuccessResponse.ok(result);
 
     }
-
-
-
-
-
 
 
 }

@@ -54,7 +54,4 @@ public class Gift extends BaseTimeEntity {
         this.score = score;
     }
 
-
-
-
 }
