@@ -3,6 +3,7 @@ package org.sopt.sweet.domain.member.service;
 import lombok.RequiredArgsConstructor;
 import org.sopt.sweet.domain.member.dto.response.ActiveRoomResponseDto;
 import org.sopt.sweet.domain.member.dto.response.ClosedRoomResponseDto;
+import org.sopt.sweet.domain.member.dto.response.MemberInfoDto;
 import org.sopt.sweet.domain.member.dto.response.MemberTokenResponseDto;
 import org.sopt.sweet.domain.member.entity.Member;
 import org.sopt.sweet.domain.member.repository.MemberRepository;
@@ -47,8 +48,6 @@ public class MemberService {
 
     public List<ClosedRoomResponseDto> getClosedRoom(Long memberId) {
         List<RoomMember> roomMembers = roomMemberRepository.findByMemberId(memberId);
-        System.out.println(memberId);
-        System.out.println("/"+ LocalDateTime.now());
         List<ClosedRoomResponseDto> closedRooms = roomMembers.stream()
                 .map(RoomMember::getRoom)
                 .filter(room -> room.getDeliveryDate().isBefore(LocalDateTime.now()))
@@ -101,4 +100,22 @@ public class MemberService {
         return isOwner;
     }
 
+    public List<ClosedRoomResponseDto> getTop2ClosedRooms(Long memberId) {
+        List<ClosedRoomResponseDto> closedRooms = getClosedRoom(memberId);
+        return closedRooms.size() > 2 ? closedRooms.subList(0, 2) : closedRooms;
+    }
+
+    public List<ActiveRoomResponseDto> getTop2ActiveRooms(Long memberId) {
+        List<ActiveRoomResponseDto> activeRooms = getActiveRoom(memberId);
+        return activeRooms.size() > 2 ? activeRooms.subList(0, 2) : activeRooms;
+    }
+
+
+    public MemberInfoDto getMemberInfo(Long memberId) {
+        Optional<Member> member = memberRepository.findById(memberId);
+        return new MemberInfoDto(
+                member.get().getNickName(),
+                member.get().getProfileImg()
+        );
+    }
 }
