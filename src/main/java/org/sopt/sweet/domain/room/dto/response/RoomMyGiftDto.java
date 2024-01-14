@@ -10,7 +10,7 @@ public record RoomMyGiftDto(
         String url,
         int cost
 ) {
-    public static RoomMyGiftDto of(Long giftId, String imageUrl, String name, String url, int cost){
+    public static RoomMyGiftDto of(Long giftId, String imageUrl, String name, String url, int cost) {
         return RoomMyGiftDto.builder()
                 .giftId(giftId)
                 .imageUrl(imageUrl)

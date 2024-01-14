@@ -1,9 +1,12 @@
 package org.sopt.sweet.domain.room.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
-import org.sopt.sweet.domain.room.constant.TournamentDuration;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.sopt.sweet.domain.member.entity.Member;
+import org.sopt.sweet.domain.room.constant.TournamentDuration;
 import org.sopt.sweet.global.common.BaseTimeEntity;
 
 import java.time.LocalDateTime;
@@ -44,7 +47,7 @@ public class Room extends BaseTimeEntity {
     private Member host;
 
     @Builder
-    public Room(String gifteeName, String imageUrl, LocalDateTime deliveryDate, LocalDateTime tournamentStartDate, TournamentDuration tournamentDuration, String invitationCode, Member host){
+    public Room(String gifteeName, String imageUrl, LocalDateTime deliveryDate, LocalDateTime tournamentStartDate, TournamentDuration tournamentDuration, String invitationCode, Member host) {
         this.gifteeName = gifteeName;
         this.imageUrl = imageUrl;
         this.gifterNumber = DEFAULT_NUMBER;
@@ -58,9 +61,11 @@ public class Room extends BaseTimeEntity {
     public void setGifterNumber(int gifterNumber) {
         this.gifterNumber = gifterNumber;
     }
+
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
+
     public void setGifteeName(String gifteeName) {
         this.gifteeName = gifteeName;
     }

@@ -1,7 +1,10 @@
 package org.sopt.sweet.domain.member.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.sopt.sweet.domain.member.constant.SocialType;
 import org.sopt.sweet.global.common.BaseTimeEntity;
 

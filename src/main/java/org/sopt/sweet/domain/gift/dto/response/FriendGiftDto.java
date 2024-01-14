@@ -1,7 +1,6 @@
 package org.sopt.sweet.domain.gift.dto.response;
 
 import lombok.Builder;
-import org.sopt.sweet.domain.gift.dto.request.TournamentScoreRequestDto;
 import org.sopt.sweet.domain.gift.entity.Gift;
 
 import java.time.LocalDateTime;

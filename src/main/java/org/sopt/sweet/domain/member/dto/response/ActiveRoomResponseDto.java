@@ -2,8 +2,6 @@ package org.sopt.sweet.domain.member.dto.response;
 
 import java.time.LocalDateTime;
 
-;
-
 public record ActiveRoomResponseDto(
         Long roomId,
         String imageUrl,
@@ -13,6 +11,4 @@ public record ActiveRoomResponseDto(
         Boolean isOwner
 
 ) {
-
-
 }

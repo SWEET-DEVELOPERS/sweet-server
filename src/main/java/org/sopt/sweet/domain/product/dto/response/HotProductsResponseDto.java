@@ -11,7 +11,7 @@ public record HotProductsResponseDto(
         List<HotProductDto> hotProductDtoList
 ) {
     public static HotProductsResponseDto of(LocalDateTime tournamentStartDate,
-                                            List<HotProductDto> hotProductDtoList){
+                                            List<HotProductDto> hotProductDtoList) {
         return HotProductsResponseDto.builder()
                 .tournamentStartDate(tournamentStartDate)
                 .hotProductDtoList(hotProductDtoList)

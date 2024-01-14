@@ -20,55 +20,55 @@ public class RoomController implements RoomApi {
     private final RoomService roomService;
 
     @PostMapping
-    public ResponseEntity<SuccessResponse<?>> createNewRoom(@UserId Long userId, @RequestBody CreateRoomRequestDto createRoomRequestDto){
+    public ResponseEntity<SuccessResponse<?>> createNewRoom(@UserId Long userId, @RequestBody CreateRoomRequestDto createRoomRequestDto) {
         final CreateRoomResponseDto newRoom = roomService.createNewRoom(userId, createRoomRequestDto);
         return SuccessResponse.created(newRoom);
     }
 
     @GetMapping("/invitations/{invitationCode}")
-    public ResponseEntity<SuccessResponse<?>> getRoomInviteInfo(@PathVariable String invitationCode){
+    public ResponseEntity<SuccessResponse<?>> getRoomInviteInfo(@PathVariable String invitationCode) {
         final RoomInviteResponseDto roomInviteResponseDto = roomService.getRoomInviteInfo(invitationCode);
         return SuccessResponse.ok(roomInviteResponseDto);
     }
 
     @PostMapping("/participation")
-    public ResponseEntity<SuccessResponse<?>> joinRoom(@UserId Long userId, @RequestBody JoinRoomRequestDto joinRoomRequestDto){
+    public ResponseEntity<SuccessResponse<?>> joinRoom(@UserId Long userId, @RequestBody JoinRoomRequestDto joinRoomRequestDto) {
         final JoinRoomResponseDto joinRoomResponseDto = roomService.findAndJoinRoom(userId, joinRoomRequestDto);
         return SuccessResponse.ok(joinRoomResponseDto);
     }
 
     @GetMapping("/{roomId}")
-    public ResponseEntity<SuccessResponse<?>> getRoomMainInfo(@UserId Long userId, @PathVariable Long roomId){
+    public ResponseEntity<SuccessResponse<?>> getRoomMainInfo(@UserId Long userId, @PathVariable Long roomId) {
         final RoomMainResponseDto roomMainResponseDto = roomService.getRoomMainInfo(userId, roomId);
         return SuccessResponse.ok(roomMainResponseDto);
     }
 
     @GetMapping("/detail/{roomId}")
-    public ResponseEntity<SuccessResponse<?>> getRoomDetailInfo(@UserId Long userId, @PathVariable Long roomId){
+    public ResponseEntity<SuccessResponse<?>> getRoomDetailInfo(@UserId Long userId, @PathVariable Long roomId) {
         final RoomDetailResponseDto roomDetailResponseDto = roomService.getRoomDetailInfo(userId, roomId);
         return SuccessResponse.ok(roomDetailResponseDto);
     }
 
     @PatchMapping("/{roomId}/thumbnail")
-    public ResponseEntity<SuccessResponse<?>> modifyRoomThumbnail(@UserId Long userId, @PathVariable Long roomId, @RequestBody RoomImageRequestDto roomImageRequestDto){
+    public ResponseEntity<SuccessResponse<?>> modifyRoomThumbnail(@UserId Long userId, @PathVariable Long roomId, @RequestBody RoomImageRequestDto roomImageRequestDto) {
         roomService.modifyRoomThumbnail(userId, roomId, roomImageRequestDto);
         return SuccessResponse.ok(null);
     }
 
     @PatchMapping("/{roomId}/giftee-name")
-    public ResponseEntity<SuccessResponse<?>> modifyRoomGifteeName(@UserId Long userId, @PathVariable Long roomId, @RequestBody RoomNameRequestDto roomNameRequestDto){
+    public ResponseEntity<SuccessResponse<?>> modifyRoomGifteeName(@UserId Long userId, @PathVariable Long roomId, @RequestBody RoomNameRequestDto roomNameRequestDto) {
         roomService.modifyRoomGifteeName(userId, roomId, roomNameRequestDto);
         return SuccessResponse.ok(null);
     }
 
     @GetMapping("/{roomId}/members")
-    public ResponseEntity<SuccessResponse<?>> getRoomMembers(@UserId Long userId, @PathVariable Long roomId){
+    public ResponseEntity<SuccessResponse<?>> getRoomMembers(@UserId Long userId, @PathVariable Long roomId) {
         final RoomMembersResponseDto roomMembersResponseDto = roomService.getRoomMembers(userId, roomId);
         return SuccessResponse.ok(roomMembersResponseDto);
     }
 
     @DeleteMapping("/{roomId}/members/{memberId}")
-    public ResponseEntity<SuccessResponse<?>> deleteRoomMember(@UserId Long userId, @PathVariable Long roomId, @PathVariable Long memberId){
+    public ResponseEntity<SuccessResponse<?>> deleteRoomMember(@UserId Long userId, @PathVariable Long roomId, @PathVariable Long memberId) {
         roomService.deleteRoomMember(userId, roomId, memberId);
         return SuccessResponse.ok(null);
     }

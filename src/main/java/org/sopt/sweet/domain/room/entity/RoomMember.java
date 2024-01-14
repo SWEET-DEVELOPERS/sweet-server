@@ -1,7 +1,10 @@
 package org.sopt.sweet.domain.room.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.sopt.sweet.domain.member.entity.Member;
 import org.sopt.sweet.global.common.BaseTimeEntity;
 
@@ -27,7 +30,7 @@ public class RoomMember extends BaseTimeEntity {
     private boolean tournamentParticipation;
 
     @Builder
-    public RoomMember(Room room, Member member){
+    public RoomMember(Room room, Member member) {
         this.room = room;
         this.member = member;
     }

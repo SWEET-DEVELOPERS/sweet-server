@@ -133,12 +133,6 @@ public class GiftService {
                 .orElseThrow(() -> new EntityNotFoundException(GIFT_NOT_FOUND));
     }
 
-    private Room findGiftByIdOrThrow(Long roomId) {
-        return roomRepository.findById(roomId)
-                .orElseThrow(() -> new EntityNotFoundException(GIFT_NOT_FOUND));
-    }
-
-
     @Transactional(readOnly = true)
     public List<TournamentListsResponseDto> getTournamentGiftList(Long roomId) {
         Room room = findRoomByIdOrThrow(roomId);

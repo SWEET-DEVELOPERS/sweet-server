@@ -21,7 +21,7 @@ public class S3Config {
 
     @Bean
     @Primary
-    public BasicAWSCredentials awsCredentialsProvider(){
+    public BasicAWSCredentials awsCredentialsProvider() {
         BasicAWSCredentials basicAWSCredentials = new BasicAWSCredentials(accessKey, secretKey);
         return basicAWSCredentials;
     }

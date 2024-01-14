@@ -8,7 +8,7 @@ public record OpengraphResponseDto(
         String image
 ) {
     public static OpengraphResponseDto of(String title,
-                                          String image){
+                                          String image) {
         return OpengraphResponseDto.builder()
                 .title(title)
                 .image(image)
