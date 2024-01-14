@@ -31,12 +31,10 @@ public class OAuthController implements OAuthApi {
         return SuccessResponse.ok(loginResponse);
     }
 
-
     @PostMapping("/kakao/logout")
     public ResponseEntity<SuccessResponse<?>> kakaoLogout(@UserId Long userId) {
         oAuthService.kakaoLogout(userId);
         return SuccessResponse.ok("로그아웃 성공");
     }
-
 
 }

@@ -23,7 +23,7 @@ public record RoomInviteResponseDto(
                                            LocalDateTime deliveryDate,
                                            LocalDateTime tournamentStartDate,
                                            TournamentDuration tournamentDuration,
-                                           String invitationCode){
+                                           String invitationCode) {
         return RoomInviteResponseDto.builder()
                 .roomId(roomId)
                 .gifterNumber(gifterNumber)

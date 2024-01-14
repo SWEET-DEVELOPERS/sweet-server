@@ -4,6 +4,7 @@ import lombok.Builder;
 
 import java.time.LocalDateTime;
 import java.util.List;
+
 @Builder
 public record RoomMainResponseDto(
         int gifterNumber,
@@ -20,7 +21,7 @@ public record RoomMainResponseDto(
                                          LocalDateTime tournamentStartDate,
                                          List<RoomMyGiftDto> roomMyGiftDtoList,
                                          List<RoomFriendsGiftDto> roomFriendsGiftDtoList,
-                                         List<HotProductGiftDto> hotProductGiftDtoList){
+                                         List<HotProductGiftDto> hotProductGiftDtoList) {
         return RoomMainResponseDto.builder()
                 .gifterNumber(gifterNumber)
                 .gifteeName(gifteeName)

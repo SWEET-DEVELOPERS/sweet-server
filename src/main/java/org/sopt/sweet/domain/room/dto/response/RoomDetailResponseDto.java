@@ -21,7 +21,7 @@ public record RoomDetailResponseDto(
                                            int gifterNumber,
                                            LocalDateTime deliveryDate,
                                            LocalDateTime tournamentStartDate,
-                                           TournamentDuration tournamentDuration){
+                                           TournamentDuration tournamentDuration) {
         return RoomDetailResponseDto.builder()
                 .roomId(roomId)
                 .imageUrl(imageUrl)

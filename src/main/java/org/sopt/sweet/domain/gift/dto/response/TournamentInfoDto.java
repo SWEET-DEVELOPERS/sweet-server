@@ -4,6 +4,7 @@ import lombok.Builder;
 import org.sopt.sweet.domain.room.constant.TournamentDuration;
 
 import java.time.LocalDateTime;
+
 @Builder
 public record TournamentInfoDto(
         LocalDateTime tournamentStartDate,
@@ -17,12 +18,12 @@ public record TournamentInfoDto(
                                        TournamentDuration tournamentDuration,
                                        int TotalParticipantsCount,
                                        int ParticipantsCount) {
-       return TournamentInfoDto.builder()
-               .tournamentStartDate(tournamentStartDate)
-               .tournamentDuration(tournamentDuration)
-               .TotalParticipantsCount(TotalParticipantsCount)
-               .ParticipantsCount(ParticipantsCount)
-               .build();
+        return TournamentInfoDto.builder()
+                .tournamentStartDate(tournamentStartDate)
+                .tournamentDuration(tournamentDuration)
+                .TotalParticipantsCount(TotalParticipantsCount)
+                .ParticipantsCount(ParticipantsCount)
+                .build();
     }
 
 }

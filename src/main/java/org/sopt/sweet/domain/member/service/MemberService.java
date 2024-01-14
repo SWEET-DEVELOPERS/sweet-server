@@ -1,7 +1,6 @@
 package org.sopt.sweet.domain.member.service;
 
 import lombok.RequiredArgsConstructor;
-
 import org.sopt.sweet.domain.member.dto.response.ActiveRoomResponseDto;
 import org.sopt.sweet.domain.member.dto.response.ClosedRoomResponseDto;
 import org.sopt.sweet.domain.member.dto.response.MemberInfoDto;
@@ -89,6 +88,7 @@ public class MemberService {
                 isOwner(memberId, room.getId())
         );
     }
+
     private LocalDateTime getRoomMemberCreationTime(Room room, Long memberId) {
         Optional<RoomMember> roomMember = roomMemberRepository.findByMemberIdAndRoom(memberId, room);
         return roomMember.map(RoomMember::getCreateDate).orElse(LocalDateTime.MIN);
@@ -110,7 +110,6 @@ public class MemberService {
         List<ActiveRoomResponseDto> activeRooms = getActiveRoom(memberId);
         return activeRooms.size() > 2 ? activeRooms.subList(0, 2) : activeRooms;
     }
-
 
     public MemberInfoDto getMemberInfo(Long memberId) {
         Optional<Member> member = memberRepository.findById(memberId);

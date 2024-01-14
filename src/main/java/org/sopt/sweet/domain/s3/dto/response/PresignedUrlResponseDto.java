@@ -6,7 +6,7 @@ import lombok.Builder;
 public record PresignedUrlResponseDto(
         String presignedUrl
 ) {
-    public static PresignedUrlResponseDto of(String presignedUrl){
+    public static PresignedUrlResponseDto of(String presignedUrl) {
         return PresignedUrlResponseDto.builder()
                 .presignedUrl(presignedUrl)
                 .build();

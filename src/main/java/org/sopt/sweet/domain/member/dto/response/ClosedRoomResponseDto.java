@@ -6,5 +6,4 @@ public record ClosedRoomResponseDto(
         String gifteeName,
         int gifterNumber
 ) {
-
 }
