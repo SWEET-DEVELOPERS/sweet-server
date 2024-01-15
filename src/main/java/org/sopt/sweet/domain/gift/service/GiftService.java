@@ -27,6 +27,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static org.codehaus.groovy.runtime.DefaultGroovyMethods.collect;
 import static org.sopt.sweet.global.error.ErrorCode.*;
 
 @RequiredArgsConstructor
@@ -224,13 +225,15 @@ public class GiftService {
         checkRoomMemberNotExists(room, member);
         List<Gift> gifts = giftRepository.findByRoomAndMemberNot(room, member);
         return mapGiftsToFriendGiftDtoList(gifts);
+
     }
 
 
     private List<FriendGiftDto> mapGiftsToFriendGiftDtoList(List<Gift> gifts) {
+
         return gifts.stream()
                 .sorted(Comparator.comparing(Gift::getCreateDate).reversed())
-                .map(gift -> FriendGiftDto.of(gift))
+                .map(gift -> FriendGiftDto.of(gift, gift.getMember().getNickName()))
                 .collect(Collectors.toList());
     }
 
