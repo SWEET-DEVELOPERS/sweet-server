@@ -62,7 +62,7 @@ public interface GiftApi {
                     required = true,
                     example = "12345"
             ) @UserId Long userId,
-            @Valid @RequestBody MyGiftsRequestDto myGiftsRequestDto
+            @Valid @PathVariable Long roomId
     );
 
     @Operation(

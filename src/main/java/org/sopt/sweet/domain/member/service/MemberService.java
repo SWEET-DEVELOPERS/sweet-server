@@ -52,17 +52,18 @@ public class MemberService {
                 .map(RoomMember::getRoom)
                 .filter(room -> room.getDeliveryDate().isBefore(LocalDateTime.now()))
                 .sorted(Comparator.comparing(Room::getDeliveryDate).reversed())
-                .map(this::mapToClosedRoomResponseDto)
+                .map(room -> mapToClosedRoomResponseDto(room, memberId))
                 .collect(Collectors.toList());
         return closedRooms;
     }
 
-    private ClosedRoomResponseDto mapToClosedRoomResponseDto(Room room) {
+    private ClosedRoomResponseDto mapToClosedRoomResponseDto(Room room, Long memberId){
         return new ClosedRoomResponseDto(
                 room.getId(),
                 room.getImageUrl(),
                 room.getGifteeName(),
-                room.getGifterNumber()
+                room.getGifterNumber(),
+                isOwner(memberId, room.getId())
         );
     }
 

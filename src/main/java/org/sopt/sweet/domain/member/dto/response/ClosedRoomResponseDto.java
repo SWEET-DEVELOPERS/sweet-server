@@ -4,6 +4,7 @@ public record ClosedRoomResponseDto(
         Long roomId,
         String imageUrl,
         String gifteeName,
-        int gifterNumber
+        int gifterNumber,
+        Boolean isOwner
 ) {
 }
