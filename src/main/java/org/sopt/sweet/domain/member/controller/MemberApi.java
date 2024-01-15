@@ -112,7 +112,7 @@ public interface MemberApi {
             security = @SecurityRequirement(name = "token")
     )
     @GetMapping("/mypage")
-    public MyPageResponseDto getMyPage(
+    public ResponseEntity<SuccessResponse<?>> getMyPage(
             @Parameter(
                     description = "Authorization token에서 얻은 userId, 임의입력하면 대체됩니다.",
                     required = true,

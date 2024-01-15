@@ -5,6 +5,7 @@ import org.sopt.sweet.domain.member.dto.response.*;
 import org.sopt.sweet.domain.member.service.MemberService;
 import org.sopt.sweet.global.common.SuccessResponse;
 import org.sopt.sweet.global.config.auth.UserId;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -43,16 +44,19 @@ public class MemberController implements MemberApi {
     }
 
     @GetMapping("/mypage")
-    public MyPageResponseDto getMyPage(@UserId Long userId) {
+    public ResponseEntity<SuccessResponse<?>> getMyPage(@UserId Long userId) {
         List<ClosedRoomResponseDto> top2ClosedRooms = memberService.getTop2ClosedRooms(userId);
         List<ActiveRoomResponseDto> top2ActiveRooms = memberService.getTop2ActiveRooms(userId);
-        MemberInfoDto MemberInfo = memberService.getMemberInfo(userId);
+        MemberInfoDto memberInfo = memberService.getMemberInfo(userId);
 
-        return new MyPageResponseDto(
-                MemberInfo,
+        MyPageResponseDto myPageResponseDto = new MyPageResponseDto(
+                memberInfo,
                 top2ClosedRooms,
                 top2ActiveRooms
         );
+
+        return SuccessResponse.ok(myPageResponseDto);
     }
+
 
 }
