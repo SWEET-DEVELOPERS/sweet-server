@@ -40,9 +40,9 @@ public class SecurityConfig {
             "api/v1/swagger-ui/**",
             "api/member/token/**",
             "api/oauth/kakao/login/**",
-            "api/oauth/kakao/logout/**",
             "api/opengraph",
-            "api/room/invitations/**"
+            "api/room/invitations/**",
+            "api/oauth/reissue/**"
             };
 
     @Bean

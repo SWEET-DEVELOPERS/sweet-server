@@ -1,8 +1,10 @@
 package org.sopt.sweet.domain.member.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
 import org.sopt.sweet.domain.member.dto.response.KakaoUserInfoResponseDto;
 import org.sopt.sweet.domain.member.dto.response.MemberTokenResponseDto;
+import org.sopt.sweet.domain.member.dto.response.MemberReissueTokenResponseDto;
 import org.sopt.sweet.domain.member.service.OAuthService;
 import org.sopt.sweet.global.common.SuccessResponse;
 import org.sopt.sweet.global.config.auth.UserId;
@@ -31,10 +33,17 @@ public class OAuthController implements OAuthApi {
         return SuccessResponse.ok(loginResponse);
     }
 
-    @PostMapping("/kakao/logout")
-    public ResponseEntity<SuccessResponse<?>> kakaoLogout(@UserId Long userId) {
-        oAuthService.kakaoLogout(userId);
+
+    @PostMapping("/logout")
+    public ResponseEntity<SuccessResponse<?>> logout(@UserId Long userId) {
+        oAuthService.logout(userId);
         return SuccessResponse.ok("로그아웃 성공");
+    }
+
+    @PostMapping("/reissue")
+    public ResponseEntity<SuccessResponse<?>> reissueToken(@RequestBody String accessToken) throws JsonProcessingException {
+        MemberReissueTokenResponseDto memberToken = oAuthService.reissue(accessToken);
+        return SuccessResponse.ok(memberToken);
     }
 
 }

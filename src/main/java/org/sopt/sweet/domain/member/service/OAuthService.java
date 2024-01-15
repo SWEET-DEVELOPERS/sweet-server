@@ -1,11 +1,13 @@
 package org.sopt.sweet.domain.member.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import lombok.RequiredArgsConstructor;
 import org.sopt.sweet.domain.member.constant.SocialType;
 import org.sopt.sweet.domain.member.dto.response.KakaoUserInfoResponseDto;
+import org.sopt.sweet.domain.member.dto.response.MemberReissueTokenResponseDto;
 import org.sopt.sweet.domain.member.dto.response.MemberTokenResponseDto;
 import org.sopt.sweet.domain.member.entity.Member;
 import org.sopt.sweet.domain.member.entity.OAuthToken;
@@ -143,12 +145,25 @@ public class OAuthService {
         return new MemberTokenResponseDto(accessToken, refreshToken);
     }
 
-    public void kakaoLogout(Long memberId) {
+
+    public void logout(Long memberId) {
         String redisKey = "RT:" + memberId;
         redisTemplate.delete(redisKey);
-
-        System.out.println("카카오 로그아웃 성공 :" + memberId);
     }
+
+    public MemberReissueTokenResponseDto reissue(String accessToken) throws JsonProcessingException {
+        Long memberId = Long.valueOf(jwtProvider.decodeJwtPayloadSubject(accessToken));
+
+        String redisKey = "RT:" + memberId;
+        String storedRefreshToken = redisTemplate.opsForValue().get(redisKey);
+        jwtProvider.validateRefreshToken(storedRefreshToken);
+
+        String newAccessToken = issueNewAccessToken(memberId);
+        String newRefreshToken = issueNewRefreshToken(memberId);
+        redisTemplate.opsForValue().set(redisKey, newRefreshToken, REFRESH_TOKEN_EXPIRE_TIME, TimeUnit.SECONDS);
+        return MemberReissueTokenResponseDto.of(newAccessToken);
+    }
+
 
 }
 
