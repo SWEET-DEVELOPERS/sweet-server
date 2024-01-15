@@ -12,18 +12,18 @@ public record FriendGiftDto(
         String name,
         int cost,
         String url,
-        LocalDateTime createDate
+        String giftOwner
 ) {
 
-    public static FriendGiftDto of(Gift gift) {
-        return new FriendGiftDto(
-                gift.getId(),
-                gift.getImageUrl(),
-                gift.getName(),
-                gift.getCost(),
-                gift.getUrl(),
-                gift.getCreateDate()
-        );
+    public static FriendGiftDto of(Gift gift, String giftOwner) {
+        return FriendGiftDto.builder()
+                .giftId(gift.getId())
+                .imageUrl(gift.getImageUrl())
+                .name(gift.getName())
+                .cost(gift.getCost())
+                .url(gift.getUrl())
+                .giftOwner(giftOwner)
+                .build();
     }
 
 }
