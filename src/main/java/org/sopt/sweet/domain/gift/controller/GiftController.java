@@ -28,11 +28,12 @@ public class GiftController implements GiftApi {
         return SuccessResponse.created(null);
     }
 
-    @GetMapping("/my")
-    public ResponseEntity<SuccessResponse<?>> getMyGift(@UserId Long userId, @RequestBody MyGiftsRequestDto myGiftsRequestDto) {
-        final MyGiftsResponseDto myGiftsResponseDto = giftService.getMyGift(userId, myGiftsRequestDto);
+    @GetMapping("/my-gift/{roomId}")
+    public ResponseEntity<SuccessResponse<?>> getMyGift(@UserId Long userId, @PathVariable Long roomId) {
+        final MyGiftsResponseDto myGiftsResponseDto = giftService.getMyGift(userId, roomId);
         return SuccessResponse.ok(myGiftsResponseDto);
     }
+
 
     @DeleteMapping("/my/{giftId}")
     public ResponseEntity<SuccessResponse<?>> deleteMyGift(@UserId Long userId, @PathVariable Long giftId) {
@@ -52,13 +53,13 @@ public class GiftController implements GiftApi {
         return SuccessResponse.created(null);
     }
 
-    @GetMapping("tournament-info/{roomId}")
+    @GetMapping("/tournament-info/{roomId}")
     public ResponseEntity<SuccessResponse<?>> getTournamentInfo(@UserId Long userId, @PathVariable Long roomId) {
         final TournamentInfoDto tournamentInfo = giftService.getTournamentInfo(userId, roomId);
         return SuccessResponse.ok(tournamentInfo);
     }
 
-    @GetMapping("ranking/{roomId}")
+    @GetMapping("/ranking/{roomId}")
     public ResponseEntity<SuccessResponse<?>> getRanking(@UserId Long userId, @PathVariable Long roomId) {
         final List<TournamentRankingResponseDto> ranking = giftService.getTournamentRanking(roomId);
         return SuccessResponse.ok(ranking);

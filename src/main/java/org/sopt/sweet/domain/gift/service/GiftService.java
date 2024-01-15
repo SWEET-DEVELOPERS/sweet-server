@@ -53,9 +53,9 @@ public class GiftService {
     }
 
     @Transactional(readOnly = true)
-    public MyGiftsResponseDto getMyGift(Long memberId, MyGiftsRequestDto myGiftsRequestDto) {
+    public MyGiftsResponseDto getMyGift(Long memberId, Long roomId) {
         Member member = findMemberByIdOrThrow(memberId);
-        Room room = findRoomByIdOrThrow(myGiftsRequestDto.roomId());
+        Room room = findRoomByIdOrThrow(roomId);
         checkRoomMemberNotExists(room, member);
         List<Gift> gifts = giftRepository.findByRoomAndMember(room, member);
         List<MyGiftDto> myGiftsDtoList = mapGiftsToMyGiftDtoList(gifts);
