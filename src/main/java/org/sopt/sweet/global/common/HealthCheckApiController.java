@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class HealthCheckApiController {
-
     @Hidden
     @RequestMapping("/")
     public String SweetServer() {

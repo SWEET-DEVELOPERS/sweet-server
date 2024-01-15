@@ -46,6 +46,4 @@ public class OAuthController implements OAuthApi {
         return SuccessResponse.ok(memberToken);
     }
 
-
-
 }

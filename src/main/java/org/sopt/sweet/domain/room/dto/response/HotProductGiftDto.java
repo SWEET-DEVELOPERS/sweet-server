@@ -10,7 +10,7 @@ public record HotProductGiftDto(
         String url,
         int cost
 ) {
-    public static HotProductGiftDto of(Long productId, String imageUrl, String name, String url, int cost){
+    public static HotProductGiftDto of(Long productId, String imageUrl, String name, String url, int cost) {
         return HotProductGiftDto.builder()
                 .productId(productId)
                 .imageUrl(imageUrl)

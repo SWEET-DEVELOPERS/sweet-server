@@ -11,7 +11,7 @@ public record RoomMembersResponseDto(
         List<RoomMemberDto> roomMemberDtoList
 ) {
     public static RoomMembersResponseDto of(Long myId, int gifterNumber,
-                                            List<RoomMemberDto> roomMemberDtoList){
+                                            List<RoomMemberDto> roomMemberDtoList) {
         return RoomMembersResponseDto.builder()
                 .myId(myId)
                 .gifterNumber(gifterNumber)

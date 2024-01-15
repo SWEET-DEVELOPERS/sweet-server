@@ -1,7 +1,6 @@
 package org.sopt.sweet.domain.product.service;
 
 import lombok.RequiredArgsConstructor;
-import org.sopt.sweet.domain.gift.repository.GiftRepository;
 import org.sopt.sweet.domain.member.entity.Member;
 import org.sopt.sweet.domain.member.repository.MemberRepository;
 import org.sopt.sweet.domain.product.dto.response.HotProductDto;
@@ -9,7 +8,6 @@ import org.sopt.sweet.domain.product.dto.response.HotProductsResponseDto;
 import org.sopt.sweet.domain.product.entity.Product;
 import org.sopt.sweet.domain.product.repository.ProductRepository;
 import org.sopt.sweet.domain.room.entity.Room;
-import org.sopt.sweet.domain.room.repository.RoomMemberRepository;
 import org.sopt.sweet.domain.room.repository.RoomRepository;
 import org.sopt.sweet.global.error.exception.EntityNotFoundException;
 import org.springframework.stereotype.Service;
@@ -30,7 +28,7 @@ public class ProductService {
     private final ProductRepository productRepository;
     private final RoomRepository roomRepository;
 
-    public HotProductsResponseDto getHotGift(Long memberId, Long roomId){
+    public HotProductsResponseDto getHotGift(Long memberId, Long roomId) {
         Member member = findMemberByIdOrThrow(memberId);
         Room room = findRoomByIdOrThrow(roomId);
         List<Product> allProducts = productRepository.findAll();

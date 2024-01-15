@@ -20,7 +20,7 @@ public class CorsConfig {
         config.addAllowedOrigin("https://sweetgift.vercel.app");
         config.addAllowedHeader("*");
         config.setAllowedMethods(Arrays.asList("HEAD", "GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
-        source.registerCorsConfiguration("/**",config);
+        source.registerCorsConfiguration("/**", config);
         return new CorsFilter(source);
     }
 }

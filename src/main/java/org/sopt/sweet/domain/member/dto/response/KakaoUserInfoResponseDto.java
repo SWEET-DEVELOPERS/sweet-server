@@ -1,8 +1,6 @@
 package org.sopt.sweet.domain.member.dto.response;
 
-
 import org.sopt.sweet.domain.member.entity.Member;
-
 
 public record KakaoUserInfoResponseDto(
         Long memberId,
@@ -10,8 +8,6 @@ public record KakaoUserInfoResponseDto(
         String nickname,
         String profileImage
 ) {
-
-
     KakaoUserInfoResponseDto of(Member member) {
         return new KakaoUserInfoResponseDto(
                 member.getId(),
@@ -20,6 +16,4 @@ public record KakaoUserInfoResponseDto(
                 member.getProfileImg()
         );
     }
-
-
 }

@@ -123,7 +123,6 @@ public class OAuthService {
             memberRepository.save(member);
             return new KakaoUserInfoResponseDto(member.getId(), socialId, nickname, profileImage);
         }
-
         return new KakaoUserInfoResponseDto(existMember.getId(), socialId, nickname, profileImage);
     }
 
@@ -132,7 +131,6 @@ public class OAuthService {
     public MemberTokenResponseDto saveToken(Long memberId) {
         String refreshToken = null;
         String accessToken = issueNewAccessToken(memberId);
-
         String redisKey = "RT:" + memberId;
         String storedRefreshToken = redisTemplate.opsForValue().get(redisKey);
 
@@ -144,9 +142,9 @@ public class OAuthService {
         }
 
         System.out.println("카카오 로그인 성공 memberId: " + memberId + " accessToken :" + accessToken + " refreshToken: " + refreshToken);
-
         return new MemberTokenResponseDto(accessToken, refreshToken);
     }
+
 
     public void logout(Long memberId) {
         String redisKey = "RT:" + memberId;

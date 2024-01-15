@@ -19,8 +19,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import java.util.Map;
-
 @Tag(name = "선물", description = "선물 관련 API")
 public interface GiftApi {
     @Operation(

@@ -1,9 +1,12 @@
 package org.sopt.sweet.domain.gift.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
-import org.sopt.sweet.domain.room.entity.Room;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.sopt.sweet.domain.member.entity.Member;
+import org.sopt.sweet.domain.room.entity.Room;
 import org.sopt.sweet.global.common.BaseTimeEntity;
 
 @Getter

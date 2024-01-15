@@ -13,7 +13,7 @@ public record TournamentRankingResponseDto(
 
 ) {
 
-    public static TournamentRankingResponseDto of(  Long ranking,Long giftId, String imageUrl, String name, int cost, String url) {
+    public static TournamentRankingResponseDto of(Long ranking, Long giftId, String imageUrl, String name, int cost, String url) {
         return TournamentRankingResponseDto.builder()
                 .ranking(ranking)
                 .giftId(giftId)

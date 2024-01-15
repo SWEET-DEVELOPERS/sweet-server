@@ -7,7 +7,7 @@ public record CreateRoomResponseDto(
         Long roomId,
         String invitationCode
 ) {
-    public static CreateRoomResponseDto of(Long roomId, String invitationCode){
+    public static CreateRoomResponseDto of(Long roomId, String invitationCode) {
         return CreateRoomResponseDto.builder()
                 .roomId(roomId)
                 .invitationCode(invitationCode)
