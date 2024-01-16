@@ -19,7 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-
+//빌드 테스트
 @Tag(name = "선물", description = "선물 관련 API")
 public interface GiftApi {
     @Operation(
