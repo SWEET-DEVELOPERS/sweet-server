@@ -18,6 +18,7 @@ import org.sopt.sweet.global.config.auth.UserId;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 @Tag(name = "선물", description = "선물 관련 API")
 public interface GiftApi {
@@ -34,6 +35,7 @@ public interface GiftApi {
             },
             security = @SecurityRequirement(name = "token")
     )
+    @PostMapping
     ResponseEntity<SuccessResponse<?>> createNewGift(
             @Parameter(
                     description = "authorization token에서 얻은 userId, 임의입력하면 대체됩니다.",
@@ -56,6 +58,7 @@ public interface GiftApi {
             },
             security = @SecurityRequirement(name = "token")
     )
+    @GetMapping("/my/{roomId}")
     ResponseEntity<SuccessResponse<?>> getMyGift(
             @Parameter(
                     description = "authorization token에서 얻은 userId, 임의입력하면 대체됩니다.",
@@ -78,6 +81,7 @@ public interface GiftApi {
             },
             security = @SecurityRequirement(name = "token")
     )
+    @GetMapping("/my/{giftId}")
     ResponseEntity<SuccessResponse<?>> deleteMyGift(
             @Parameter(
                     description = "authorization token에서 얻은 userId, 임의입력하면 대체됩니다.",
@@ -112,6 +116,7 @@ public interface GiftApi {
             },
             security = @SecurityRequirement(name = "token")
     )
+    @GetMapping("/tournament/{roomId}")
     ResponseEntity<SuccessResponse<?>> getTournamentGiftList(
             @Parameter(
                     description = "authorization token에서 얻은 userId, 임의입력하면 대체됩니다.",
@@ -138,6 +143,7 @@ public interface GiftApi {
             },
             security = @SecurityRequirement(name = "token")
     )
+    @GetMapping("/tournament-score")
     ResponseEntity<SuccessResponse<?>> evaluateTournamentScore(
             @Parameter(
                     description = "authorization token에서 얻은 userId, 임의입력하면 대체됩니다.",
@@ -171,6 +177,7 @@ public interface GiftApi {
             },
             security = @SecurityRequirement(name = "token")
     )
+    @GetMapping("/tournament-info/{roomId}")
     ResponseEntity<SuccessResponse<?>> getTournamentInfo(
             @Parameter(
                     description = "authorization token에서 얻은 userId, 임의입력하면 대체됩니다.",
