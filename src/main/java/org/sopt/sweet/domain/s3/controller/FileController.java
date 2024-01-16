@@ -6,10 +6,7 @@ import org.sopt.sweet.domain.s3.dto.response.PresignedUrlResponseDto;
 import org.sopt.sweet.domain.s3.service.FileService;
 import org.sopt.sweet.global.common.SuccessResponse;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RequestMapping("/api")
@@ -19,8 +16,8 @@ public class FileController {
     private final FileService fileService;
 
     @PostMapping("/presigned-url")
-    public ResponseEntity<SuccessResponse<?>> getPresignedURL(@RequestBody PresignedUrlRequestDto presignedURLRequestDto) {
-        final PresignedUrlResponseDto presignedURLResponseDto = fileService.getPresignedURL(presignedURLRequestDto);
+    public ResponseEntity<SuccessResponse<?>> getPresignedURL(@RequestParam String fileName) {
+        final PresignedUrlResponseDto presignedURLResponseDto = fileService.getPresignedURL(fileName);
         return SuccessResponse.created(presignedURLResponseDto);
     }
 }
