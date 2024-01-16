@@ -148,10 +148,20 @@ public class GiftService {
     }
 
     public void evaluateTournamentScore(TournamentScoreRequestDto tournamentScoreRequestDto) {
+        Long firstGiftId = tournamentScoreRequestDto.firstGiftId();
+        Long secondGiftId = tournamentScoreRequestDto.secondGiftId();
+        Long finalGiftId = tournamentScoreRequestDto.finalGiftId();
 
-        Gift firstPlaceGift = updateScore(tournamentScoreRequestDto.firstPlaceGiftId(), FIRST_PLACE_SCORE);
-        Gift secondPlaceGift = updateScore(tournamentScoreRequestDto.secondPlaceGiftId(), SECOND_PLACE_SCORE);
+        Gift firstPlaceGift;
+        Gift secondPlaceGift;
 
+        if (finalGiftId != null && finalGiftId.equals(firstGiftId)) {
+            firstPlaceGift = updateScore(firstGiftId, FIRST_PLACE_SCORE);
+            secondPlaceGift = updateScore(secondGiftId, SECOND_PLACE_SCORE);
+        } else {
+            firstPlaceGift = updateScore(secondGiftId, FIRST_PLACE_SCORE);
+            secondPlaceGift = updateScore(firstGiftId, SECOND_PLACE_SCORE);
+        }
         giftRepository.save(firstPlaceGift);
         giftRepository.save(secondPlaceGift);
     }
