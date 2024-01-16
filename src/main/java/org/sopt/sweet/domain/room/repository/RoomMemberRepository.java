@@ -21,4 +21,5 @@ public interface RoomMemberRepository extends JpaRepository<RoomMember, Long> {
 
     Optional<RoomMember> findByMemberIdAndRoom(Long memberId, Room room);
 
+
 }

@@ -63,8 +63,8 @@ public class RoomController implements RoomApi {
 
     @GetMapping("/{roomId}/members")
     public ResponseEntity<SuccessResponse<?>> getRoomMembers(@UserId Long userId, @PathVariable Long roomId) {
-        final RoomMembersResponseDto roomMembersResponseDto = roomService.getRoomMembers(userId, roomId);
-        return SuccessResponse.ok(roomMembersResponseDto);
+        final RoomMemberDetailDto roomMemberDetailDto = roomService.getRoomMembers(userId, roomId);
+        return SuccessResponse.ok(roomMemberDetailDto);
     }
 
     @DeleteMapping("/{roomId}/members/{memberId}")
