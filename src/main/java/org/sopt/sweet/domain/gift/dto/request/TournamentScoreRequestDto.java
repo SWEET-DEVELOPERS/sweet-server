@@ -5,13 +5,15 @@ import org.sopt.sweet.domain.gift.dto.response.TournamentListsResponseDto;
 
 @Builder
 public record TournamentScoreRequestDto(
-        Long firstPlaceGiftId,
-        Long secondPlaceGiftId
+        Long firstGiftId,
+        Long secondGiftId,
+        Long finalGiftId
 ) {
-    public static TournamentScoreRequestDto of(Long firstPlaceGiftId, Long secondPlaceGiftId) {
+    public static TournamentScoreRequestDto of(Long firstGiftId, Long secondGiftId, Long finalGiftId) {
         return TournamentScoreRequestDto.builder()
-                .firstPlaceGiftId(firstPlaceGiftId)
-                .secondPlaceGiftId(secondPlaceGiftId)
+                .firstGiftId(firstGiftId)
+                .secondGiftId(secondGiftId)
+                .finalGiftId(finalGiftId)
                 .build();
     }
 
