@@ -25,8 +25,6 @@ public interface FileApi {
                     description = "생성하고자 하는 파일 이름",
                     required = true,
                     content = @Content(
-                            schema = @Schema(implementation = PresignedUrlRequestDto.class,
-                                    required = true),
                             mediaType = "application/json"
                     )
             ) String fileName
