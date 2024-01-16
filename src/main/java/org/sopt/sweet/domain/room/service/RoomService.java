@@ -145,13 +145,15 @@ public class RoomService {
     }
 
     @Transactional(readOnly = true)
-    public RoomMembersResponseDto getRoomMembers(Long memberId, Long roomId) {
+    public RoomMemberDetailDto getRoomMembers(Long memberId, Long roomId) {
         Member member = findMemberByIdOrThrow(memberId);
         Room room = findByIdOrThrow(roomId);
         checkRoomHost(member, room);
         List<RoomMember> roomMembers = roomMemberRepository.findByRoomId(roomId);
         List<RoomMemberDto> roomMemberDtoList = mapToRoomMemberDtoList(roomMembers);
-        return RoomMembersResponseDto.of(memberId, room.getGifterNumber(), roomMemberDtoList);
+        RoomDto roomDto = new RoomDto(room.getGifteeName(), room.getGifterNumber());
+        OwnerDto ownerDto = new OwnerDto(room.getHost().getId(), room.getHost().getProfileImg(),room.getHost().getNickName());
+        return RoomMemberDetailDto.of(roomDto, ownerDto, roomMemberDtoList);
     }
 
     public void deleteRoomMember(Long memberId, Long roomId, Long deleteMemberId) {
@@ -166,7 +168,9 @@ public class RoomService {
     }
 
     private List<RoomMemberDto> mapToRoomMemberDtoList(List<RoomMember> roomMembers) {
+        Long hostId = roomMembers.get(0).getRoom().getHost().getId();
         return roomMembers.stream()
+                .filter(roomMember -> !roomMember.getMember().getId().equals(hostId))
                 .map(this::mapToRoomMemberDto)
                 .collect(Collectors.toList());
     }
