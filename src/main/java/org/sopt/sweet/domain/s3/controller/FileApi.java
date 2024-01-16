@@ -22,13 +22,13 @@ public interface FileApi {
     @Operation(summary = "presigned URL 발급 API")
     ResponseEntity<SuccessResponse<?>> getPresignedURL(
             @Parameter(
-                    description = "request dto",
+                    description = "생성하고자 하는 파일 이름",
                     required = true,
                     content = @Content(
                             schema = @Schema(implementation = PresignedUrlRequestDto.class,
                                     required = true),
                             mediaType = "application/json"
                     )
-            ) PresignedUrlRequestDto presignedURLRequestDto
+            ) String fileName
     );
 }

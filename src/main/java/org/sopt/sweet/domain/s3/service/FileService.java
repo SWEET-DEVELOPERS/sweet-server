@@ -14,8 +14,8 @@ public class FileService {
 
     private final FileConfig fileConfig;
 
-    public PresignedUrlResponseDto getPresignedURL(PresignedUrlRequestDto presignedURLRequestDto) {
-        String URL = fileConfig.getPreSignedUrl("roomImage", presignedURLRequestDto.fileName());
+    public PresignedUrlResponseDto getPresignedURL(String fileName) {
+        String URL = fileConfig.getPreSignedUrl("roomImage", fileName);
         return PresignedUrlResponseDto.of(URL);
     }
 
