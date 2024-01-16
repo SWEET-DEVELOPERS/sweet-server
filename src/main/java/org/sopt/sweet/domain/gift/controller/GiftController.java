@@ -28,7 +28,7 @@ public class GiftController implements GiftApi {
         return SuccessResponse.created(null);
     }
 
-    @GetMapping("/my-gift/{roomId}")
+    @GetMapping("/my/{roomId}")
     public ResponseEntity<SuccessResponse<?>> getMyGift(@UserId Long userId, @PathVariable Long roomId) {
         final MyGiftsResponseDto myGiftsResponseDto = giftService.getMyGift(userId, roomId);
         return SuccessResponse.ok(myGiftsResponseDto);
@@ -41,13 +41,13 @@ public class GiftController implements GiftApi {
         return SuccessResponse.ok(null);
     }
 
-    @GetMapping("/tonermant/{roomId}")
+    @GetMapping("/tournament/{roomId}")
     public ResponseEntity<SuccessResponse<?>> getTournamentGiftList(@UserId Long userId, @PathVariable Long roomId) {
         List<TournamentListsResponseDto> tournamentGiftList = giftService.getTournamentGiftList(roomId);
         return SuccessResponse.ok(tournamentGiftList);
     }
 
-    @PostMapping("/tonermant-score")
+    @PostMapping("/tournament-score")
     public ResponseEntity<SuccessResponse<?>> evaluateTournamentScore(@UserId Long userId, @RequestBody TournamentScoreRequestDto tournamentScoreRequestDto) {
         giftService.evaluateTournamentScore(tournamentScoreRequestDto);
         return SuccessResponse.created(null);
