@@ -10,7 +10,6 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.sopt.sweet.domain.room.dto.request.CreateRoomRequestDto;
-import org.sopt.sweet.domain.room.dto.request.JoinRoomRequestDto;
 import org.sopt.sweet.domain.room.dto.request.RoomImageRequestDto;
 import org.sopt.sweet.domain.room.dto.request.RoomNameRequestDto;
 import org.sopt.sweet.global.common.SuccessResponse;
