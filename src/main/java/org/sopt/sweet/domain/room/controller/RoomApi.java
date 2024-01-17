@@ -10,13 +10,13 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.sopt.sweet.domain.room.dto.request.CreateRoomRequestDto;
-import org.sopt.sweet.domain.room.dto.request.JoinRoomRequestDto;
 import org.sopt.sweet.domain.room.dto.request.RoomImageRequestDto;
 import org.sopt.sweet.domain.room.dto.request.RoomNameRequestDto;
 import org.sopt.sweet.global.common.SuccessResponse;
 import org.sopt.sweet.global.config.auth.UserId;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Tag(name = "선물방", description = "선물방 관련 API")
 public interface RoomApi {
@@ -82,7 +82,7 @@ public interface RoomApi {
                     required = true,
                     example = "12345"
             ) @UserId Long userId,
-            @Valid @RequestBody JoinRoomRequestDto joinRoomRequestDto
+            @RequestParam String invitationCode
     );
 
     @Operation(

@@ -2,7 +2,6 @@ package org.sopt.sweet.domain.room.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.sopt.sweet.domain.room.dto.request.CreateRoomRequestDto;
-import org.sopt.sweet.domain.room.dto.request.JoinRoomRequestDto;
 import org.sopt.sweet.domain.room.dto.request.RoomImageRequestDto;
 import org.sopt.sweet.domain.room.dto.request.RoomNameRequestDto;
 import org.sopt.sweet.domain.room.dto.response.*;
@@ -32,8 +31,8 @@ public class RoomController implements RoomApi {
     }
 
     @PostMapping("/participation")
-    public ResponseEntity<SuccessResponse<?>> joinRoom(@UserId Long userId, @RequestBody JoinRoomRequestDto joinRoomRequestDto) {
-        final JoinRoomResponseDto joinRoomResponseDto = roomService.findAndJoinRoom(userId, joinRoomRequestDto);
+    public ResponseEntity<SuccessResponse<?>> joinRoom(@UserId Long userId, @RequestParam String invitationCode) {
+        final JoinRoomResponseDto joinRoomResponseDto = roomService.findAndJoinRoom(userId, invitationCode);
         return SuccessResponse.ok(joinRoomResponseDto);
     }
 

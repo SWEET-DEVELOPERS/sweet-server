@@ -1,7 +1,6 @@
 package org.sopt.sweet.domain.room.service;
 
 import lombok.RequiredArgsConstructor;
-import org.hibernate.internal.util.collections.StandardStack;
 import org.sopt.sweet.domain.gift.entity.Gift;
 import org.sopt.sweet.domain.gift.repository.GiftRepository;
 import org.sopt.sweet.domain.member.entity.Member;
@@ -9,7 +8,6 @@ import org.sopt.sweet.domain.member.repository.MemberRepository;
 import org.sopt.sweet.domain.product.entity.Product;
 import org.sopt.sweet.domain.product.repository.ProductRepository;
 import org.sopt.sweet.domain.room.dto.request.CreateRoomRequestDto;
-import org.sopt.sweet.domain.room.dto.request.JoinRoomRequestDto;
 import org.sopt.sweet.domain.room.dto.request.RoomImageRequestDto;
 import org.sopt.sweet.domain.room.dto.request.RoomNameRequestDto;
 import org.sopt.sweet.domain.room.dto.response.*;
@@ -90,9 +88,9 @@ public class RoomService {
         );
     }
 
-    public JoinRoomResponseDto findAndJoinRoom(Long memberId, JoinRoomRequestDto joinRoomRequestDto) {
+    public JoinRoomResponseDto findAndJoinRoom(Long memberId, String invitationCode) {
         Member member = findMemberByIdOrThrow(memberId);
-        Room room = findByInvitationOrThrow(joinRoomRequestDto.invitationCode());
+        Room room = findByInvitationOrThrow(invitationCode);
         joinRoom(member, room);
         return JoinRoomResponseDto.of(room.getId());
     }
