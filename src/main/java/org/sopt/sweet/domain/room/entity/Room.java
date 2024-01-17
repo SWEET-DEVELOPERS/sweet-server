@@ -18,7 +18,6 @@ import java.time.LocalDateTime;
 public class Room extends BaseTimeEntity {
 
     private static final int DEFAULT_NUMBER = 1;
-    private static final String DEFAULT_IMAGE_URL = "https://sweet-gift-bucket.s3.ap-northeast-2.amazonaws.com/sweet.png";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -50,7 +49,7 @@ public class Room extends BaseTimeEntity {
     @Builder
     public Room(String gifteeName, String imageUrl, LocalDateTime deliveryDate, LocalDateTime tournamentStartDate, TournamentDuration tournamentDuration, String invitationCode, Member host) {
         this.gifteeName = gifteeName;
-        this.imageUrl = DEFAULT_IMAGE_URL;
+        this.imageUrl = imageUrl;
         this.gifterNumber = DEFAULT_NUMBER;
         this.deliveryDate = deliveryDate;
         this.tournamentStartDate = tournamentStartDate;
