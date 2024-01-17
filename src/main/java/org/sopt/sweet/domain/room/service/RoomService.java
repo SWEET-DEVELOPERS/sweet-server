@@ -1,6 +1,7 @@
 package org.sopt.sweet.domain.room.service;
 
 import lombok.RequiredArgsConstructor;
+import org.hibernate.internal.util.collections.StandardStack;
 import org.sopt.sweet.domain.gift.entity.Gift;
 import org.sopt.sweet.domain.gift.repository.GiftRepository;
 import org.sopt.sweet.domain.member.entity.Member;
@@ -51,9 +52,10 @@ public class RoomService {
         Member host = findMemberByIdOrThrow(memberId);
         validateName(createRoomRequestDto.gifteeName());
         String invitationCode = generateUniqueInvitationCode();
+        System.out.println("이미지Url " + createRoomRequestDto.imageUrl() +"/");
         Room room = Room.builder()
                 .gifteeName(createRoomRequestDto.gifteeName())
-                .imageUrl(createRoomRequestDto.imageUrl() != null ? createRoomRequestDto.imageUrl() : DEFAULT_IMAGE_URL)
+                .imageUrl((createRoomRequestDto.imageUrl() != null && !createRoomRequestDto.imageUrl().trim().isEmpty()) ? createRoomRequestDto.imageUrl() : DEFAULT_IMAGE_URL)
                 .deliveryDate(createRoomRequestDto.deliveryDate())
                 .tournamentStartDate(createRoomRequestDto.tournamentStartDate())
                 .tournamentDuration(createRoomRequestDto.tournamentDuration())
