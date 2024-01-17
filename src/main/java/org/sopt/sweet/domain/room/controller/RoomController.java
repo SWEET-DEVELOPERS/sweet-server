@@ -32,8 +32,8 @@ public class RoomController implements RoomApi {
     }
 
     @PostMapping("/participation")
-    public ResponseEntity<SuccessResponse<?>> joinRoom(@UserId Long userId, @RequestBody JoinRoomRequestDto joinRoomRequestDto) {
-        final JoinRoomResponseDto joinRoomResponseDto = roomService.findAndJoinRoom(userId, joinRoomRequestDto);
+    public ResponseEntity<SuccessResponse<?>> joinRoom(@UserId Long userId, @RequestParam String invitationCode) {
+        final JoinRoomResponseDto joinRoomResponseDto = roomService.findAndJoinRoom(userId, invitationCode);
         return SuccessResponse.ok(joinRoomResponseDto);
     }
 

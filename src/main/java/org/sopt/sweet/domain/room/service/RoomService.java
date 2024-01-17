@@ -90,9 +90,9 @@ public class RoomService {
         );
     }
 
-    public JoinRoomResponseDto findAndJoinRoom(Long memberId, JoinRoomRequestDto joinRoomRequestDto) {
+    public JoinRoomResponseDto findAndJoinRoom(Long memberId, String invitationCode) {
         Member member = findMemberByIdOrThrow(memberId);
-        Room room = findByInvitationOrThrow(joinRoomRequestDto.invitationCode());
+        Room room = findByInvitationOrThrow(invitationCode);
         joinRoom(member, room);
         return JoinRoomResponseDto.of(room.getId());
     }
