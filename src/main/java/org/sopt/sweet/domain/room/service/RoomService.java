@@ -43,6 +43,7 @@ public class RoomService {
     private final GiftRepository giftRepository;
     private final ProductRepository productRepository;
     private static final String CHARACTERS = "abcdefghijklmnopqrstuvwxyz0123456789";
+    private static final String DEFAULT_IMAGE_URL = "https://sweet-gift-bucket.s3.ap-northeast-2.amazonaws.com/sweet.png";
     private static final int CODE_LENGTH = 6;
     private static final int MAX_GIFTER_NUMBER = 8;
 
@@ -52,7 +53,7 @@ public class RoomService {
         String invitationCode = generateUniqueInvitationCode();
         Room room = Room.builder()
                 .gifteeName(createRoomRequestDto.gifteeName())
-                .imageUrl(createRoomRequestDto.imageUrl())
+                .imageUrl(createRoomRequestDto.imageUrl() != null ? createRoomRequestDto.imageUrl() : DEFAULT_IMAGE_URL)
                 .deliveryDate(createRoomRequestDto.deliveryDate())
                 .tournamentStartDate(createRoomRequestDto.tournamentStartDate())
                 .tournamentDuration(createRoomRequestDto.tournamentDuration())
@@ -152,7 +153,7 @@ public class RoomService {
         List<RoomMember> roomMembers = roomMemberRepository.findByRoomId(roomId);
         List<RoomMemberDto> roomMemberDtoList = mapToRoomMemberDtoList(roomMembers);
         RoomDto roomDto = new RoomDto(room.getGifteeName(), room.getGifterNumber());
-        OwnerDto ownerDto = new OwnerDto(room.getHost().getId(), room.getHost().getProfileImg(),room.getHost().getNickName());
+        OwnerDto ownerDto = new OwnerDto(room.getHost().getId(), room.getHost().getProfileImg(), room.getHost().getNickName());
         return RoomMemberDetailDto.of(roomDto, ownerDto, roomMemberDtoList);
     }
 
