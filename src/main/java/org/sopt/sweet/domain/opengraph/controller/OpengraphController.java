@@ -16,7 +16,7 @@ public class OpengraphController implements OpengraphAPI {
     private final OpengraphService opengraphService;
 
     @ResponseBody
-    @GetMapping
+    @PostMapping
     public ResponseEntity<SuccessResponse<?>> getOpenGraph(@RequestBody OpengraphRequestDto opengraphRequestDto) {
         OpengraphResponseDto opengraphResponseDto = opengraphService.getData(opengraphRequestDto);
         return SuccessResponse.ok(opengraphResponseDto);
