@@ -8,7 +8,8 @@ public record ActiveRoomResponseDto(
         String gifteeName,
         int gifterNumber,
         LocalDateTime tournamentStartDate,
-        Boolean isOwner
+        Boolean isOwner,
+        boolean tournamentParticipation
 
 ) {
 }
