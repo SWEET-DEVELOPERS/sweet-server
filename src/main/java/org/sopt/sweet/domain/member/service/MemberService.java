@@ -86,8 +86,15 @@ public class MemberService {
                 room.getGifteeName(),
                 room.getGifterNumber(),
                 room.getTournamentStartDate(),
-                isOwner(memberId, room.getId())
+                isOwner(memberId, room.getId()),
+                getRoomMemberParticipation(room, memberId)
+
         );
+    }
+
+    private boolean getRoomMemberParticipation(Room room, Long memberId) {
+        Optional<RoomMember> roomMember = roomMemberRepository.findByMemberIdAndRoom(memberId, room);
+        return roomMember.map(RoomMember::isTournamentParticipation).orElse(false);
     }
 
     private LocalDateTime getRoomMemberCreationTime(Room room, Long memberId) {
