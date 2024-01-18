@@ -1,7 +1,6 @@
 package org.sopt.sweet.domain.room.service;
 
 import lombok.RequiredArgsConstructor;
-import org.hibernate.internal.util.collections.StandardStack;
 import org.sopt.sweet.domain.gift.entity.Gift;
 import org.sopt.sweet.domain.gift.repository.GiftRepository;
 import org.sopt.sweet.domain.member.entity.Member;
@@ -149,14 +148,19 @@ public class RoomService {
 
     @Transactional(readOnly = true)
     public RoomMemberDetailDto getRoomMembers(Long memberId, Long roomId) {
+        List<RoomMember> roomMembers = roomMemberRepository.findByRoomId(roomId);
+        List<RoomMemberDto> roomMemberDtoList = mapToRoomMemberDtoList(roomMembers);
+        return RoomMemberDetailDto.of(roomMemberDtoList);
+    }
+
+    @Transactional(readOnly = true)
+    public RoomOwnerDetailDto getRoom(Long memberId, Long roomId) {
         Member member = findMemberByIdOrThrow(memberId);
         Room room = findByIdOrThrow(roomId);
         checkRoomHost(member, room);
-        List<RoomMember> roomMembers = roomMemberRepository.findByRoomId(roomId);
-        List<RoomMemberDto> roomMemberDtoList = mapToRoomMemberDtoList(roomMembers);
         RoomDto roomDto = new RoomDto(room.getGifteeName(), room.getGifterNumber());
         OwnerDto ownerDto = new OwnerDto(room.getHost().getId(), room.getHost().getProfileImg(), room.getHost().getNickName());
-        return RoomMemberDetailDto.of(roomDto, ownerDto, roomMemberDtoList);
+        return RoomOwnerDetailDto.of(roomDto, ownerDto);
     }
 
     public void deleteRoomMember(Long memberId, Long roomId, Long deleteMemberId) {
