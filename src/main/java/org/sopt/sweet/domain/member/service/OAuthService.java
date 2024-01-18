@@ -161,7 +161,8 @@ public class OAuthService {
         String newAccessToken = issueNewAccessToken(memberId);
         String newRefreshToken = issueNewRefreshToken(memberId);
         redisTemplate.opsForValue().set(redisKey, newRefreshToken, REFRESH_TOKEN_EXPIRE_TIME, TimeUnit.SECONDS);
-        return MemberReissueTokenResponseDto.of(newAccessToken);
+
+        return MemberReissueTokenResponseDto.of(newAccessToken, newRefreshToken);
     }
 
 
