@@ -12,6 +12,8 @@ import org.sopt.sweet.global.config.auth.UserId;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @RequestMapping("/api/room")
 @RestController
@@ -63,8 +65,8 @@ public class RoomController implements RoomApi {
 
     @GetMapping("/{roomId}/members")
     public ResponseEntity<SuccessResponse<?>> getRoomMembers(@UserId Long userId, @PathVariable Long roomId) {
-        final RoomMemberDetailDto roomMemberDetailDto = roomService.getRoomMembers(userId, roomId);
-        return SuccessResponse.ok(roomMemberDetailDto);
+        final List<RoomMemberDto> roomMemberDtoList = roomService.getRoomMembers(userId, roomId);
+        return SuccessResponse.ok(roomMemberDtoList);
     }
 
     @GetMapping("/{roomId}/room-detail")

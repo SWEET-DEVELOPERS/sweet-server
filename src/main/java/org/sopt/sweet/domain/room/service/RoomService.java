@@ -147,11 +147,27 @@ public class RoomService {
     }
 
     @Transactional(readOnly = true)
-    public RoomMemberDetailDto getRoomMembers(Long memberId, Long roomId) {
+    public List<RoomMemberDto> getRoomMembers(Long memberId, Long roomId) {
         List<RoomMember> roomMembers = roomMemberRepository.findByRoomId(roomId);
-        List<RoomMemberDto> roomMemberDtoList = mapToRoomMemberDtoList(roomMembers);
-        return RoomMemberDetailDto.of(roomMemberDtoList);
+        return mapToRoomMemberDtoList(roomMembers);
     }
+
+    private List<RoomMemberDto> mapToRoomMemberDtoList(List<RoomMember> roomMembers) {
+        Long hostId = roomMembers.get(0).getRoom().getHost().getId();
+        return roomMembers.stream()
+                .filter(roomMember -> !roomMember.getMember().getId().equals(hostId))
+                .map(this::mapToRoomMemberDto)
+                .collect(Collectors.toList());
+    }
+
+    private RoomMemberDto mapToRoomMemberDto(RoomMember roomMember) {
+        return RoomMemberDto.of(
+                roomMember.getMember().getId(),
+                roomMember.getMember().getProfileImg(),
+                roomMember.getMember().getNickName()
+        );
+    }
+
 
     @Transactional(readOnly = true)
     public RoomOwnerDetailDto getRoom(Long memberId, Long roomId) {
@@ -174,21 +190,7 @@ public class RoomService {
         decrementGifterNumber(room);
     }
 
-    private List<RoomMemberDto> mapToRoomMemberDtoList(List<RoomMember> roomMembers) {
-        Long hostId = roomMembers.get(0).getRoom().getHost().getId();
-        return roomMembers.stream()
-                .filter(roomMember -> !roomMember.getMember().getId().equals(hostId))
-                .map(this::mapToRoomMemberDto)
-                .collect(Collectors.toList());
-    }
 
-    private RoomMemberDto mapToRoomMemberDto(RoomMember roomMember) {
-        return RoomMemberDto.of(
-                roomMember.getMember().getId(),
-                roomMember.getMember().getProfileImg(),
-                roomMember.getMember().getNickName()
-        );
-    }
 
     private void checkRoomHost(Member member, Room room) {
         if (!member.equals(room.getHost())) {
