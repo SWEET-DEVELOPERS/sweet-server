@@ -7,22 +7,18 @@ import java.time.LocalDateTime;
 
 @Builder
 public record TournamentInfoDto(
-        LocalDateTime tournamentStartDate,
-        TournamentDuration tournamentDuration,
-
-        int TotalParticipantsCount,
-        int ParticipantsCount
+        LocalDateTime remainingTime,
+        int totalParticipantsCount,
+        int participantsCount
 
 ) {
-    public static TournamentInfoDto of(LocalDateTime tournamentStartDate,
-                                       TournamentDuration tournamentDuration,
+    public static TournamentInfoDto of(LocalDateTime remainingTime,
                                        int TotalParticipantsCount,
                                        int ParticipantsCount) {
         return TournamentInfoDto.builder()
-                .tournamentStartDate(tournamentStartDate)
-                .tournamentDuration(tournamentDuration)
-                .TotalParticipantsCount(TotalParticipantsCount)
-                .ParticipantsCount(ParticipantsCount)
+                .remainingTime(remainingTime)
+                .totalParticipantsCount(TotalParticipantsCount)
+                .participantsCount(ParticipantsCount)
                 .build();
     }
 
