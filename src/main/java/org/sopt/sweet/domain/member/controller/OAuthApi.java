@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.sopt.sweet.domain.member.dto.response.MemberTokenResponseDto;
 import org.sopt.sweet.global.common.SuccessResponse;
 import org.sopt.sweet.global.config.auth.UserId;
 import org.springframework.http.ResponseEntity;
@@ -66,10 +67,10 @@ public interface OAuthApi {
     @PostMapping("/api/oauth/reissue")
     ResponseEntity<SuccessResponse<?>> reissueToken(
             @Parameter(
-                    description = "만료된 access token",
+                    description = "만료된 access token, refresh token",
                     required = true,
                     example = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9"
-            ) @RequestBody String accessToken
-    ) throws JsonProcessingException;
+            ) @RequestBody MemberTokenResponseDto memberTokenResponseDto
+            ) throws JsonProcessingException;
 
 }
