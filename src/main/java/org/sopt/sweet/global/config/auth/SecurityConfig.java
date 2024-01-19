@@ -42,7 +42,8 @@ public class SecurityConfig {
             "api/oauth/kakao/login/**",
             "api/opengraph",
             "api/room/invitations/**",
-            "api/oauth/reissue/**"
+            "api/oauth/reissue/**",
+            "api/gift/ranking/**"
             };
 
     @Bean

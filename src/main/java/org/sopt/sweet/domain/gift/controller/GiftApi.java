@@ -218,13 +218,11 @@ public interface GiftApi {
     @GetMapping("ranking/{roomId}")
     ResponseEntity<SuccessResponse<?>> getRanking(
             @Parameter(
-                    description = "authorization token에서 얻은 userId, 임의입력하면 대체됩니다.",
+                    description = "조회하려는 토너먼트가 진행 중인 방의 ID",
                     required = true,
-                    example = "12345"
-            ) @UserId Long userId,
-            @PathVariable Long roomId
+                    example = "2"
+            ) @PathVariable Long roomId
     );
-
     @Operation(
             summary = "친구들이 등록한 선물 조회 API",
             responses = {
