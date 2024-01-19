@@ -7,6 +7,7 @@ import org.sopt.sweet.domain.member.dto.response.MemberInfoDto;
 import org.sopt.sweet.domain.member.dto.response.MemberTokenResponseDto;
 import org.sopt.sweet.domain.member.entity.Member;
 import org.sopt.sweet.domain.member.repository.MemberRepository;
+import org.sopt.sweet.domain.room.constant.TournamentDuration;
 import org.sopt.sweet.domain.room.entity.Room;
 import org.sopt.sweet.domain.room.entity.RoomMember;
 import org.sopt.sweet.domain.room.repository.RoomMemberRepository;
@@ -50,8 +51,11 @@ public class MemberService {
         List<RoomMember> roomMembers = roomMemberRepository.findByMemberId(memberId);
         List<ClosedRoomResponseDto> closedRooms = roomMembers.stream()
                 .map(RoomMember::getRoom)
-                .filter(room -> room.getDeliveryDate().isBefore(LocalDateTime.now()))
-                .sorted(Comparator.comparing(Room::getDeliveryDate).reversed())
+                .filter(room -> {
+                    LocalDateTime tournamentEndDate = getTournamentEndDate(room.getTournamentStartDate(), room.getTournamentDuration());
+                    return tournamentEndDate != null && tournamentEndDate.isBefore(LocalDateTime.now());
+                })
+                .sorted(Comparator.comparing(room -> getTournamentEndDate(room.getTournamentStartDate(), room.getTournamentDuration()), Comparator.reverseOrder()))
                 .map(room -> mapToClosedRoomResponseDto(room, memberId))
                 .collect(Collectors.toList());
         return closedRooms;
@@ -72,11 +76,22 @@ public class MemberService {
         List<RoomMember> roomMembers = roomMemberRepository.findByMemberId(memberId);
         List<ActiveRoomResponseDto> activeRooms = roomMembers.stream()
                 .map(RoomMember::getRoom)
-                .filter(room -> room.getDeliveryDate().isAfter(LocalDateTime.now()))
+                .filter(room -> {
+                    LocalDateTime tournamentEndDate = getTournamentEndDate(room.getTournamentStartDate(), room.getTournamentDuration());
+                    return tournamentEndDate != null && tournamentEndDate.isAfter(LocalDateTime.now());
+                })
                 .sorted(Comparator.comparing(room -> getRoomMemberCreationTime(room, memberId), Comparator.reverseOrder()))
                 .map(room -> mapToActiveRoomResponseDto(room, memberId))
                 .collect(Collectors.toList());
         return activeRooms;
+    }
+
+    private LocalDateTime getTournamentEndDate(LocalDateTime tournamentStartDate, TournamentDuration tournamentDuration) {
+        if (tournamentStartDate != null && tournamentDuration != null) {
+            return tournamentStartDate.plusHours(tournamentDuration.getHours());
+        } else {
+            return null;
+        }
     }
 
     private ActiveRoomResponseDto mapToActiveRoomResponseDto(Room room, Long memberId) {

@@ -179,6 +179,7 @@ public class GiftService {
 
         LocalDateTime tournamentStartDate = room.getTournamentStartDate();
         TournamentDuration tournamentDuration = room.getTournamentDuration();
+
         int totalParticipantsCount = room.getGifterNumber();
 
         updateTournamentParticipation(memberId, roomId);
@@ -187,6 +188,8 @@ public class GiftService {
 
         return new TournamentInfoDto(tournamentStartDate, tournamentDuration, totalParticipantsCount, participatingMembersCount);
     }
+
+
 
     public void updateTournamentParticipation(Long memberId, Long roomId) {
         RoomMember roomMember = roomMemberRepository.findByRoomIdAndMemberId(roomId, memberId);
