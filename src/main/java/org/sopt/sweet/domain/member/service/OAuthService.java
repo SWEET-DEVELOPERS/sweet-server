@@ -151,12 +151,14 @@ public class OAuthService {
         redisTemplate.delete(redisKey);
     }
 
-    public MemberReissueTokenResponseDto reissue(String accessToken) throws JsonProcessingException {
-        Long memberId = Long.valueOf(jwtProvider.decodeJwtPayloadSubject(accessToken));
+    public MemberReissueTokenResponseDto reissue(MemberTokenResponseDto memberTokenResponseDto) throws JsonProcessingException {
+        Long memberId = Long.valueOf(jwtProvider.decodeJwtPayloadSubject(memberTokenResponseDto.accessToken()));
 
+        String refreshToken = memberTokenResponseDto.refreshToken();
         String redisKey = "RT:" + memberId;
         String storedRefreshToken = redisTemplate.opsForValue().get(redisKey);
         jwtProvider.validateRefreshToken(storedRefreshToken);
+        jwtProvider.equalsRefreshToken(refreshToken, storedRefreshToken);
 
         String newAccessToken = issueNewAccessToken(memberId);
         String newRefreshToken = issueNewRefreshToken(memberId);

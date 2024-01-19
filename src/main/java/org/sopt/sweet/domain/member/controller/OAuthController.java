@@ -41,8 +41,8 @@ public class OAuthController implements OAuthApi {
     }
 
     @PostMapping("/reissue")
-    public ResponseEntity<SuccessResponse<?>> reissueToken(@RequestBody String accessToken) throws JsonProcessingException {
-        MemberReissueTokenResponseDto memberToken = oAuthService.reissue(accessToken);
+    public ResponseEntity<SuccessResponse<?>> reissueToken(@RequestBody MemberTokenResponseDto memberTokenResponseDto) throws JsonProcessingException {
+        MemberReissueTokenResponseDto memberToken = oAuthService.reissue(memberTokenResponseDto);
         return SuccessResponse.ok(memberToken);
     }
 
