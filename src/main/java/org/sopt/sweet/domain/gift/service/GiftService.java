@@ -2,7 +2,6 @@ package org.sopt.sweet.domain.gift.service;
 
 import lombok.RequiredArgsConstructor;
 import org.sopt.sweet.domain.gift.dto.request.CreateGiftRequestDto;
-import org.sopt.sweet.domain.gift.dto.request.MyGiftsRequestDto;
 import org.sopt.sweet.domain.gift.dto.request.TournamentScoreRequestDto;
 import org.sopt.sweet.domain.gift.dto.response.*;
 import org.sopt.sweet.domain.gift.entity.Gift;
@@ -20,6 +19,7 @@ import org.sopt.sweet.global.error.exception.ForbiddenException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -27,7 +27,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static org.codehaus.groovy.runtime.DefaultGroovyMethods.collect;
 import static org.sopt.sweet.global.error.ErrorCode.*;
 
 @RequiredArgsConstructor
@@ -186,10 +185,25 @@ public class GiftService {
 
         int participatingMembersCount = roomMemberRepository.countByRoomIdAndTournamentParticipationIsTrue(roomId);
 
-        return new TournamentInfoDto(tournamentStartDate, tournamentDuration, totalParticipantsCount, participatingMembersCount);
+        LocalDateTime tournamentEndTime = getTournamentEndDate(tournamentStartDate, tournamentDuration);
+        LocalDateTime remainingTime =getTournamentRemainingTime(tournamentEndTime);
+
+        return new TournamentInfoDto(remainingTime, totalParticipantsCount, participatingMembersCount);
     }
 
 
+    private LocalDateTime getTournamentEndDate(LocalDateTime tournamentStartDate, TournamentDuration tournamentDuration) {
+        LocalDateTime tournamentEndTime = tournamentStartDate.plusHours(tournamentDuration.getHours());
+        return tournamentEndTime;
+    }
+
+
+    private LocalDateTime getTournamentRemainingTime(LocalDateTime tournamentEndTime) {
+        return tournamentEndTime
+                .minusHours(LocalDateTime.now().getHour())
+                .minusMinutes(LocalDateTime.now().getMinute())
+                .minusSeconds(LocalDateTime.now().getSecond());
+    }
 
     public void updateTournamentParticipation(Long memberId, Long roomId) {
         RoomMember roomMember = roomMemberRepository.findByRoomIdAndMemberId(roomId, memberId);
