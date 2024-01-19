@@ -41,6 +41,8 @@ public class GiftService {
     private static final int FIRST_PLACE_SCORE = 10;
     private static final int SECOND_PLACE_SCORE = 5;
 
+    private static final String DEFAULT_GIFT_IMAGE_URL = "https://sweet-gift-bucket.s3.ap-northeast-2.amazonaws.com/gift.png";
+
     public void createNewGift(Long memberId, CreateGiftRequestDto createGiftRequestDto) {
         Member member = findMemberByIdOrThrow(memberId);
         Room room = findRoomByIdOrThrow(createGiftRequestDto.roomId());
@@ -73,7 +75,7 @@ public class GiftService {
                 .url(createGiftRequestDto.url())
                 .name(createGiftRequestDto.name())
                 .cost(createGiftRequestDto.cost())
-                .imageUrl(createGiftRequestDto.imageUrl())
+                .imageUrl((createGiftRequestDto.imageUrl() != null && !createGiftRequestDto.imageUrl().trim().isEmpty()) ? createGiftRequestDto.imageUrl() : DEFAULT_GIFT_IMAGE_URL)
                 .room(room)
                 .member(member)
                 .build();
