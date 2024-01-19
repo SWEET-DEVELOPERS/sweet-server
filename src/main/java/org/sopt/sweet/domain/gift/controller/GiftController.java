@@ -60,7 +60,7 @@ public class GiftController implements GiftApi {
     }
 
     @GetMapping("/ranking/{roomId}")
-    public ResponseEntity<SuccessResponse<?>> getRanking(@UserId Long userId, @PathVariable Long roomId) {
+    public ResponseEntity<SuccessResponse<?>> getRanking(@PathVariable Long roomId) {
         final List<TournamentRankingResponseDto> ranking = giftService.getTournamentRanking(roomId);
         return SuccessResponse.ok(ranking);
     }
