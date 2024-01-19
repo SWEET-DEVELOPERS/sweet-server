@@ -15,10 +15,7 @@ import org.sopt.sweet.domain.member.repository.MemberRepository;
 import org.sopt.sweet.global.config.auth.jwt.JwtProvider;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.LinkedMultiValueMap;
@@ -26,6 +23,8 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 @RequiredArgsConstructor
@@ -121,6 +120,7 @@ public class OAuthService {
                     .profileImg(profileImage)
                     .build();
             memberRepository.save(member);
+            sendDiscordNotification(nickname);
             return new KakaoUserInfoResponseDto(member.getId(), socialId, nickname, profileImage);
         }
         return new KakaoUserInfoResponseDto(existMember.getId(), socialId, nickname, profileImage);
@@ -166,6 +166,29 @@ public class OAuthService {
 
         return MemberReissueTokenResponseDto.of(newAccessToken, newRefreshToken);
     }
+
+    // 회원가입 웹훅
+    public String sendDiscordNotification(String nickname) {
+        RestTemplate restTemplate = new RestTemplate();
+        String discordWebhookUrl = "https://discord.com/api/webhooks/1204058265701322762/pevRTECoHK4iT7hfIn7gVzIETwTh7r8z7f42snGswwVcFFOmYHItAu9sA-L2z_FzSW0p";
+        Long totalMembers = memberRepository.count();
+
+        String message = totalMembers + "번째 멤버가 회원가입했습니다.\n" +
+                "사용자명: " + nickname;
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        Map<String, String> body = new HashMap<>();
+        body.put("content", message);
+
+        HttpEntity<Map<String, String>> requestEntity = new HttpEntity<>(body, headers);
+
+        restTemplate.postForEntity(discordWebhookUrl, requestEntity, String.class);
+        return null;
+    }
+
+
 
 
 }
