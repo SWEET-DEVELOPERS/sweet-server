@@ -50,10 +50,9 @@ public class RoomService {
         Member host = findMemberByIdOrThrow(memberId);
         validateName(createRoomRequestDto.gifteeName());
         String invitationCode = generateUniqueInvitationCode();
-        System.out.println("이미지Url " + createRoomRequestDto.imageUrl() +"/");
         Room room = Room.builder()
                 .gifteeName(createRoomRequestDto.gifteeName())
-                .imageUrl((createRoomRequestDto.imageUrl() != null && !createRoomRequestDto.imageUrl().trim().isEmpty()) ? createRoomRequestDto.imageUrl() : DEFAULT_IMAGE_URL)
+                .imageUrl(DEFAULT_IMAGE_URL)
                 .deliveryDate(createRoomRequestDto.deliveryDate())
                 .tournamentStartDate(createRoomRequestDto.tournamentStartDate())
                 .tournamentDuration(createRoomRequestDto.tournamentDuration())
