@@ -41,7 +41,7 @@ public class GiftService {
     private static final int FIRST_PLACE_SCORE = 10;
     private static final int SECOND_PLACE_SCORE = 5;
 
-    private static final String DEFAULT_GIFT_IMAGE_URL = "https://sweet-gift-bucket.s3.ap-northeast-2.amazonaws.com/gift.png";
+    private static final String DEFAULT_GIFT_IMAGE_URL = "https://sweet-gift-bucket.s3.ap-northeast-2.amazonaws.com/kitty.png";
 
     public void createNewGift(Long memberId, CreateGiftRequestDto createGiftRequestDto) {
         Member member = findMemberByIdOrThrow(memberId);
