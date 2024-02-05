@@ -52,6 +52,9 @@ public class OAuthService {
     @Value("${jwt.refresh-token-expire-time}")
     private long REFRESH_TOKEN_EXPIRE_TIME;
 
+    @Value("${discord.webhook.url}")
+    private String discordWebhookUrl;
+
     private final ObjectMapper objectMapper;
     private final RedisTemplate<String, String> redisTemplate;
 
@@ -170,7 +173,6 @@ public class OAuthService {
     // 회원가입 웹훅
     public String sendDiscordNotification(String nickname) {
         RestTemplate restTemplate = new RestTemplate();
-        String discordWebhookUrl = "https://discord.com/api/webhooks/1204058265701322762/pevRTECoHK4iT7hfIn7gVzIETwTh7r8z7f42snGswwVcFFOmYHItAu9sA-L2z_FzSW0p";
         Long totalMembers = memberRepository.count();
 
         String message = totalMembers + "번째 멤버가 회원가입했습니다.\n" +
