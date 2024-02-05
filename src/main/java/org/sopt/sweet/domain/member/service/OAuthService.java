@@ -123,7 +123,7 @@ public class OAuthService {
                     .profileImg(profileImage)
                     .build();
             memberRepository.save(member);
-            sendDiscordNotification(nickname);
+            //sendDiscordNotification(nickname);
             return new KakaoUserInfoResponseDto(member.getId(), socialId, nickname, profileImage);
         }
         return new KakaoUserInfoResponseDto(existMember.getId(), socialId, nickname, profileImage);
