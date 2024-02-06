@@ -175,7 +175,7 @@ public class OAuthService {
         RestTemplate restTemplate = new RestTemplate();
         Long totalMembers = memberRepository.count();
 
-        String message = totalMembers + "번째 멤버가 회원가입했습니다.\n" +
+        String message = "\n" + totalMembers + "번째 멤버가 회원가입했습니다.\n" +
                 "사용자명: " + nickname;
 
         HttpHeaders headers = new HttpHeaders();
