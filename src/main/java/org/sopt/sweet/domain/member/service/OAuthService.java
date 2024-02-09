@@ -59,7 +59,7 @@ public class OAuthService {
     private final RedisTemplate<String, String> redisTemplate;
 
     // 카카오 로그인 시 회원 정보 조회
-    public KakaoUserInfoResponseDto kakaoCallback(String code) {
+    public KakaoUserInfoResponseDto kakaoCallback(String code, String environment) {
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
@@ -68,6 +68,11 @@ public class OAuthService {
         params.add("grant_type", "authorization_code");
         params.add("client_id", clientId);
         params.add("redirect_uri", redirectUri);
+        if ("development".equals(environment)) {
+            params.add("redirect_uri", redirectUri);
+        } else {
+            params.add("redirect_uri", "http://localhost:5137/api/oauth/kakao/login");
+        }
         params.add("code", code);
 
         HttpEntity<MultiValueMap<String, String>> kakaoTokenRequest =
