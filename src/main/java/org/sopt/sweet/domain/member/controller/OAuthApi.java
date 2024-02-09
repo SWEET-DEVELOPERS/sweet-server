@@ -14,6 +14,7 @@ import org.sopt.sweet.global.config.auth.UserId;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Tag(name = "소셜로그인", description = "소셜로그인 관련 API")
@@ -38,7 +39,13 @@ public interface OAuthApi {
                     required = true,
                     example = "gGMvN1u_dgHdTizP8uUf7HZHNls_3G4X8qbKTwihE0x5W6f3E6acGDDsc80KPXLrAAABjO-2eHHUNEQ5evY1pg"
             )
-            @RequestParam("code") String code
+            @RequestParam("code") String code,
+            @Parameter(
+                    description = "환경변수",
+                    required = true,
+                    example = "development"
+            )
+            @RequestHeader("X-Environment") String environment
     );
 
     @ApiResponses(

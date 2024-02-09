@@ -136,8 +136,14 @@ public class GiftService {
     }
 
     @Transactional(readOnly = true)
-    public List<TournamentListsResponseDto> getTournamentGiftList(Long roomId) {
+    public List<TournamentListsResponseDto> getTournamentGiftList(Long memberId, Long roomId) {
         Room room = findRoomByIdOrThrow(roomId);
+        RoomMember roomMember = roomMemberRepository.findByRoomIdAndMemberId(roomId, memberId);
+
+        if(roomMember.isTournamentParticipation()){
+            throw new BusinessException(ALREADY_PARTICIPATED_TOURNAMENT);
+        }
+
         List<Gift> gifts = giftRepository.findByRoom(room);
         return mapGiftsToTournamentLists(gifts);
     }

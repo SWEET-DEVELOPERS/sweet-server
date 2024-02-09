@@ -22,8 +22,8 @@ public class OAuthController implements OAuthApi {
     private final OAuthService oAuthService;
 
     @GetMapping("/kakao/login")
-    public ResponseEntity<SuccessResponse<?>> kakaoLogin(@RequestParam("code") String code) {
-        KakaoUserInfoResponseDto userInfo = oAuthService.kakaoCallback(code);
+    public ResponseEntity<SuccessResponse<?>> kakaoLogin(@RequestParam("code") String code, @RequestHeader("X-Environment") String environment) {
+        KakaoUserInfoResponseDto userInfo = oAuthService.kakaoCallback(code, environment);
         MemberTokenResponseDto memberToken = oAuthService.saveToken(userInfo.memberId());
 
         Map<String, Object> loginResponse = new HashMap<>();
