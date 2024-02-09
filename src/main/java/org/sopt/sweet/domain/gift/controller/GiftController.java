@@ -43,7 +43,7 @@ public class GiftController implements GiftApi {
 
     @GetMapping("/tournament/{roomId}")
     public ResponseEntity<SuccessResponse<?>> getTournamentGiftList(@UserId Long userId, @PathVariable Long roomId) {
-        List<TournamentListsResponseDto> tournamentGiftList = giftService.getTournamentGiftList(roomId);
+        List<TournamentListsResponseDto> tournamentGiftList = giftService.getTournamentGiftList(userId, roomId);
         return SuccessResponse.ok(tournamentGiftList);
     }
 

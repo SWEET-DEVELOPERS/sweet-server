@@ -18,7 +18,7 @@ public enum ErrorCode {
     MEMBER_GIFT_COUNT_EXCEEDED(HttpStatus.BAD_REQUEST, "최대 선물 등록 개수를 초과하였습니다."),
     TOURNAMENT_START_DATE_PASSED(HttpStatus.BAD_REQUEST, "토너먼트 시작 날짜가 지났습니다"),
     ROOM_OWNER_CANNOT_DELETE_SELF(HttpStatus.BAD_REQUEST, "방 개설자는 스스로를 삭제할 수 없습니다."),
-
+    ALREADY_PARTICIPATED_TOURNAMENT(HttpStatus.BAD_REQUEST, "이미 참가한 토너먼트입니다."),
     /**
      * 401 Unauthorized
      */
@@ -30,7 +30,6 @@ public enum ErrorCode {
     INVALID_REFRESH_TOKEN_VALUE(HttpStatus.UNAUTHORIZED, "리프레시 토큰의 값이 올바르지 않습니다."),
     EXPIRED_REFRESH_TOKEN(HttpStatus.UNAUTHORIZED, "리프레시 토큰이 만료되었습니다. 다시 로그인해 주세요."),
     NOT_MATCH_REFRESH_TOKEN(HttpStatus.UNAUTHORIZED, "일치하지 않는 리프레시 토큰입니다."),
-
     /**
      * 403 Forbidden
      */
