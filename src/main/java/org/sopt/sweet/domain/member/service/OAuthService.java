@@ -68,7 +68,7 @@ public class OAuthService {
         params.add("grant_type", "authorization_code");
         params.add("client_id", clientId);
         params.add("redirect_uri", redirectUri);
-        if ("development".equals(environment)) {
+        if ("production".equals(environment)) {
             params.add("redirect_uri", redirectUri);
         } else {
             params.add("redirect_uri", "http://localhost:5137/api/oauth/kakao/login");
@@ -180,8 +180,7 @@ public class OAuthService {
         RestTemplate restTemplate = new RestTemplate();
         Long totalMembers = memberRepository.count();
 
-        String message = "\n" + totalMembers + "번째 멤버가 회원가입했습니다.\n" +
-                "사용자명: " + nickname;
+        String message = nickname + "님이 회원가입했습니다! (누적 회원수: " + totalMembers + "명\n)";
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
