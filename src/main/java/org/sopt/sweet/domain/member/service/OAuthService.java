@@ -181,7 +181,7 @@ public class OAuthService {
         RestTemplate restTemplate = new RestTemplate();
         Long totalMembers = memberRepository.count();
 
-        String message = nickname + "님이 회원가입했습니다! (누적 회원수: " + totalMembers + "명\n)";
+        String message = nickname + "님이 회원가입했습니다! (누적 회원수: " + totalMembers + "명)\n";
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
