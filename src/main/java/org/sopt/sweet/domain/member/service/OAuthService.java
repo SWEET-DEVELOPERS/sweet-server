@@ -71,8 +71,7 @@ public class OAuthService {
         if ("production".equals(environment)) {
             params.add("redirect_uri", redirectUri);
         } else {
-            params.add("redirect_uri", redirectUri);
-            //params.add("redirect_uri", "http://localhost:5173/api/oauth/kakao/login");
+            params.add("redirect_uri", "http://localhost:5173/api/oauth/kakao/login");
         }
         params.add("code", code);
 
