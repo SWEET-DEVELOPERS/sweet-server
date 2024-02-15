@@ -68,11 +68,6 @@ public class OAuthService {
         params.add("grant_type", "authorization_code");
         params.add("client_id", clientId);
         params.add("redirect_uri", redirectUri);
-        if ("production".equals(environment)) {
-            params.add("redirect_uri", redirectUri);
-        } else {
-            params.add("redirect_uri", "http://localhost:5173/api/oauth/kakao/login");
-        }
         params.add("code", code);
 
         HttpEntity<MultiValueMap<String, String>> kakaoTokenRequest =
