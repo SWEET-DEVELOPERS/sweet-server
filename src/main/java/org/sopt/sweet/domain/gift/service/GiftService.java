@@ -148,6 +148,8 @@ public class GiftService {
         return mapGiftsToTournamentLists(gifts);
     }
 
+
+
     private List<TournamentListsResponseDto> mapGiftsToTournamentLists(List<Gift> gifts) {
         return gifts.stream()
                 .map(gift -> TournamentListsResponseDto.of(gift.getId(), gift.getImageUrl(), gift.getName(), gift.getCost(), gift.getUrl()))
