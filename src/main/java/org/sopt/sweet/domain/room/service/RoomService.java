@@ -52,7 +52,7 @@ public class RoomService {
         String invitationCode = generateUniqueInvitationCode();
         Room room = Room.builder()
                 .gifteeName(createRoomRequestDto.gifteeName())
-                .imageUrl(DEFAULT_IMAGE_URL)
+                .imageUrl((createRoomRequestDto.imageUrl() != null && !createRoomRequestDto.imageUrl().trim().isEmpty()) ? createRoomRequestDto.imageUrl() : DEFAULT_IMAGE_URL)
                 .deliveryDate(createRoomRequestDto.deliveryDate())
                 .tournamentStartDate(createRoomRequestDto.tournamentStartDate())
                 .tournamentDuration(createRoomRequestDto.tournamentDuration())
