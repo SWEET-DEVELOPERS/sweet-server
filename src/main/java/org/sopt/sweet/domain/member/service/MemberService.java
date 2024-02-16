@@ -141,4 +141,9 @@ public class MemberService {
                 member.get().getProfileImg()
         );
     }
+
+    public String getProfile(Long memberId) {
+        Optional<Member> member = memberRepository.findById(memberId);
+        return member.get().getProfileImg();
+    }
 }
