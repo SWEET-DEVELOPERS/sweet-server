@@ -1,10 +1,7 @@
 package org.sopt.sweet.domain.member.service;
 
 import lombok.RequiredArgsConstructor;
-import org.sopt.sweet.domain.member.dto.response.ActiveRoomResponseDto;
-import org.sopt.sweet.domain.member.dto.response.ClosedRoomResponseDto;
-import org.sopt.sweet.domain.member.dto.response.MemberInfoDto;
-import org.sopt.sweet.domain.member.dto.response.MemberTokenResponseDto;
+import org.sopt.sweet.domain.member.dto.response.*;
 import org.sopt.sweet.domain.member.entity.Member;
 import org.sopt.sweet.domain.member.repository.MemberRepository;
 import org.sopt.sweet.domain.room.constant.TournamentDuration;
@@ -142,8 +139,8 @@ public class MemberService {
         );
     }
 
-    public String getProfile(Long memberId) {
+    public ProfileImageResponseDto getProfile(Long memberId) {
         Optional<Member> member = memberRepository.findById(memberId);
-        return member.get().getProfileImg();
+        return new ProfileImageResponseDto(member.get().getProfileImg());
     }
 }

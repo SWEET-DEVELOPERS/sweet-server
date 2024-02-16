@@ -59,7 +59,7 @@ public class MemberController implements MemberApi {
 
     @GetMapping("/profile")
     public ResponseEntity<SuccessResponse<?>> getProfile(@UserId Long userId) {
-        String profile = memberService.getProfile(userId);
+        ProfileImageResponseDto profile = memberService.getProfile(userId);
         return SuccessResponse.ok(profile);
     }
 
