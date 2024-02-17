@@ -5,7 +5,6 @@ import org.sopt.sweet.domain.member.dto.response.*;
 import org.sopt.sweet.domain.member.service.MemberService;
 import org.sopt.sweet.global.common.SuccessResponse;
 import org.sopt.sweet.global.config.auth.UserId;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -58,5 +57,10 @@ public class MemberController implements MemberApi {
         return SuccessResponse.ok(myPageResponseDto);
     }
 
+    @GetMapping("/profile")
+    public ResponseEntity<SuccessResponse<?>> getProfile(@UserId Long userId) {
+        ProfileImageResponseDto profile = memberService.getProfile(userId);
+        return SuccessResponse.ok(profile);
+    }
 
 }
