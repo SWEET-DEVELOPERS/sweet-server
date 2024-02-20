@@ -164,13 +164,13 @@ public class OAuthService {
 
         String refreshToken = memberTokenResponseDto.refreshToken();
         String redisKey = "RT:" + memberId;
-        String storedRefreshToken = redisTemplate.opsForValue().get(redisKey);
-        jwtProvider.validateRefreshToken(storedRefreshToken);
-        jwtProvider.equalsRefreshToken(refreshToken, storedRefreshToken);
-
+        jwtProvider.validateRefreshToken(refreshToken);
         String newAccessToken = issueNewAccessToken(memberId);
         String newRefreshToken = issueNewRefreshToken(memberId);
         redisTemplate.opsForValue().set(redisKey, newRefreshToken, REFRESH_TOKEN_EXPIRE_TIME, TimeUnit.SECONDS);
+
+        String storedRefreshToken = redisTemplate.opsForValue().get(redisKey);
+        jwtProvider.equalsRefreshToken(newRefreshToken, storedRefreshToken);
 
         return MemberReissueTokenResponseDto.of(newAccessToken, newRefreshToken);
     }
