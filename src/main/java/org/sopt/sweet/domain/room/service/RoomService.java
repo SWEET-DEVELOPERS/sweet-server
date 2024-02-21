@@ -90,9 +90,19 @@ public class RoomService {
     public JoinRoomResponseDto findAndJoinRoom(Long memberId, String invitationCode) {
         Member member = findMemberByIdOrThrow(memberId);
         Room room = findByInvitationOrThrow(invitationCode);
-        joinRoom(member, room);
+        if (!isOwner(memberId, room.getId())) {
+            joinRoom(member, room);
+        }
         return JoinRoomResponseDto.of(room.getId());
     }
+
+    public Boolean isOwner(Long memberId, Long roomId) {
+        Optional<Member> member = memberRepository.findById(memberId);
+        Optional<Room> room = roomRepository.findById(roomId);
+        Boolean isOwner = member.get().getId().equals(room.get().getHost().getId());
+        return isOwner;
+    }
+
 
     @Transactional(readOnly = true)
     public RoomMainResponseDto getRoomMainInfo(Long memberId, Long roomId) {
