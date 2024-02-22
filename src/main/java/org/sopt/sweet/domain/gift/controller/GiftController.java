@@ -73,11 +73,11 @@ public class GiftController implements GiftApi {
 
     @GetMapping("/friend/{roomId}")
     public ResponseEntity<SuccessResponse<?>> getFriendGift(@UserId Long userId, @PathVariable Long roomId) {
-        TournamentStartDateResponseDto tournamentStartDate = giftService.getTournamentStartDate(roomId);
+        RoomInfoResponseDto roomInfoResponseDto = giftService.getRoomInfo(roomId);
         final List<FriendGiftDto> friendGiftList = giftService.getFriendGift(userId, roomId);
 
         Map<String, Object> result = new HashMap<>();
-        result.put("tournamentStartDate", tournamentStartDate);
+        result.put("roomInfoResponseDto", roomInfoResponseDto);
         result.put("friendGiftDto", friendGiftList);
         return SuccessResponse.ok(result);
 

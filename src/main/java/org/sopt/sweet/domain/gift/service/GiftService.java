@@ -20,7 +20,6 @@ import org.sopt.sweet.global.error.exception.ForbiddenException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -280,9 +279,10 @@ public class GiftService {
                 .collect(Collectors.toList());
     }
 
-    public TournamentStartDateResponseDto getTournamentStartDate(Long roomId) {
+    public RoomInfoResponseDto getRoomInfo(Long roomId) {
         Room room = findRoomByIdOrThrow(roomId);
+        String gifteeName = room.getGifteeName();
         LocalDateTime tournamentStartDate = room.getTournamentStartDate();
-        return new TournamentStartDateResponseDto(tournamentStartDate);
+        return new RoomInfoResponseDto(gifteeName,tournamentStartDate);
     }
 }
