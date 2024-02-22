@@ -57,6 +57,7 @@ public enum ErrorCode {
      */
     CONFLICT(HttpStatus.CONFLICT, "이미 존재하는 리소스입니다."),
     MEMBER_ALREADY_EXISTS_ROOM(HttpStatus.CONFLICT, "해당 선물방에 이미 참여하였습니다."),
+    DUPLICATED_GIFT(HttpStatus.CONFLICT, "중복된 선물 등록입니다."),
 
     /**
      * 500 Internal Server Error

@@ -14,6 +14,7 @@ import org.sopt.sweet.domain.room.entity.RoomMember;
 import org.sopt.sweet.domain.room.repository.RoomMemberRepository;
 import org.sopt.sweet.domain.room.repository.RoomRepository;
 import org.sopt.sweet.global.error.exception.BusinessException;
+import org.sopt.sweet.global.error.exception.ConflictException;
 import org.sopt.sweet.global.error.exception.EntityNotFoundException;
 import org.sopt.sweet.global.error.exception.ForbiddenException;
 import org.springframework.stereotype.Service;
@@ -49,6 +50,11 @@ public class GiftService {
         checkRoomMemberNotExists(room, member);
         checkGiftCountNotExceeded(room, member);
         checkTournamentStartDatePassed(room);
+
+        if (giftRepository.existsByRoomAndUrlAndCost(room, createGiftRequestDto.url(), createGiftRequestDto.cost())) {
+            throw new ConflictException(DUPLICATED_GIFT);
+        }
+
         Gift gift = buildGift(member, room, createGiftRequestDto);
         giftRepository.save(gift);
     }
