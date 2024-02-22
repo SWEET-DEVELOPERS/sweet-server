@@ -33,7 +33,7 @@ public class ProductService {
         Room room = findRoomByIdOrThrow(roomId);
         List<Product> allProducts = productRepository.findAll();
         List<HotProductDto> hotProductDtoList = mapToHotProductDtoList(allProducts);
-        return HotProductsResponseDto.of(room.getTournamentStartDate(), hotProductDtoList);
+        return HotProductsResponseDto.of(room.getGifteeName(), room.getTournamentStartDate(), hotProductDtoList);
     }
 
     private Member findMemberByIdOrThrow(Long memberId) {

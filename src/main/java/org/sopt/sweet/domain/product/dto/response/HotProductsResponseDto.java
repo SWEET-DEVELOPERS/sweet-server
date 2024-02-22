@@ -7,12 +7,15 @@ import java.util.List;
 
 @Builder
 public record HotProductsResponseDto(
+        String gifteeName,
         LocalDateTime tournamentStartDate,
         List<HotProductDto> hotProductDtoList
 ) {
-    public static HotProductsResponseDto of(LocalDateTime tournamentStartDate,
+    public static HotProductsResponseDto of( String gifteeName,
+                                            LocalDateTime tournamentStartDate,
                                             List<HotProductDto> hotProductDtoList) {
         return HotProductsResponseDto.builder()
+                .gifteeName(gifteeName)
                 .tournamentStartDate(tournamentStartDate)
                 .hotProductDtoList(hotProductDtoList)
                 .build();
