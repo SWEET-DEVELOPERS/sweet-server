@@ -29,6 +29,9 @@ public class RoomMember extends BaseTimeEntity {
     @Column(columnDefinition = "TINYINT(1) default 0")
     private boolean tournamentParticipation;
 
+    @Column(name = "firstplace_gift_id")
+    private Long firstplaceGiftId;
+
     @Builder
     public RoomMember(Room room, Member member) {
         this.room = room;
