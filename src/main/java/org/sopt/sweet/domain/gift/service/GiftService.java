@@ -201,6 +201,9 @@ public class GiftService {
 
     public TournamentInfoDto getTournamentInfo(Long memberId, Long roomId) {
         Room room = findRoomByIdOrThrow(roomId);
+        RoomMember roomMember = roomMemberRepository.findByRoomIdAndMemberId(roomId, memberId);
+        Gift firstPlaceGift = giftRepository.findById(roomMember.getFirstplaceGiftId())
+                .orElseThrow(() -> new EntityNotFoundException(GIFT_NOT_FOUND));
 
         LocalDateTime tournamentStartDate = room.getTournamentStartDate();
         TournamentDuration tournamentDuration = room.getTournamentDuration();
@@ -212,9 +215,10 @@ public class GiftService {
         LocalDateTime tournamentEndTime = getTournamentEndDate(tournamentStartDate, tournamentDuration);
         LocalDateTime remainingTime =getTournamentRemainingTime(tournamentEndTime);
 
-        return new TournamentInfoDto(remainingTime, totalParticipantsCount, participatingMembersCount);
+        return new TournamentInfoDto(
+                firstPlaceGift.getName(), firstPlaceGift.getImageUrl(), firstPlaceGift.getCost(),
+                remainingTime, totalParticipantsCount, participatingMembersCount);
     }
-
 
     private LocalDateTime getTournamentEndDate(LocalDateTime tournamentStartDate, TournamentDuration tournamentDuration) {
         LocalDateTime tournamentEndTime = tournamentStartDate.plusHours(tournamentDuration.getHours());

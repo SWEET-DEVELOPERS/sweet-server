@@ -7,18 +7,28 @@ import java.time.LocalDateTime;
 
 @Builder
 public record TournamentInfoDto(
+
+        String firstplaceGiftName,
+        String firstplaceGiftImageUrl,
+        int firstplaceGiftCost,
         LocalDateTime remainingTime,
         int totalParticipantsCount,
         int participantsCount
 
 ) {
-    public static TournamentInfoDto of(LocalDateTime remainingTime,
-                                       int TotalParticipantsCount,
-                                       int ParticipantsCount) {
+    public static TournamentInfoDto of( String firstplaceGiftName,
+                                        String firstplaceGiftImageUrl,
+                                        int firstplaceGiftCost,
+                                        LocalDateTime remainingTime,
+                                        int totalParticipantsCount,
+                                        int participantsCount) {
         return TournamentInfoDto.builder()
+                .firstplaceGiftName(firstplaceGiftName)
+                .firstplaceGiftImageUrl(firstplaceGiftImageUrl)
+                .firstplaceGiftCost(firstplaceGiftCost)
                 .remainingTime(remainingTime)
-                .totalParticipantsCount(TotalParticipantsCount)
-                .participantsCount(ParticipantsCount)
+                .totalParticipantsCount(totalParticipantsCount)
+                .participantsCount(participantsCount)
                 .build();
     }
 
