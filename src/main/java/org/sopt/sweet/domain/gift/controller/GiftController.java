@@ -55,7 +55,7 @@ public class GiftController implements GiftApi {
 
     @PostMapping("/tournament-score")
     public ResponseEntity<SuccessResponse<?>> evaluateTournamentScore(@UserId Long userId, @RequestBody TournamentScoreRequestDto tournamentScoreRequestDto) {
-        giftService.evaluateTournamentScore(tournamentScoreRequestDto);
+        giftService.evaluateTournamentScore(userId,tournamentScoreRequestDto);
         return SuccessResponse.created(null);
     }
 

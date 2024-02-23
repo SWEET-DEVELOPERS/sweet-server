@@ -161,7 +161,16 @@ public class GiftService {
                 .collect(Collectors.toList());
     }
 
-    public void evaluateTournamentScore(TournamentScoreRequestDto tournamentScoreRequestDto) {
+    public void evaluateTournamentScore(Long memberId, TournamentScoreRequestDto tournamentScoreRequestDto) {
+        Gift gift = findByIdOrThrow(tournamentScoreRequestDto.finalGiftId());
+        System.out.println(gift);
+        Room room = gift.getRoom();
+        System.out.println(room);
+        RoomMember roomMember = roomMemberRepository.findByRoomIdAndMemberId(room.getId(), memberId);
+        System.out.println(roomMember);
+        roomMember.setFirstplaceGiftId(tournamentScoreRequestDto.finalGiftId());
+        roomMemberRepository.save(roomMember);
+
         Long firstGiftId = tournamentScoreRequestDto.firstGiftId();
         Long secondGiftId = tournamentScoreRequestDto.secondGiftId();
         Long finalGiftId = tournamentScoreRequestDto.finalGiftId();

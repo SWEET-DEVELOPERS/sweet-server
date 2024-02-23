@@ -7,7 +7,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.sopt.sweet.domain.member.entity.Member;
 import org.sopt.sweet.domain.room.entity.Room;
+import org.sopt.sweet.domain.room.entity.RoomMember;
 import org.sopt.sweet.global.common.BaseTimeEntity;
+
+import java.util.List;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -41,6 +44,10 @@ public class Gift extends BaseTimeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id", nullable = false)
     private Member member;
+
+    @OneToMany(mappedBy = "id")
+    private List<RoomMember> roomMembers;
+
 
     @Builder
     public Gift(String url, String name, int cost, String imageUrl, Room room, Member member) {
