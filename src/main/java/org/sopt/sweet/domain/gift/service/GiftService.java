@@ -294,4 +294,12 @@ public class GiftService {
         LocalDateTime tournamentStartDate = room.getTournamentStartDate();
         return new RoomInfoResponseDto(gifteeName,tournamentStartDate);
     }
+
+
+    public String getGifteeName(Long roomId) {
+        Room room = findRoomByIdOrThrow(roomId);
+        String gifteeName = room.getGifteeName();
+        return gifteeName;
+    }
+
 }
