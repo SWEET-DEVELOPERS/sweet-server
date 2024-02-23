@@ -163,13 +163,15 @@ public class GiftService {
 
     public void evaluateTournamentScore(Long memberId, TournamentScoreRequestDto tournamentScoreRequestDto) {
         Gift gift = findByIdOrThrow(tournamentScoreRequestDto.finalGiftId());
-        System.out.println(gift);
         Room room = gift.getRoom();
-        System.out.println(room);
+
+        //1등 상품 저장하기
         RoomMember roomMember = roomMemberRepository.findByRoomIdAndMemberId(room.getId(), memberId);
-        System.out.println(roomMember);
         roomMember.setFirstplaceGiftId(tournamentScoreRequestDto.finalGiftId());
         roomMemberRepository.save(roomMember);
+
+        //토너먼트 참여 여부 업데이트
+        updateTournamentParticipation(memberId, room.getId());
 
         Long firstGiftId = tournamentScoreRequestDto.firstGiftId();
         Long secondGiftId = tournamentScoreRequestDto.secondGiftId();
@@ -204,8 +206,6 @@ public class GiftService {
         TournamentDuration tournamentDuration = room.getTournamentDuration();
 
         int totalParticipantsCount = room.getGifterNumber();
-
-        updateTournamentParticipation(memberId, roomId);
 
         int participatingMembersCount = roomMemberRepository.countByRoomIdAndTournamentParticipationIsTrue(roomId);
 
