@@ -161,7 +161,18 @@ public class GiftService {
                 .collect(Collectors.toList());
     }
 
-    public void evaluateTournamentScore(TournamentScoreRequestDto tournamentScoreRequestDto) {
+    public void evaluateTournamentScore(Long memberId, TournamentScoreRequestDto tournamentScoreRequestDto) {
+        Gift gift = findByIdOrThrow(tournamentScoreRequestDto.finalGiftId());
+        Room room = gift.getRoom();
+
+        //1등 상품 저장하기
+        RoomMember roomMember = roomMemberRepository.findByRoomIdAndMemberId(room.getId(), memberId);
+        roomMember.setFirstplaceGiftId(tournamentScoreRequestDto.finalGiftId());
+        roomMemberRepository.save(roomMember);
+
+        //토너먼트 참여 여부 업데이트
+        updateTournamentParticipation(memberId, room.getId());
+
         Long firstGiftId = tournamentScoreRequestDto.firstGiftId();
         Long secondGiftId = tournamentScoreRequestDto.secondGiftId();
         Long finalGiftId = tournamentScoreRequestDto.finalGiftId();
@@ -190,22 +201,24 @@ public class GiftService {
 
     public TournamentInfoDto getTournamentInfo(Long memberId, Long roomId) {
         Room room = findRoomByIdOrThrow(roomId);
+        RoomMember roomMember = roomMemberRepository.findByRoomIdAndMemberId(roomId, memberId);
+        Gift firstPlaceGift = giftRepository.findById(roomMember.getFirstplaceGiftId())
+                .orElseThrow(() -> new EntityNotFoundException(GIFT_NOT_FOUND));
 
         LocalDateTime tournamentStartDate = room.getTournamentStartDate();
         TournamentDuration tournamentDuration = room.getTournamentDuration();
 
         int totalParticipantsCount = room.getGifterNumber();
 
-        updateTournamentParticipation(memberId, roomId);
-
         int participatingMembersCount = roomMemberRepository.countByRoomIdAndTournamentParticipationIsTrue(roomId);
 
         LocalDateTime tournamentEndTime = getTournamentEndDate(tournamentStartDate, tournamentDuration);
         LocalDateTime remainingTime =getTournamentRemainingTime(tournamentEndTime);
 
-        return new TournamentInfoDto(remainingTime, totalParticipantsCount, participatingMembersCount);
+        return new TournamentInfoDto(
+                firstPlaceGift.getName(), firstPlaceGift.getImageUrl(), firstPlaceGift.getCost(),
+                remainingTime, totalParticipantsCount, participatingMembersCount);
     }
-
 
     private LocalDateTime getTournamentEndDate(LocalDateTime tournamentStartDate, TournamentDuration tournamentDuration) {
         LocalDateTime tournamentEndTime = tournamentStartDate.plusHours(tournamentDuration.getHours());
@@ -285,4 +298,12 @@ public class GiftService {
         LocalDateTime tournamentStartDate = room.getTournamentStartDate();
         return new RoomInfoResponseDto(gifteeName,tournamentStartDate);
     }
+
+
+    public String getGifteeName(Long roomId) {
+        Room room = findRoomByIdOrThrow(roomId);
+        String gifteeName = room.getGifteeName();
+        return gifteeName;
+    }
+
 }
