@@ -38,4 +38,8 @@ public class Member extends BaseTimeEntity {
         this.socialType = socialType;
         this.profileImg = profileImg;
     }
+
+    public void setProfileImg(String profileImage) {
+        this.profileImg = profileImage;
+    }
 }

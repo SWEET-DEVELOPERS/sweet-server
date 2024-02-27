@@ -131,6 +131,8 @@ public class OAuthService {
             sendDiscordNotification(nickname);
             return new KakaoUserInfoResponseDto(member.getId(), socialId, nickname, profileImage);
         }
+        existMember.setProfileImg(profileImage);
+        memberRepository.save(existMember);
         return new KakaoUserInfoResponseDto(existMember.getId(), socialId, nickname, profileImage);
     }
 
