@@ -65,7 +65,7 @@ public class GiftController implements GiftApi {
         Boolean isOwner = memberService.isOwner(userId, roomId);
         List<TournamentListsResponseDto> tournamentGiftList = giftService.getTournamentGiftList(userId, roomId);
 
-        if (tournamentGiftList.isEmpty()) {
+        if (tournamentGiftList.isEmpty() || tournamentGiftList.size() == 1) {
             return SuccessResponse.ok(new OwnerResponseDto(isOwner));
         }
         return SuccessResponse.ok(tournamentGiftList);
