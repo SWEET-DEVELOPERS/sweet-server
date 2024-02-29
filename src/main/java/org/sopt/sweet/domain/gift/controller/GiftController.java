@@ -89,6 +89,12 @@ public class GiftController implements GiftApi {
         return SuccessResponse.ok(ranking);
     }
 
+    @PostMapping("/tournament/end/{roomId}")
+    public ResponseEntity<SuccessResponse<?>> endTournament(@UserId Long userId, @PathVariable Long roomId) {
+        giftService.endTournament(roomId);
+        return SuccessResponse.created(null);
+    }
+
 
 
 
