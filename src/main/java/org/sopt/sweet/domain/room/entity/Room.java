@@ -69,4 +69,7 @@ public class Room extends BaseTimeEntity {
     public void setGifteeName(String gifteeName) {
         this.gifteeName = gifteeName;
     }
+
+    public  void setTournamentStartDate(LocalDateTime tournamentStartDate) { this.tournamentStartDate = tournamentStartDate;
+    }
 }

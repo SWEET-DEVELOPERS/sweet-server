@@ -312,4 +312,12 @@ public class GiftService {
         return gifteeName;
     }
 
+    public void endTournament(Long roomId) {
+        Room room = findRoomByIdOrThrow(roomId);
+        TournamentDuration tournamentDuration = room.getTournamentDuration();
+        LocalDateTime newStartDate = LocalDateTime.now().minusHours(tournamentDuration.getHours());
+        room.setTournamentStartDate(newStartDate);
+
+    }
+
 }
