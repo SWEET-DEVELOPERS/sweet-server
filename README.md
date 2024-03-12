@@ -3,7 +3,7 @@
 </div>
 
 > 배포 링크 <br />
-> **https://sweetgift.vercel.app/**
+> **https://www.sweetgift.kr/**
 
 <div align="center">
       <a href="https://hits.seeyoufarm.com"><img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FSWEET-DEVELOPERS%2Fsweet-server&count_bg=%23FF2176&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false"/></a>
